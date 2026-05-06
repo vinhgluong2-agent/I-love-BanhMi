@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Packaging Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --surface: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.4);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+        body {
+            background-color: var(--bg-color); color: var(--text-main); line-height: 1.6;
+            background-image: radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.15) 0px, transparent 50%);
+            background-attachment: fixed; padding: 2rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .lang-toggle { display: flex; justify-content: center; gap: 10px; margin-bottom: 2rem; }
+        .lang-toggle button {
+            background: rgba(255, 255, 255, 0.1); color: var(--text-muted); border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;
+        }
+        .lang-toggle button.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+        header { text-align: center; margin-bottom: 3rem; animation: fadeInDown 1s ease-out; }
+        h1 { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .subtitle { color: var(--text-muted); font-size: 1.2rem; font-weight: 300; max-width: 700px; margin: 0 auto; }
+        .glass-panel {
+            background: var(--surface); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem; margin-bottom: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        }
+        .glass-panel:hover { transform: translateY(-3px); box-shadow: 0 25px 50px rgba(0,0,0,0.3), 0 0 15px var(--accent-glow); }
+        .glass-panel h2 { color: #fff; font-size: 1.6rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
+        .glass-panel h2 span.step { background: var(--accent); color: #000; width: 35px; height: 35px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%; font-size: 1.2rem; font-weight: 800; }
+        .concept-img { width: 100%; max-width: 800px; display: block; margin: 0 auto 2rem auto; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); border: 2px solid rgba(255,255,255,0.05); }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.95rem; min-width: 600px; }
+        th, td { padding: 1.2rem 1rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { color: var(--accent); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; background: rgba(0,0,0,0.2); }
+        tr:hover td { background: rgba(255,255,255,0.05); }
+        .price-highlight { color: var(--warning); font-weight: 800; font-size: 1.1rem; }
+        .badge-supplier { background: rgba(56, 189, 248, 0.2); color: var(--accent); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-block; }
+        .badge-pending { background: rgba(239, 68, 68, 0.2); color: var(--danger); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-block; }
+        .mobile-swipe-hint { display: none; }
+        div[style*="overflow-x: auto"]::-webkit-scrollbar { height: 6px; }
+        div[style*="overflow-x: auto"]::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
+        div[style*="overflow-x: auto"]::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.5); border-radius: 10px; }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            h1 { font-size: 1.8rem; }
+            .glass-panel { padding: 1.5rem 1rem; }
+            .glass-panel h2 { font-size: 1.2rem; }
+            table th, table td { padding: 0.8rem 0.5rem; font-size: 0.85rem; }
+            .price-highlight { font-size: 0.95rem; }
+            .mobile-swipe-hint { display: block; color: var(--warning); font-size: 0.85rem; font-style: italic; margin-bottom: 10px; animation: pulse 2s infinite; }
+            @keyframes pulse { 0% { opacity: 0.7; } 50% { opacity: 1; transform: translateX(5px); } 100% { opacity: 0.7; } }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="lang-toggle">
+            <button id="btn-en" class="active" onclick="switchLang('en')">EN</button>
+            <button id="btn-vi" onclick="switchLang('vi')">VN</button>
+        </div>
+
+        <!-- ================= ENGLISH VERSION ================= -->
+        <div id="content-en">
+            <header>
+                <h1>SOURCING PRICING REPORT</h1>
+                <p class="subtitle">Complete Procurement Breakdown into 6 Core Material Categories</p>
+            </header>
+
+            <section class="glass-panel">
+                <img class="concept-img" src="concept_image.jpg" alt="Target Concept">
+                <p style="text-align: center; color: var(--text-muted); font-size: 1rem;">Reference Concept: Packaging applied with Branding Decals.</p>
+            </section>
+
+            <!-- PART 1: CUPS -->
+            <section class="glass-panel">
+                <h2><span class="step">1</span> PLASTIC CUPS (BEVERAGES)</h2>
+                <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Product</th><th>Volume</th><th>Qty/Carton</th><th>Carton Price</th><th>Unit Price</th><th>Supplier</th></tr></thead>
+                        <tbody>
+                            <tr><td>PET Cup (Size S)</td><td>470ml (16oz)</td><td>1,000</td><td>860,000 VND</td><td class="price-highlight">860 VND</td><td><span class="badge-supplier">Bao Bi Xanh</span></td></tr>
+                            <tr><td>PET Cup (Size M)</td><td>590ml (20oz)</td><td>1,000</td><td>1,100,000 VND</td><td class="price-highlight">1,100 VND</td><td><span class="badge-supplier">Bao Bi Xanh</span></td></tr>
+                            <tr><td>PET Cup (Size L)</td><td>700ml (24oz)</td><td>1,000</td><td>1,260,000 VND</td><td class="price-highlight">1,260 VND</td><td><span class="badge-supplier">Bao Bi Xanh</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PART 2: PAPER BAGS -->
+            <section class="glass-panel">
+                <h2><span class="step">2</span> PAPER BAGS (TAKEAWAY)</h2>
+                <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Product</th><th>Dimensions</th><th>MOQ</th><th>Total Price</th><th>Unit Price</th><th>Supplier</th></tr></thead>
+                        <tbody>
+                            <tr><td>Square Bottom Kraft</td><td>13x20x5 cm</td><td>5,000</td><td>990,000 VND</td><td class="price-highlight">198 VND</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
+                            <tr><td>Hexagon Bottom Kraft</td><td>15x20 cm</td><td>5,000</td><td>950,000 VND</td><td class="price-highlight">190 VND</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
+                            <tr><td>Flat Bottom Kraft</td><td>13x20x5 cm</td><td>5,000</td><td>930,000 VND</td><td class="price-highlight">186 VND</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PART 3: BANH MI WRAPPERS -->
+            <section class="glass-panel">
+                <h2><span class="step">3</span> BANH MI WRAPPERS</h2>
+                <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Product</th><th>Material</th><th>Dimensions</th><th>Status</th><th>Est. Unit Price</th><th>Supplier</th></tr></thead>
+                        <tbody>
+                            <tr><td>Food Wrapper</td><td>Greaseproof Paper</td><td>Standard</td><td>Pending Quote</td><td class="price-highlight" style="color: var(--text-muted);">-</td><td><span class="badge-pending">Waiting for reply</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PART 4: PHO BOWLS -->
+            <section class="glass-panel">
+                <h2><span class="step">4</span> PHO BOWLS (2-TIER)</h2>
+                <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Product</th><th>Material</th><th>Volume</th><th>Status</th><th>Est. Unit Price</th><th>Supplier</th></tr></thead>
+                        <tbody>
+                            <tr><td>2-Tier Bowl / Deli Container</td><td>PP (Food Grade)</td><td>1000ml</td><td>Checking off-the-shelf molds</td><td class="price-highlight" style="color: var(--text-muted);">-</td><td><span class="badge-pending">Negotiating with Hunufa</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PART 5: APRON -->
+            <section class="glass-panel">
+                <h2><span class="step">5</span> UNIFORM (APRONS)</h2>
+                <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Product</th><th>Material</th><th>Customization</th><th>MOQ</th><th>Unit Price</th><th>Supplier</th></tr></thead>
+                        <tbody>
+                            <tr><td>Apron</td><td>Canvas</td><td>Logo Printed</td><td>1</td><td class="price-highlight">170k - 240k VND</td><td><span class="badge-supplier">Tạp dề Mỹ Nga</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PART 6: DECALS -->
+            <section class="glass-panel">
+                <h2><span class="step">6</span> BRANDING DECALS (DIRECT PRINT ALTERNATIVE)</h2>
+                <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Dimensions</th><th>Material</th><th>Qty</th><th>Unit Price</th><th>Total Price</th><th>Supplier</th></tr></thead>
+                        <tbody>
+                            <tr><td>5 x 10 cm</td><td>Plastic Decal</td><td>10,000</td><td class="price-highlight">377 VND</td><td>3,770,000 VND</td><td><span class="badge-supplier">In Bao Bì Sài Gòn</span></td></tr>
+                            <tr><td>5 x 10 cm</td><td>Plastic Decal</td><td>15,000</td><td class="price-highlight">333 VND</td><td>4,995,000 VND</td><td><span class="badge-supplier">In Bao Bì Sài Gòn</span></td></tr>
+                            <tr><td>10 x 15 cm</td><td>Plastic Decal</td><td>10,000</td><td class="price-highlight">765 VND</td><td>7,650,000 VND</td><td><span class="badge-supplier">In Bao Bì Sài Gòn</span></td></tr>
+                            <tr><td>10 x 15 cm</td><td>Plastic Decal</td><td>15,000</td><td class="price-highlight">734 VND</td><td>11,010,000 VND</td><td><span class="badge-supplier">In Bao Bì Sài Gòn</span></td></tr>
+                            <tr><td>10 x 15 cm</td><td>Plastic Decal</td><td>20,000</td><td class="price-highlight">673 VND</td><td>13,460,000 VND</td><td><span class="badge-supplier">In Bao Bì Sài Gòn</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= VIETNAMESE VERSION ================= -->
+        <div id="content-vi" style="display: none;">
+            <header>
+                <h1>BÁO CÁO GIÁ THU MUA VẬT TƯ</h1>
+                <p class="subtitle">Phân bổ chi tiết 6 hạng mục vật tư & đồng phục thiết yếu</p>
+            </header>
+
+            <section class="glass-panel">
+                <img class="concept-img" src="concept_image.jpg" alt="Target Concept">
+                <p style="text-align: center; color: var(--text-muted); font-size: 1rem;">Mẫu tham khảo: Gắn Tem Decal lên Phôi Trơn để tối ưu chi phí MOQ.</p>
+            </section>
+
+            <!-- PHẦN 1: LY -->
+            <section class="glass-panel">
+                <h2><span class="step">1</span> LY NHỰA (THỨC UỐNG)</h2>
+                <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Sản Phẩm</th><th>Dung Tích</th><th>Đóng Gói (Cái)</th><th>Giá Nguyên Thùng</th><th>Giá 1 Cái</th><th>Nhà Cung Cấp</th></tr></thead>
+                        <tbody>
+                            <tr><td>Ly PET (Size S)</td><td>470ml (16oz)</td><td>1.000</td><td>860.000 VNĐ</td><td class="price-highlight">860 VNĐ</td><td><span class="badge-supplier">Bao Bì Xanh</span></td></tr>
+                            <tr><td>Ly PET (Size M)</td><td>590ml (20oz)</td><td>1.000</td><td>1.100.000 VNĐ</td><td class="price-highlight">1.100 VNĐ</td><td><span class="badge-supplier">Bao Bì Xanh</span></td></tr>
+                            <tr><td>Ly PET (Size L)</td><td>700ml (24oz)</td><td>1.000</td><td>1.260.000 VNĐ</td><td class="price-highlight">1.260 VNĐ</td><td><span class="badge-supplier">Bao Bì Xanh</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PHẦN 2: TÚI GIẤY -->
+            <section class="glass-panel">
+                <h2><span class="step">2</span> TÚI GIẤY (MANG ĐI)</h2>
+                <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Sản Phẩm</th><th>Kích Thước</th><th>Số Lượng In</th><th>Tổng Tiền</th><th>Giá 1 Cái</th><th>Nhà Cung Cấp</th></tr></thead>
+                        <tbody>
+                            <tr><td>Túi Kraft Đáy Vuông</td><td>13x20x5 cm</td><td>5.000</td><td>990.000 VNĐ</td><td class="price-highlight">198 VNĐ</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
+                            <tr><td>Túi Kraft Đáy Lục Giác</td><td>15x20 cm</td><td>5.000</td><td>950.000 VNĐ</td><td class="price-highlight">190 VNĐ</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
+                            <tr><td>Túi Kraft Đáy Thường</td><td>13x20x5 cm</td><td>5.000</td><td>930.000 VNĐ</td><td class="price-highlight">186 VNĐ</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PHẦN 3: GIẤY GÓI BÁNH MÌ -->
+            <section class="glass-panel">
+                <h2><span class="step">3</span> GIẤY GÓI BÁNH MÌ</h2>
+                <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Sản Phẩm</th><th>Chất Liệu</th><th>Kích Thước</th><th>Trạng Thái</th><th>Giá Dự Kiến</th><th>Nhà Cung Cấp</th></tr></thead>
+                        <tbody>
+                            <tr><td>Giấy bọc ổ bánh mì</td><td>Giấy chống thấm dầu</td><td>Tiêu chuẩn</td><td>Đang chờ báo giá</td><td class="price-highlight" style="color: var(--text-muted);">-</td><td><span class="badge-pending">Chờ phản hồi</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PHẦN 4: TÔ PHỞ -->
+            <section class="glass-panel">
+                <h2><span class="step">4</span> TÔ PHỞ (TÔ NHỰA 2 TẦNG)</h2>
+                <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Sản Phẩm</th><th>Chất Liệu</th><th>Dung Tích</th><th>Trạng Thái</th><th>Giá Dự Kiến</th><th>Nhà Cung Cấp</th></tr></thead>
+                        <tbody>
+                            <tr><td>Thố nhựa 2 tầng / Deli</td><td>Nhựa PP (Food Grade)</td><td>1000ml</td><td>Kiểm tra phôi trơn có sẵn</td><td class="price-highlight" style="color: var(--text-muted);">-</td><td><span class="badge-pending">Đàm phán Hunufa</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PHẦN 5: TẠP DỀ -->
+            <section class="glass-panel">
+                <h2><span class="step">5</span> ĐỒNG PHỤC (TẠP DỀ)</h2>
+                <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Sản Phẩm</th><th>Chất Liệu</th><th>Gia Công</th><th>Đóng Gói</th><th>Giá 1 Cái</th><th>Nhà Cung Cấp</th></tr></thead>
+                        <tbody>
+                            <tr><td>Tạp dề</td><td>Vải Canvas</td><td>In Logo</td><td>1</td><td class="price-highlight">170k - 240k VNĐ</td><td><span class="badge-supplier">Tạp dề Mỹ Nga</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PHẦN 6: DECAL -->
+            <section class="glass-panel">
+                <h2><span class="step">6</span> TEM DECAL (THAY THẾ IN TRỰC TIẾP)</h2>
+                <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <table>
+                        <thead><tr><th>Kích Thước</th><th>Chất Liệu</th><th>Số Lượng In</th><th>Giá 1 Tem</th><th>Tổng Tiền</th><th>Nhà Cung Cấp</th></tr></thead>
+                        <tbody>
+                            <tr><td>5 x 10 cm</td><td>Decal Nhựa</td><td>10.000</td><td class="price-highlight">377 VNĐ</td><td>3.770.000 VNĐ</td><td><span class="badge-supplier">In Bao Bì Sài Gòn</span></td></tr>
+                            <tr><td>5 x 10 cm</td><td>Decal Nhựa</td><td>15.000</td><td class="price-highlight">333 VNĐ</td><td>4.995.000 VNĐ</td><td><span class="badge-supplier">In Bao Bì Sài Gòn</span></td></tr>
+                            <tr><td>10 x 15 cm</td><td>Decal Nhựa</td><td>10.000</td><td class="price-highlight">765 VNĐ</td><td>7.650.000 VNĐ</td><td><span class="badge-supplier">In Bao Bì Sài Gòn</span></td></tr>
+                            <tr><td>10 x 15 cm</td><td>Decal Nhựa</td><td>15.000</td><td class="price-highlight">734 VNĐ</td><td>11.010.000 VNĐ</td><td><span class="badge-supplier">In Bao Bì Sài Gòn</span></td></tr>
+                            <tr><td>10 x 15 cm</td><td>Decal Nhựa</td><td>20.000</td><td class="price-highlight">673 VNĐ</td><td>13.460.000 VNĐ</td><td><span class="badge-supplier">In Bao Bì Sài Gòn</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
+            document.getElementById('content-vi').style.display = lang === 'vi' ? 'block' : 'none';
+            document.getElementById('btn-en').className = lang === 'en' ? 'active' : '';
+            document.getElementById('btn-vi').className = lang === 'vi' ? 'active' : '';
+        }
+    </script>
+</body>
+</html>
