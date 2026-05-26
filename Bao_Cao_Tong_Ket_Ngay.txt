@@ -1,0 +1,33 @@
+Kính gửi Sếp,
+
+Em xin tổng kết toàn bộ tiến độ xử lý kỹ thuật, thiết kế và đàm phán gia công Bảng hiệu cho 2 chi nhánh quốc tế trong ngày hôm nay:
+
+1. XỬ LÝ KỸ THUẬT LOGO GỐC (Áp dụng chung)
+- Đã xử lý dứt điểm tình trạng vỡ nét của logo cũ. Chuyển đổi thành công sang định dạng Vector chuẩn gia công (AI/PDF), bóc tách rõ mảng đế (Base plate) nguyên khối và mảng chữ nổi để xưởng CNC có thể cắt chính xác, không bị ghép nối.
+
+2. CHI NHÁNH MỸ (STRIP MALL) - NÂNG CẤP MEGA-STORE
+- Chốt Vật Liệu & Điện (Plug & Play): Đã nhận và kiểm duyệt Giấy chứng nhận SGS Test Report ASTM D 4802 từ xưởng VN, đảm bảo nhựa Mica đạt chuẩn an toàn Hoa Kỳ. Thay vì tự dán LED, em đã yêu cầu xưởng VN dán sẵn bằng các hãng LED Hàn Quốc (NC LED, GOQ) có sẵn tem UL để lách luật ép mua 10.000 bóng của xưởng, hàng qua tới Mỹ cắm điện là sáng.
+- Lách luật Mặt Bằng (Landlord): Chuyển đổi Bảng vẫy 3D đâm ngang tường (rủi ro bị cấm) thành phương án "Standee Bánh Mì 3D" cao 1.5m đặt lề đường, không cần xin Giấy phép (Permit) kết cấu phức tạp.
+- Quy Hoạch Mặt Tiền Kép (Mega-Store): Đã chốt phương án gộp 2 mặt bằng liền kề đập thông nội thất. Tái định vị Logo chính (1683x1200mm) nằm cân xứng ở trọng tâm 2 gian hàng.
+- Chiến lược Cửa Kính Tối Giản (Minimalist Decals): Dựa trên sơ đồ kiến trúc 6 mảng kính, em đã lột bỏ hoàn toàn các decal rườm rà. Bốn mảng kính Panorama lớn được để trong suốt 100% để khoe nội thất. Decal trắng (White Vinyl Line-art) được quy hoạch khắt khe chỉ dán lên 2 cánh Cửa Ra Vào: Cửa 1 dán Giờ Hoạt Động, Cửa 2 dán Slogan "BETTER Food BETTER Mood" chuẩn phong cách F&B cao cấp.
+
+3. CHI NHÁNH ĐỨC (FRANKFURT)
+- Thích ứng kiến trúc địa phương: Nhận thấy dải mặt tiền khá hẹp, em đã chuyển logo sang thiết kế dàn ngang (1.1m x 0.8m) và gắn nổi hẳn lên trên bờ nóc (Roof Mount). Cách này giúp mặt tiền trông bề thế hơn mà tuyệt đối không vi phạm luật che khuất tầm nhìn cửa sổ tầng trên của Đức.
+- Đột phá vật liệu Bảng vẫy: Thay vì dùng Mica nhựa, em chuyển sang dùng vật liệu Mốp xốp điêu khắc (Foam Carving) sơn vẽ thủ công, kết hợp đèn rọi Spotlight. Thành phẩm mang lại độ chân thực cao, chuẩn phong cách nghệ thuật (Artisan) đường phố Châu Âu.
+- Window Graphics: Thiết kế thêm Decal dán kính nghệ thuật (Bánh mì, Cafe phin) phân bổ rải rác để thu hút khách bộ hành mà vẫn giữ được độ thoáng nhìn vào không gian quán.
+- Cập nhật pháp lý Châu Âu: Đã làm lại bộ yêu cầu cho xưởng gia công để khớp chuẩn Đức: Điện áp 230V, Chứng nhận CE, mộc hun trùng gỗ ISPM 15 và yêu cầu bản vẽ chịu tải gió (Wind load) cho khung sắt.
+
+4. TỐI ƯU HÓA BÁO CÁO CUNG ỨNG VẬT TƯ (SOURCING DASHBOARD) - CẬP NHẬT CHIẾN LƯỢC PREMIUM CUSTOM
+- Hủy bỏ phương án tiết kiệm dán decal: Nhận thấy phương án dùng vật tư trơn dán tem decal cắt bế không đảm bảo tính thẩm mỹ, độ bền và đẳng cấp thương hiệu cho hệ thống Mega-Store ở Mỹ. Em đã quyết định hủy bỏ toàn bộ phương án dán decal để chuyển sang in ấn Custom trực tiếp 100%.
+- Cập nhật Bao Bì "Trending": Bổ sung phương án "Ly nhựa chia 2 ngăn" (Dual-chamber/Split Cup) để khách có thể mua 2 loại nước uống cùng lúc. Đây là loại bao bì đang rất viral tại các tiệm cafe xịn, tạo điểm nhấn độc đáo cho thương hiệu.
+- Sự tinh tế trong tiểu tiết: Chuyển ống hút sang loại có bọc giấy từng cái, trên lớp giấy bọc có in pattern logo. Bổ sung găng tay cao su y tế màu đen (Black Nitrile Gloves) cho nhân viên bếp để tạo hình ảnh chuyên nghiệp và cực kỳ vệ sinh (chuẩn Health Department).
+- Đồng bộ hóa dữ liệu Dashboard: Đã tái cấu trúc toàn bộ bảng báo giá theo hướng đầu tư dài hạn với MOQ lớn nhất để có mức giá tốt nhất cho các dòng ly PET, PP, Giấy, Túi Kraft in offset chuẩn FDA. Sếp có thể theo dõi số liệu trực tiếp trên hệ thống.
+
+5. PHÁT TRIỂN THIẾT KẾ NỘI THẤT (INTERIOR DESIGN - IN PROGRESS)
+- Tranh tường nghệ thuật: Dựa trên Vibe Authentic mà anh gửi, em đang triển khai lên 3D thiết kế bức tường check-in chính. Ý tưởng kết hợp mảng tường xám/đen nhám với tác phẩm nghệ thuật đan lát từ "mẹt tre/rổ tre" xếp lớp, tạo sự giao thoa giữa nét truyền thống Việt Nam và không gian hiện đại.
+- Ánh sáng đèn (Lighting Accessories): Bố trí hệ thống đèn thả trần (pendant lights) bằng mây tre đan cỡ lớn kết hợp với đèn ray rọi (track lighting) màu ấm, giúp đánh bóng đồ nội thất và chiếu sáng logo chữ nổi Neon Sign trên tường. Bố trí thêm kệ âm tường trưng bày phin cà phê kim loại tạo chiều sâu cho không gian.
+
+5. KẾ HOẠCH TIẾP THEO (NEXT STEPS)
+- Về hạng mục Bảng hiệu: Để đảm bảo tối ưu chi phí và có phương án dự phòng cho dự án, em đã chủ động liên hệ thêm với 2 nhà thầu thi công bảng hiệu khác. Dự kiến ngày mai em sẽ nhận được báo giá chi tiết, sau đó sẽ lập bảng phân tích so sánh chéo để trình Sếp chốt phương án cuối cùng.
+
+Xin báo cáo Sếp!

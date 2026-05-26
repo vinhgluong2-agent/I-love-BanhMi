@@ -1,0 +1,1862 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Báo Giá Tổng Hợp - I Love BanhMi</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-color: #f8fafc;
+        --surface: rgba(255, 255, 255, 0.9);
+        --text-main: #0f172a;
+        --text-muted: #475569;
+        --accent: #39ff14;
+        --warning: #ef4444;
+        --success: #10b981;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+        background-image:
+          radial-gradient(
+            at 0% 0%,
+            rgba(57, 255, 20, 0.15) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 100% 100%,
+            rgba(245, 158, 11, 0.15) 0px,
+            transparent 50%
+          );
+        background-attachment: fixed;
+        padding: 2rem;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 800;
+        background: linear-gradient(135deg, #1e293b, #39ff14);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        align-items: start;
+      }
+
+      .category-card {
+        background: var(--surface);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      }
+
+      .category-img-container {
+        width: 100%;
+        height: 180px;
+        position: relative;
+        background: #fff;
+      }
+
+      .category-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        opacity: 0.9;
+        background: #fff;
+      }
+
+      .category-title {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 1.5rem 1.5rem 1rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 800;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .category-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+
+      th,
+      td {
+        padding: 0.8rem 0.5rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        text-align: left;
+        vertical-align: middle;
+        line-height: 1.4;
+      }
+
+      /* Giữ cho các cột thông số và giá không bị rớt dòng */
+      .no-wrap {
+        white-space: nowrap;
+      }
+
+      th {
+        color: var(--text-muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        background: rgba(241, 245, 249, 0.95);
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      .item-thumb {
+        width: 45px;
+        height: 45px;
+        border-radius: 8px;
+        object-fit: cover;
+        display: block;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background: #fff;
+      }
+
+      .price {
+        color: var(--warning);
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .note-bar {
+        margin-top: 3rem;
+        padding: 1.5rem;
+        background: rgba(16, 185, 129, 0.1);
+        border-left: 4px solid var(--success);
+        border-radius: 0 10px 10px 0;
+        font-size: 0.95rem;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(57, 255, 20, 0.5);
+        border-radius: 10px;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 0.5rem;
+        }
+        .grid-container {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+        .category-img-container {
+          height: 140px;
+        }
+        .category-content {
+          padding: 0.8rem;
+        }
+        th,
+        td {
+          padding: 0.5rem 0.2rem;
+          font-size: 0.75rem;
+        }
+        .item-thumb {
+          width: 35px;
+          height: 35px;
+          min-width: 35px;
+        }
+      }
+
+      /* Modal Image Zoom */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+      .modal-content {
+        max-width: 800px;
+        max-height: 800px;
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+        animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        object-fit: contain;
+        background: #fff;
+      }
+      @keyframes zoomIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        color: #fff;
+        font-size: 45px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 10000;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      .item-thumb,
+      .category-img {
+        cursor: zoom-in;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>BÁO GIÁ VẬT TƯ F&B</h1>
+      <p class="subtitle">
+        Bảng báo giá tổng hợp sử dụng hình ảnh thực tế từ các nhà cung cấp.
+      </p>
+    </header>
+
+    <div class="grid-container">
+      <!-- THẺ 1: BẢNG HIỆU -->
+      <div class="category-card" style="grid-column: 1 / -1;">
+        <div class="category-img-container" style="height: 250px;">
+          <img
+            src="the_shop_idea2_v3.png"
+            alt="Bảng Hiệu"
+            class="category-img"
+            style="object-fit: cover;"
+          />
+          <div class="category-title">
+            1. Bảng Hiệu Ngoại Thất & Đóng Gói (US Branch)
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 Công Ty CP Ánh Sáng Tiến Dư</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+              line-height: 1.8;
+            "
+          >
+            <strong>Ghi chú:</strong><br />
+            - Đơn giá đóng gói tại xưởng đảm bảo hàng hóa chịu lực tốt theo tiêu chuẩn xuất khẩu. Xưởng không chịu trách nhiệm đối với các rủi ro móp méo, bể vỡ do bên vận chuyển thực hiện.<br />
+            - Báo giá chưa bao gồm chi phí giao hàng đến địa điểm theo yêu cầu của khách hàng.
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hạng Mục</th>
+                  <th>Quy Cách / Kích Thước</th>
+                  <th class="no-wrap">SL</th>
+                  <th class="no-wrap" style="color: var(--warning)">
+                    Thành Tiền
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Bộ chữ "I Love BanhMi"</strong></td>
+                  <td>
+                    <strong>Kích thước: 2.0 x 2.8m (Main Brand Anchor)</strong><br/>
+                    - Quy cách: Cắt bế 3D bám sát biên dạng logo (Free-form shape). Sáng mặt mica hoặc hắt chân (Halo-lit). KHÔNG có mâm nền.<br/>
+                    - Vật liệu: Nhựa Mica / Acrylic đạt chuẩn (SGS Test Report ASTM D 4802).<br/>
+                    - Điện (PLUG & PLAY): Cắm là sáng. LED Hàn Quốc tem UL-Listed. Nguồn Meanwell (110V-120V, chuẩn Mỹ).
+                  </td>
+                  <td class="no-wrap">1 Bộ</td>
+                  <td class="price">Tạm tính:<br/>73.000.000 đ</td>
+                </tr>
+                <tr>
+                  <td><strong>Bộ chữ "vietnamese food & coffee"</strong></td>
+                  <td>
+                    <strong>Kích thước: 1.8m x 0.85m (Category Sign)</strong><br/>
+                    - Nội dung: Chữ Script uốn lượn chia 2 dòng.<br/>
+                    - Quy cách: Channel Letters uốn rời độc lập. LED hắt sáng cực mạnh (do nằm trong góc khuất).<br/>
+                    - Điện (PLUG & PLAY): LED chuẩn UL-Listed, Nguồn 110V-120V.
+                  </td>
+                  <td class="no-wrap">1 Bộ</td>
+                  <td class="price">Tạm tính:<br/>56.000.000 đ</td>
+                </tr>
+                <tr>
+                  <td><strong>Mô hình Bánh Mì 3D (Standee Props)</strong></td>
+                  <td>
+                    <strong>Kích thước: Cao 1.5m</strong><br/>
+                    - Thiết kế: Mô hình ổ bánh mì 3D đứng, rãnh nhân xoay ngang.<br/>
+                    - Yêu cầu: Đế sắt/bê tông ẩn siêu nặng chống gió hất đổ vỉa hè.
+                  </td>
+                  <td class="no-wrap">1 Bộ</td>
+                  <td class="price" style="color: var(--warning)">Chờ báo giá</td>
+                </tr>
+                <tr>
+                  <td><strong>Decal Trang Trí Kính (Window Graphics)</strong></td>
+                  <td>
+                    - Decal Trong Suốt Cao Cấp, in mực Trắng UV (White UV).<br/>
+                    - Keo dán chịu nhiệt chống ố vàng dưới nắng California.<br/>
+                    - Dán lùi lề an toàn (Safe Margin) 15-20px không lấn khung nhôm.
+                  </td>
+                  <td class="no-wrap">1 Gói</td>
+                  <td class="price" style="color: var(--warning)">Chờ báo giá</td>
+                </tr>
+                <tr>
+                  <td><strong>Đóng gói & Hun trùng Xuất khẩu</strong></td>
+                  <td>
+                    - Tất cả hàng hóa gom vào 1 kiện gỗ chịu lực xuất khẩu.<br/>
+                    - Bắt buộc hun trùng & đóng dấu chuẩn ISPM 15 qua Hải quan Mỹ.
+                  </td>
+                  <td class="no-wrap">1 Gói</td>
+                  <td class="price">Tạm tính:<br/>18.000.000 đ</td>
+                </tr>
+                <tr style="background: rgba(245, 158, 11, 0.05);">
+                  <td colspan="3" style="text-align: right; padding-top: 15px;"><strong>Cộng:</strong></td>
+                  <td class="price" style="padding-top: 15px;">Chờ cập nhật</td>
+                </tr>
+                <tr style="background: rgba(245, 158, 11, 0.05);">
+                  <td colspan="3" style="text-align: right; border-bottom: none;">Thuế VAT (8%):</td>
+                  <td class="price" style="border-bottom: none;">Chờ cập nhật</td>
+                </tr>
+                <tr style="background: rgba(16, 185, 129, 0.1);">
+                  <td colspan="3" style="text-align: right; border-bottom: none;"><strong>TỔNG TIỀN SAU THUẾ:</strong></td>
+                  <td class="price" style="color: var(--success); font-size: 1.1rem; border-bottom: none;">Đang chờ chốt</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top: auto; padding-top: 1rem">
+            <p
+              style="
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                border-top: 1px dashed rgba(255, 255, 255, 0.1);
+                padding-top: 0.8rem;
+              "
+            >
+              <strong>📄 Báo giá chi tiết trên Google Sheets:</strong><br />
+              <a
+                href="https://docs.google.com/spreadsheets/d/1BoVViV_vPYqw0g6hwwhp-ts6eOMJrMzv/edit?usp=sharing"
+                target="_blank"
+                style="color: var(--accent); text-decoration: none; font-weight: 600;"
+                >🔗 click vào đây để xem trực tiếp bản Google Sheets gốc</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+<!-- THẺ 2: LY GIẤY NGỌC TRAI -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img
+            src="ly_ngoc_trai.jpg"
+            alt="Ly Giấy Ngọc Trai"
+            class="category-img"
+            style="object-fit: cover"
+          />
+          <div class="category-title">
+            2. Ly Giấy Ngọc Trai (In UV)
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 Cốc Giấy Tô Giấy KKGroup.vn</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            In nhiều màu trên ly giấy ngọc trai. Giá chưa bao gồm nắp. Miễn phí vận chuyển nội thành Hà Nội.
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Dung Tích</th>
+                  <th class="no-wrap">MOQ (SL)</th>
+                  <th class="no-wrap" style="color: var(--warning)">
+                    Đơn Giá
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img src="ly_ngoc_trai_12oz.jpg" class="item-thumb" alt="Pearl Paper 12oz" /></td>
+                  <td>12oz (360ml)</td>
+                  <td class="no-wrap">5.000 cái<br />10.000 cái</td>
+                  <td class="price">1.960 đ/cái<br />1.820 đ/cái</td>
+                </tr>
+                <tr>
+                  <td><img src="ly_ngoc_trai_16oz.jpg" class="item-thumb" alt="Pearl Paper 16oz" /></td>
+                  <td>16oz (500ml)</td>
+                  <td class="no-wrap">5.000 cái<br />10.000 cái</td>
+                  <td class="price">2.190 đ/cái<br />2.030 đ/cái</td>
+                </tr>
+                <tr>
+                  <td><img src="ly_ngoc_trai_22oz.jpg" class="item-thumb" alt="Pearl Paper 22oz" /></td>
+                  <td>22oz (680ml)</td>
+                  <td class="no-wrap">5.000 cái<br />10.000 cái</td>
+                  <td class="price">2.370 đ/cái<br />2.270 đ/cái</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- THẺ 3: LY GIẤY IN CUSTOM (BVC PACK) -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img
+            src="ly_giay_bvc_non_la.png"
+            alt="Ly Giấy BVC PACK"
+            class="category-img"
+            style="object-fit: cover"
+          />
+          <div class="category-title">
+            3. Ly Giấy 1 Lớp In Custom
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 Công ty TNHH BVC Pack</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            Chất liệu: Giấy thực phẩm 1 lớp. Thân thiện môi trường. In ấn logo tùy biến theo yêu cầu (Hàng thường & Hàng cao cấp).
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Dung Tích & Kích Thước</th>
+                  <th class="no-wrap">MOQ (SL)</th>
+                  <th class="no-wrap" style="color: var(--accent)">Thường</th>
+                  <th class="no-wrap" style="color: var(--warning)">Cao Cấp</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- 12/14oz -->
+                <tr>
+                  <td rowspan="6"><img src="ly_giay_bvc_phuoc.png" class="item-thumb" alt="BVC 12/14oz" /></td>
+                  <td rowspan="6"><strong>12/14oz</strong><br/>(360-420 ml)<br/><span style="font-size: 0.75rem; color: var(--text-muted)">90x110x60 mm</span></td>
+                  <td class="no-wrap">2.000</td>
+                  <td class="price">1.530 đ</td>
+                  <td class="price">1.626 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">5.000</td>
+                  <td class="price">1.188 đ</td>
+                  <td class="price">1.284 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">10.000</td>
+                  <td class="price">1.140 đ</td>
+                  <td class="price">1.236 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">30.000</td>
+                  <td class="price">1.068 đ</td>
+                  <td class="price">1.164 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">50.000</td>
+                  <td class="price">1.044 đ</td>
+                  <td class="price">1.140 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">100.000</td>
+                  <td class="price">1.020 đ</td>
+                  <td class="price">1.116 đ</td>
+                </tr>
+
+                <!-- 16oz -->
+                <tr>
+                  <td rowspan="6"><img src="ly_giay_bvc_tmei.png" class="item-thumb" alt="BVC 16oz" /></td>
+                  <td rowspan="6"><strong>16oz</strong><br/>(480-500 ml)<br/><span style="font-size: 0.75rem; color: var(--text-muted)">90x125x60 mm</span></td>
+                  <td class="no-wrap">2.000</td>
+                  <td class="price">1.596 đ</td>
+                  <td class="price">1.692 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">5.000</td>
+                  <td class="price">1.248 đ</td>
+                  <td class="price">1.344 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">10.000</td>
+                  <td class="price">1.200 đ</td>
+                  <td class="price">1.296 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">30.000</td>
+                  <td class="price">1.140 đ</td>
+                  <td class="price">1.236 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">50.000</td>
+                  <td class="price">1.128 đ</td>
+                  <td class="price">1.224 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">100.000</td>
+                  <td class="price">1.116 đ</td>
+                  <td class="price">1.212 đ</td>
+                </tr>
+
+                <!-- 18oz -->
+                <tr>
+                  <td rowspan="6"><img src="ly_giay_bvc_flower.png" class="item-thumb" alt="BVC 18oz" /></td>
+                  <td rowspan="6"><strong>18oz</strong><br/>(520-540 ml)<br/><span style="font-size: 0.75rem; color: var(--text-muted)">90x135x60 mm</span></td>
+                  <td class="no-wrap">2.000</td>
+                  <td class="price">1.716 đ</td>
+                  <td class="price">1.812 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">5.000</td>
+                  <td class="price">1.284 đ</td>
+                  <td class="price">1.380 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">10.000</td>
+                  <td class="price">1.224 đ</td>
+                  <td class="price">1.320 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">30.000</td>
+                  <td class="price">1.164 đ</td>
+                  <td class="price">1.260 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">50.000</td>
+                  <td class="price">1.152 đ</td>
+                  <td class="price">1.248 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">100.000</td>
+                  <td class="price">1.140 đ</td>
+                  <td class="price">1.236 đ</td>
+                </tr>
+
+                <!-- 22oz -->
+                <tr>
+                  <td rowspan="6"><img src="ly_giay_bvc_non_la.png" class="item-thumb" alt="BVC 22oz" /></td>
+                  <td rowspan="6"><strong>22oz</strong><br/>(630-680 ml)<br/><span style="font-size: 0.75rem; color: var(--text-muted)">90x158x60 mm</span></td>
+                  <td class="no-wrap">2.000</td>
+                  <td class="price">1.776 đ</td>
+                  <td class="price">1.896 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">5.000</td>
+                  <td class="price">1.404 đ</td>
+                  <td class="price">1.500 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">10.000</td>
+                  <td class="price">1.344 đ</td>
+                  <td class="price">1.440 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">30.000</td>
+                  <td class="price">1.260 đ</td>
+                  <td class="price">1.356 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">50.000</td>
+                  <td class="price">1.236 đ</td>
+                  <td class="price">1.332 đ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">100.000</td>
+                  <td class="price">1.212 đ</td>
+                  <td class="price">1.308 đ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top: auto; padding-top: 1rem">
+            <p
+              style="
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                border-top: 1px dashed rgba(255, 255, 255, 0.1);
+                padding-top: 0.8rem;
+              "
+            >
+              <strong>💡 Phụ kiện đi kèm:</strong> Giá Nón Lá + Nắp PET phẳng:<br/>
+              - MOQ 3.000: <span style="color: var(--accent);">1.300 đ/Cái</span><br/>
+              - MOQ 6.000: <span style="color: var(--accent);">1.100 đ/Cái</span><br/>
+              - MOQ 10.000: <span style="color: var(--accent);">900 đ/Cái</span><br/>
+              <strong>📌 Lưu ý:</strong> Đơn giá trên chưa bao gồm thuế VAT.<br/>
+              <strong>📞 Hotline:</strong> <span style="color: var(--accent);">0936 420 333 - 0903 465 333</span> (BVC Pack)
+            </p>
+          </div>
+        </div>
+      </div>
+<!-- THẺ 4: GIẤY GÓI BÁNH MÌ -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img
+            src="giay_goi_banh_mi_custom.png"
+            alt="Giấy Gói Bánh Mì"
+            class="category-img"
+            style="object-fit: cover"
+          />
+          <div class="category-title">
+            4. Giấy Gói Bánh Mì Chống Thấm (In Custom)
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 In Việt Kim (tuigiaythucpham.vn)</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            Chất liệu: Giấy MG trắng chống thấm dầu chuyên dụng (Greaseproof 38-40gsm) hoặc Giấy Kraft nâu. In ấn logo mực thực phẩm (Soy Ink) an toàn vệ sinh.
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Quy Cách & Kích Thước</th>
+                  <th class="no-wrap">MOQ (Tờ)</th>
+                  <th class="no-wrap" style="color: var(--warning)">Đơn Giá</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Khổ 20x30 cm -->
+                <tr>
+                  <td rowspan="3"><img src="giay_goi_banh_mi_custom.png" class="item-thumb" alt="Giấy gói 20x30" /></td>
+                  <td rowspan="3"><strong>Khổ 20x30 cm</strong><br/><span style="font-size: 0.75rem; color: var(--text-muted)">Phù hợp bánh mì truyền thống</span></td>
+                  <td class="no-wrap">20.000</td>
+                  <td class="price">165 đ/tờ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">50.000</td>
+                  <td class="price">130 đ/tờ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">100.000</td>
+                  <td class="price">110 đ/tờ</td>
+                </tr>
+
+                <!-- Khổ 30x30 cm -->
+                <tr>
+                  <td rowspan="3"><img src="giay_goi_banh_mi_custom.png" class="item-thumb" alt="Giấy gói 30x30" /></td>
+                  <td rowspan="3"><strong>Khổ 30x30 cm</strong><br/><span style="font-size: 0.75rem; color: var(--text-muted)">Phù hợp Hamburger / Kebab</span></td>
+                  <td class="no-wrap">20.000</td>
+                  <td class="price">240 đ/tờ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">50.000</td>
+                  <td class="price">195 đ/tờ</td>
+                </tr>
+                <tr>
+                  <td class="no-wrap">100.000</td>
+                  <td class="price">165 đ/tờ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top: auto; padding-top: 1rem">
+            <p
+              style="
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                border-top: 1px dashed rgba(255, 255, 255, 0.1);
+                padding-top: 0.8rem;
+              "
+            >
+              <strong>💡 Ưu đãi đặc biệt:</strong> Hỗ trợ **thiết kế market miễn phí**. Miễn phí giao hàng nội thành TP.HCM.<br/>
+              <strong>📌 Cam kết an toàn:</strong> Sử dụng mực in thực phẩm (soybean ink), đạt chuẩn an toàn vệ sinh thực phẩm (VSATTP), không thôi nhiễm độc hại.<br/>
+              <strong>📞 Hotline/Zalo:</strong> <span style="color: var(--accent);">037 555 9998 - 0907 943 434</span> (In Việt Kim)
+            </p>
+          </div>
+        </div>
+      </div>
+<!-- THẺ 5: DECAL UV DTF -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img
+            src="tem_uv_dtf_application.png"
+            alt="Decal UV DTF"
+            class="category-img"
+            style="object-fit: cover"
+          />
+          <div class="category-title">
+            5. Tem In UV DTF
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 In decal uv dtf Newhouse</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            Dán mọi bề mặt cứng. Chống tia UV, chống nước, chống xước. Freeship đơn từ 1.000.000đ.
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Kích Thước</th>
+                  <th class="no-wrap">MOQ (SL)</th>
+                  <th class="no-wrap" style="color: var(--warning)">
+                    Đơn Giá
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img src="tem_uv_dtf_a4.png" class="item-thumb" alt="UV DTF A4" /></td>
+                  <td>Khổ A4<br /><span style="font-size: 0.75rem; color: var(--text-muted)">(29x20cm)</span></td>
+                  <td class="no-wrap">1 tờ (in test)<br />Từ 5 tờ (1 mẫu)</td>
+                  <td class="price">60.000 đ<br />39.000 đ/tờ</td>
+                </tr>
+                <tr>
+                  <td><img src="tem_uv_dtf_30cm.png" class="item-thumb" alt="UV DTF 30cm" /></td>
+                  <td>Khổ 30cm<br /><span style="font-size: 0.75rem; color: var(--text-muted)">(29x100cm) - Max 2 mẫu</span></td>
+                  <td class="no-wrap">1 mét</td>
+                  <td class="price">210.000 đ/mét</td>
+                </tr>
+                <tr>
+                  <td><img src="tem_uv_dtf_60cm.png" class="item-thumb" alt="UV DTF 60cm" /></td>
+                  <td>Khổ 60cm<br /><span style="font-size: 0.75rem; color: var(--text-muted)">(59x100cm) - Max 4 mẫu</span></td>
+                  <td class="no-wrap">1 mét<br />Từ 6 mét<br />Từ 50 mét</td>
+                  <td class="price">269.000 đ/mét<br />215.000 đ/mét<br />189.000 đ/mét</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top: auto; padding-top: 1rem">
+            <p
+              style="
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                border-top: 1px dashed rgba(255, 255, 255, 0.1);
+                padding-top: 0.8rem;
+              "
+            >
+              <strong>💡 Năng suất tem 3x3cm ước tính:</strong><br />
+              Khổ 60cm ~540 tem | Khổ 30cm ~240 tem | Khổ A4 ~48 tem<br />
+              <strong>📞 Liên hệ:</strong> Zalo <span style="color: var(--accent);">0352.634.195</span> - ĐT <span style="color: var(--accent);">0973.896.428</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- THẺ 6: BAO BÁNH MÌ -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img
+            src="logo.jpg"
+            alt="Bao Bánh Mì"
+            class="category-img"
+            style="object-fit: cover"
+          />
+          <div class="category-title">
+            6. Bao Bánh Mì In Custom
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 STC Việt Nam</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            Túi giấy đựng bánh mì có xếp hông in ấn thông tin riêng (Custom
+            Logo).
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Quy Cách</th>
+                  <th class="no-wrap">MOQ (SL)</th>
+                  <th class="no-wrap" style="color: var(--warning)">
+                    Tổng Tiền
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <img src="logo.jpg" class="item-thumb" alt="Baguette Bag" />
+                  </td>
+                  <td>
+                    Có xếp hông<br /><span
+                      style="font-size: 0.75rem; color: var(--text-muted)"
+                      >In Custom</span
+                    >
+                  </td>
+                  <td class="no-wrap">5.000 cái</td>
+                  <td class="price">1.500.000 đ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top: auto; padding-top: 1rem">
+            <p
+              style="
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                border-top: 1px dashed rgba(255, 255, 255, 0.1);
+                padding-top: 0.8rem;
+              "
+            >
+              <strong>Chi tiết giá:</strong> 300 đ/cái.<br />
+              <strong>🔗 Đối tác:</strong>
+              <a
+                href="https://inbaoduagiare.com/bang-bao-gia"
+                target="_blank"
+                style="color: var(--accent); text-decoration: none"
+                >STC Việt Nam (inbaoduagiare.com)</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- THẺ 7: LY NHỰA 2 NGĂN -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img
+            src="https://kimmygroup.com/wp-content/uploads/2021/03/ly-nhua-pp-2-ngan-kim-my.jpg"
+            alt="Ly 2 Ngăn"
+            class="category-img"
+          />
+          <div class="category-title">
+            7. Ly Nhựa PP 2 Ngăn (Split Cup)
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 Kim Mỹ Group</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            Bao bì trending, chất lượng Premium. Khách có thể thưởng thức 2 đồ
+            uống cùng lúc.
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Kích Thước</th>
+                  <th class="no-wrap">MOQ (SL)</th>
+                  <th class="no-wrap" style="color: var(--warning)">
+                    Tổng Tiền
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <img
+                      src="https://kimmygroup.com/wp-content/uploads/2021/03/ly-nhua-pp-2-ngan-kim-my.jpg"
+                      class="item-thumb"
+                      alt="Split Cup"
+                    />
+                  </td>
+                  <td>
+                    600ml<br /><span
+                      style="font-size: 0.75rem; color: var(--text-muted)"
+                      >(95x63x162mm)</span
+                    >
+                  </td>
+                  <td class="no-wrap">1 lốc (15 cái)</td>
+                  <td class="price">113.000 đ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top: auto; padding-top: 1rem">
+            <p
+              style="
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                border-top: 1px dashed rgba(255, 255, 255, 0.1);
+                padding-top: 0.8rem;
+              "
+            >
+              <strong>Chi tiết giá:</strong> Ly 6.708 đ + Nắp 804 đ = 7.512
+              đ/cái (Đã VAT).<br />
+              <strong>🔗 Đối tác:</strong>
+              <a
+                href="https://kimmygroup.com/ly-nhua-pp-2-ngan.html"
+                target="_blank"
+                style="color: var(--accent); text-decoration: none"
+                >kimmygroup.com</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- THẺ 8: LY PET -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img
+            src="https://bizweb.dktcdn.net/100/339/225/files/ly-nhua-pet-e8d47dfd-98b6-46a3-bf48-1fb6861319ee.jpg"
+            alt="Ly Nhựa PET"
+            class="category-img"
+          />
+          <div class="category-title">
+            8. Ly Nhựa PET
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 Bao Bì Xanh</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            Trong, cứng, không chịu nhiệt. (Bao in 1 màu)
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Dung Tích</th>
+                  <th class="no-wrap">Phân Loại</th>
+                  <th class="no-wrap">MOQ (SL)</th>
+                  <th class="no-wrap" style="color: var(--warning)">
+                    Tổng Tiền
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231217201232363.jpg"
+                      class="item-thumb"
+                      alt="PET 270ml"
+                    />
+                  </td>
+                  <td>270ml (9oz)</td>
+                  <td class="no-wrap">L1</td>
+                  <td class="no-wrap">1.000 cái</td>
+                  <td class="price">860.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231218055040936.jpg"
+                      class="item-thumb"
+                      alt="PET 360ml"
+                    />
+                  </td>
+                  <td>360ml (12/14oz)</td>
+                  <td class="no-wrap">L1<br />L2<br />L3</td>
+                  <td class="no-wrap">
+                    1.000 cái<br />1.000 cái<br />1.000 cái
+                  </td>
+                  <td class="price">883.000 đ<br />799.000 đ<br />742.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231218062328271.jpg"
+                      class="item-thumb"
+                      alt="PET 470ml"
+                    />
+                  </td>
+                  <td>470ml (16oz)</td>
+                  <td class="no-wrap">L1<br />L2</td>
+                  <td class="no-wrap">1.000 cái<br />1.000 cái</td>
+                  <td class="price">933.000 đ<br />850.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231218063802460.jpg"
+                      class="item-thumb"
+                      alt="PET 500ml"
+                    />
+                  </td>
+                  <td>500ml (16oz)</td>
+                  <td class="no-wrap">L1<br />L2</td>
+                  <td class="no-wrap">1.000 cái<br />1.000 cái</td>
+                  <td class="price">996.000 đ<br />840.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231218063802460.jpg"
+                      class="item-thumb"
+                      alt="PET 500ml lùn"
+                    />
+                  </td>
+                  <td>500ml lùn (18oz)</td>
+                  <td class="no-wrap">L1</td>
+                  <td class="no-wrap">1.000 cái</td>
+                  <td class="price">1.040.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231218081725584.jpg"
+                      class="item-thumb"
+                      alt="PET 590ml"
+                    />
+                  </td>
+                  <td>590ml (20oz)</td>
+                  <td class="no-wrap">L1<br />L2</td>
+                  <td class="no-wrap">1.000 cái<br />1.000 cái</td>
+                  <td class="price">1.138.000 đ<br />1.088.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/ly-nhua-pet-650ml-22oz-98.jpg"
+                      class="item-thumb"
+                      alt="PET 650ml"
+                    />
+                  </td>
+                  <td>650ml (22oz)</td>
+                  <td class="no-wrap">L1<br />L2</td>
+                  <td class="no-wrap">1.000 cái<br />1.000 cái</td>
+                  <td class="price">1.215.000 đ<br />1.170.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231218090150184.jpg"
+                      class="item-thumb"
+                      alt="PET 700ml"
+                    />
+                  </td>
+                  <td>700ml (24oz)</td>
+                  <td class="no-wrap">L1<br />L2</td>
+                  <td class="no-wrap">1.000 cái<br />1.000 cái</td>
+                  <td class="price">1.266.000 đ<br />1.215.000 đ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- THẺ 9: LY PP -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img
+            src="https://bizweb.dktcdn.net/100/339/225/files/ly-nhua-pp-130dafe1-b038-405c-8b02-98238eaf29f5.jpg"
+            alt="Ly Nhựa PP"
+            class="category-img"
+          />
+          <div class="category-title">
+            9. Ly Nhựa PP Đáy Bằng
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 Bao Bì Xanh</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            Dẻo, đục mờ, chịu nhiệt. (Bao in 1 màu)
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Dung Tích</th>
+                  <th class="no-wrap">Phân Loại</th>
+                  <th class="no-wrap">MOQ (SL)</th>
+                  <th class="no-wrap" style="color: var(--warning)">
+                    Tổng Tiền
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231219113541519.jpg"
+                      class="item-thumb"
+                      alt="PP 360ml"
+                    />
+                  </td>
+                  <td>360ml</td>
+                  <td class="no-wrap">L1<br />L2<br />L3</td>
+                  <td class="no-wrap">
+                    1.000 cái<br />1.000 cái<br />1.000 cái
+                  </td>
+                  <td class="price">770.000 đ<br />720.000 đ<br />680.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231219115241883.jpg"
+                      class="item-thumb"
+                      alt="PP 500ml"
+                    />
+                  </td>
+                  <td>500ml</td>
+                  <td class="no-wrap">L1<br />L2<br />L3<br />L4</td>
+                  <td class="no-wrap">
+                    1.000 cái<br />1.000 cái<br />1.000 cái<br />1.000 cái
+                  </td>
+                  <td class="price">
+                    868.000 đ<br />800.000 đ<br />760.000 đ<br />720.000 đ
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/ly-nhua-650ml-pp.jpg"
+                      class="item-thumb"
+                      alt="PP 650ml"
+                    />
+                  </td>
+                  <td>650ml</td>
+                  <td class="no-wrap">L1<br />L2<br />L3<br />L4</td>
+                  <td class="no-wrap">
+                    1.000 cái<br />1.000 cái<br />1.000 cái<br />1.000 cái
+                  </td>
+                  <td class="price">
+                    920.000 đ<br />888.000 đ<br />800.000 đ<br />748.000 đ
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231219142651153.jpg"
+                      class="item-thumb"
+                      alt="PP 700ml"
+                    />
+                  </td>
+                  <td>700ml</td>
+                  <td class="no-wrap">L1<br />L2<br />L3<br />L4</td>
+                  <td class="no-wrap">
+                    1.000 cái<br />1.000 cái<br />1.000 cái<br />1.000 cái
+                  </td>
+                  <td class="price">
+                    980.000 đ<br />900.000 đ<br />860.000 đ<br />828.000 đ
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/ly-nhua-800ml-pp.jpg"
+                      class="item-thumb"
+                      alt="PP 800ml"
+                    />
+                  </td>
+                  <td>800ml</td>
+                  <td class="no-wrap">
+                    Mini<br />Yếu<br />Mỏng<br />Dày<br />Dày Thùng
+                  </td>
+                  <td class="no-wrap">
+                    1.000 cái<br />1.000 cái<br />1.000 cái<br />1.000 cái<br />1.000
+                    cái
+                  </td>
+                  <td class="price">
+                    732.000 đ<br />745.000 đ<br />815.000 đ<br />912.000 đ<br />925.000
+                    đ
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/ly-nhua-900ml-pp.jpg"
+                      class="item-thumb"
+                      alt="PP 900ml"
+                    />
+                  </td>
+                  <td>900ml</td>
+                  <td class="no-wrap">L1<br />L2</td>
+                  <td class="no-wrap">1.000 cái<br />1.000 cái</td>
+                  <td class="price">1.080.000 đ<br />950.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231219150402514.jpg"
+                      class="item-thumb"
+                      alt="PP 1000ml"
+                    />
+                  </td>
+                  <td>1000ml</td>
+                  <td class="no-wrap">Lùn<br />Cao</td>
+                  <td class="no-wrap">1.000 cái<br />1.000 cái</td>
+                  <td class="price">1.210.000 đ<br />1.095.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/20231219155600509-30202c8f-3eb3-477b-8003-23be397b2c3a.jpg"
+                      class="item-thumb"
+                      alt="PP 1300ml"
+                    />
+                  </td>
+                  <td>1300ml</td>
+                  <td class="no-wrap">L1</td>
+                  <td class="no-wrap">1.000 cái</td>
+                  <td class="price">1.450.000 đ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- THẺ 10: LY GIẤY -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img
+            src="https://bizweb.dktcdn.net/100/339/225/files/kich-thuoc-ly-giay.jpg"
+            alt="Ly Giấy"
+            class="category-img"
+          />
+          <div class="category-title">
+            10. Ly Giấy Trắng & Kraft
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 Bao Bì Xanh</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            Tráng 1 lớp PE. Thân thiện môi trường.
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Dung Tích</th>
+                  <th class="no-wrap">Chất Liệu</th>
+                  <th class="no-wrap">MOQ (SL)</th>
+                  <th class="no-wrap" style="color: var(--warning)">
+                    Tổng Tiền
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/ly-giay-6oz-180ml.jpg"
+                      class="item-thumb"
+                      alt="Paper 3-7oz"
+                    />
+                  </td>
+                  <td>3oz - 7oz</td>
+                  <td class="no-wrap">Trắng nhỏ</td>
+                  <td class="no-wrap">1.000 cái</td>
+                  <td class="price">781.000 đ - 1.000.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/ly-giay-8oz-240ml.jpg"
+                      class="item-thumb"
+                      alt="Paper 8oz"
+                    />
+                  </td>
+                  <td>8oz (240ml)</td>
+                  <td class="no-wrap">Trắng<br />Nâu Kraft</td>
+                  <td class="no-wrap">1.000 cái<br />1.000 cái</td>
+                  <td class="price">939.000 đ<br />1.200.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/ly-giay-9oz-270ml.jpg"
+                      class="item-thumb"
+                      alt="Paper 9oz"
+                    />
+                  </td>
+                  <td>9oz (270ml)</td>
+                  <td class="no-wrap">Trắng</td>
+                  <td class="no-wrap">1.000 cái</td>
+                  <td class="price">920.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/ly-giay-12oz-360ml-2pe-dung-cafe-take-away.jpg"
+                      class="item-thumb"
+                      alt="Paper 12oz"
+                    />
+                  </td>
+                  <td>12oz (360ml)</td>
+                  <td class="no-wrap">Trắng<br />Nâu Kraft</td>
+                  <td class="no-wrap">1.000 cái<br />1.000 cái</td>
+                  <td class="price">1.069.000 đ<br />1.410.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/ly-giay-16oz-500ml.jpg"
+                      class="item-thumb"
+                      alt="Paper 16oz"
+                    />
+                  </td>
+                  <td>16oz (500ml)</td>
+                  <td class="no-wrap">Trắng<br />Nâu Kraft</td>
+                  <td class="no-wrap">1.000 cái<br />1.000 cái</td>
+                  <td class="price">1.144.000 đ<br />1.570.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://bizweb.dktcdn.net/100/339/225/products/ly-giay-22oz.jpg"
+                      class="item-thumb"
+                      alt="Paper 22oz"
+                    />
+                  </td>
+                  <td>22oz (680ml)</td>
+                  <td class="no-wrap">Trắng<br />Nâu Kraft</td>
+                  <td class="no-wrap">1.000 cái<br />1.000 cái</td>
+                  <td class="price">1.309.000 đ<br />1.720.000 đ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- THẺ 11: TÚI GIẤY MANG ĐI -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img
+            src="https://insieutoc.vn/wp-content/uploads/2021/04/tui-giay-kraft-tron-in-hoa-tiet.jpg"
+            alt="Túi Giấy"
+            class="category-img"
+          />
+          <div class="category-title">
+            11. Túi Giấy Kraft
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 HK Packaging</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            Túi Kraft in Logo Custom.<br />
+            <span style="color: var(--warning); font-size: 0.8rem"
+              >Đang cập nhật báo giá in trực tiếp chất lượng cao (MOQ lớn).
+              Không dùng phương án dán tem decal.</span
+            >
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Quy Cách</th>
+                  <th class="no-wrap">MOQ (SL)</th>
+                  <th class="no-wrap" style="color: var(--warning)">
+                    Tổng Tiền
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <img
+                      src="https://insieutoc.vn/wp-content/uploads/2021/04/tui-giay-kraft-tron-in-hoa-tiet.jpg"
+                      class="item-thumb"
+                      alt="Bag"
+                    />
+                  </td>
+                  <td>Đáy Vuông (13x20x5)</td>
+                  <td class="no-wrap">5.000 cái</td>
+                  <td class="price">990.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://insieutoc.vn/wp-content/uploads/2021/04/tui-giay-kraft-tron-in-hoa-tiet.jpg"
+                      class="item-thumb"
+                      alt="Bag"
+                    />
+                  </td>
+                  <td>Đáy Lục Giác (15x20)</td>
+                  <td class="no-wrap">5.000 cái</td>
+                  <td class="price">950.000 đ</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img
+                      src="https://insieutoc.vn/wp-content/uploads/2021/04/tui-giay-kraft-tron-in-hoa-tiet.jpg"
+                      class="item-thumb"
+                      alt="Bag"
+                    />
+                  </td>
+                  <td>Đáy Thường (13x20x5)</td>
+                  <td class="no-wrap">5.000 cái</td>
+                  <td class="price">930.000 đ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- THẺ 12: DECAL TEM NHÃN -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img
+            src="logo.jpg"
+            alt="Decal Trong"
+            class="category-img"
+            style="object-fit: cover"
+          />
+          <div class="category-title">
+            12. Tem Logo Trong Suốt
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 Công ty In Siêu Tốc VN</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            Nhựa trong, <strong>có in lót trắng</strong>. Giải pháp dán cho các
+            bề mặt trơn.
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Kích Thước</th>
+                  <th class="no-wrap">MOQ (SL)</th>
+                  <th class="no-wrap" style="color: var(--warning)">
+                    Tổng Tiền
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img src="logo.jpg" class="item-thumb" alt="Decal" /></td>
+                  <td>Tròn 4 cm</td>
+                  <td class="no-wrap">5.000 tem<br />10.000 tem</td>
+                  <td class="price">1.250k - 1.750k<br />1.500k - 2.500k</td>
+                </tr>
+                <tr>
+                  <td><img src="logo.jpg" class="item-thumb" alt="Decal" /></td>
+                  <td>Tròn 5 cm</td>
+                  <td class="no-wrap">5.000 tem<br />10.000 tem</td>
+                  <td class="price">1.500k - 2.250k<br />2.000k - 3.000k</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="logo.jpg" class="item-thumb" alt="Decal Diecut" />
+                  </td>
+                  <td>
+                    Cắt bế viền Logo<br /><span
+                      style="font-size: 0.75rem; color: var(--text-muted)"
+                      >(≤ 4x4 cm)</span
+                    >
+                  </td>
+                  <td class="no-wrap">5.000 tem<br />10.000 tem</td>
+                  <td class="price">1.450k - 1.950k<br />1.700k - 2.800k</td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="logo.jpg" class="item-thumb" alt="Decal Diecut" />
+                  </td>
+                  <td>
+                    Cắt bế viền Logo<br /><span
+                      style="font-size: 0.75rem; color: var(--text-muted)"
+                      >(≤ 5x5 cm)</span
+                    >
+                  </td>
+                  <td class="no-wrap">5.000 tem<br />10.000 tem</td>
+                  <td class="price">1.750k - 2.500k<br />2.300k - 3.400k</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top: auto; padding-top: 1rem">
+            <p
+              style="
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                border-top: 1px dashed rgba(255, 255, 255, 0.1);
+                padding-top: 0.8rem;
+              "
+            >
+              <strong>🔗 Tham khảo từ các công ty in ấn:</strong><br />
+              <a
+                href="https://insieutoc.vn/"
+                target="_blank"
+                style="
+                  color: var(--accent);
+                  text-decoration: none;
+                  margin-right: 8px;
+                "
+                >In Siêu Tốc VN</a
+              >
+              |
+              <a
+                href="https://inluha.vn/"
+                target="_blank"
+                style="
+                  color: var(--accent);
+                  text-decoration: none;
+                  margin-right: 8px;
+                  margin-left: 8px;
+                "
+                >In Luha</a
+              >
+              |
+              <a
+                href="https://indepnhanh.com.vn/"
+                target="_blank"
+                style="
+                  color: var(--accent);
+                  text-decoration: none;
+                  margin-left: 8px;
+                "
+                >In Đẹp Nhanh</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- THẺ 13: ĐỒNG PHỤC TẠP DỀ -->
+      <div class="category-card">
+        <div class="category-img-container">
+          <img src="apron_real.jpg" alt="Tạp Dề" class="category-img" />
+          <div class="category-title">
+            13. Đồng Phục Tạp Dề
+            <span
+              style="
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 5px;
+                color: var(--accent);
+                text-shadow: none;
+              "
+              >🏭 Tạp dề Mỹ Nga</span
+            >
+          </div>
+        </div>
+        <div class="category-content">
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              margin-bottom: 1rem;
+            "
+          >
+            Vải Canvas cao cấp, quai chéo.
+          </p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hình Ảnh</th>
+                  <th>Quy Cách</th>
+                  <th class="no-wrap">MOQ (SL)</th>
+                  <th class="no-wrap" style="color: var(--warning)">
+                    Tổng Tiền
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <img src="apron_real.jpg" class="item-thumb" alt="Apron" />
+                  </td>
+                  <td>
+                    Vải Canvas<br /><span
+                      style="font-size: 0.75rem; color: var(--text-muted)"
+                      >In/Thêu Logo</span
+                    >
+                  </td>
+                  <td class="no-wrap">10 cái</td>
+                  <td class="price">1.700.000 đ - 2.400.000 đ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+          </div>
+
+    <div class="note-bar" style="max-width: 1400px; margin: 3rem auto">
+      <strong>📌 CHÚ Ý QUAN TRỌNG:</strong><br />
+      - Cột "MOQ" thể hiện Số lượng đặt hàng tối thiểu cho mỗi lần gia công.<br />
+      - Cột "Báo Giá" là tổng số tiền bạn phải trả cho đơn hàng tương ứng với
+      mốc MOQ đó.<br />
+      - Giá in ly sẽ tiếp tục được tối ưu và giảm sâu hơn nữa khi tăng sản lượng
+      lên các mốc 2.000 - 5.000 - 10.000 & 20.000 cái.
+    </div>
+
+    <!-- Modal for Image Zoom -->
+    <div id="imageModal" class="modal">
+      <span class="close-modal">&times;</span>
+      <img class="modal-content" id="modalImg" />
+    </div>
+
+    <script>
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("modalImg");
+      const closeBtn = document.querySelector(".close-modal");
+
+      document.querySelectorAll(".item-thumb, .category-img").forEach((img) => {
+        img.addEventListener("click", function (e) {
+          e.stopPropagation();
+          modal.style.display = "flex";
+
+          // Load ảnh độ phân giải cao (800x800) thay vì dùng ảnh thumbnail 100px
+          let highResSrc = this.src;
+          if (
+            highResSrc.includes("unsplash.com") &&
+            highResSrc.includes("w=100")
+          ) {
+            highResSrc = highResSrc.replace("w=100", "w=800&h=800&fit=crop");
+          }
+          modalImg.src = highResSrc;
+        });
+      });
+
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+      modal.addEventListener("click", (e) => {
+        if (e.target !== modalImg) {
+          modal.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>

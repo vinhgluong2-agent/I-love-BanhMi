@@ -3,312 +3,1492 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Export Packaging Report</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Sourcing & Branding Dashboard - I Love BanhMi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --surface: rgba(30, 41, 59, 0.7);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.4);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
+            --bg-color: #070a13;
+            --surface-color: rgba(17, 24, 39, 0.7);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --brand-yellow: #FFC107;
+            --brand-red: #E31837;
+            --accent-glow: rgba(255, 193, 7, 0.35);
+            --success-color: #10b981;
+            --transition-speed: 0.4s;
         }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
         body {
-            background-color: var(--bg-color); color: var(--text-main); line-height: 1.6;
-            background-image: radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.15) 0px, transparent 50%);
-            background-attachment: fixed; padding: 2rem;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 193, 7, 0.08) 0px, transparent 50%), 
+                radial-gradient(at 100% 100%, rgba(227, 24, 55, 0.08) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.04) 0px, transparent 50%);
+            background-attachment: fixed;
+            padding: 2rem 1.5rem;
         }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .lang-toggle { display: flex; justify-content: center; gap: 10px; margin-bottom: 2rem; }
-        .lang-toggle button {
-            background: rgba(255, 255, 255, 0.1); color: var(--text-muted); border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
         }
-        .lang-toggle button.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
-        header { text-align: center; margin-bottom: 3rem; animation: fadeInDown 1s ease-out; }
-        h1 { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
-        .subtitle { color: var(--text-muted); font-size: 1.2rem; font-weight: 300; max-width: 700px; margin: 0 auto; }
-        
+
+        /* HEADER SECTION */
+        header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            position: relative;
+        }
+
+        .brand-logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .brand-logo-text {
+            font-size: 2.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 40%, var(--brand-yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-heart {
+            color: var(--brand-red);
+            font-size: 2.6rem;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+            text-shadow: 0 0 15px rgba(227, 24, 55, 0.6);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #f8fafc 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* TOGGLE CONTROLS */
+        .controls-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        /* View Toggle (Premium vs Classic) */
+        .view-toggle-container {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--surface-border);
+            padding: 6px;
+            border-radius: 40px;
+            display: flex;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+            backdrop-filter: blur(8px);
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 14px 28px;
+            border-radius: 35px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-speed) cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .toggle-btn.active {
+            color: #000;
+            background: var(--brand-yellow);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Language Toggle (EN vs VI) */
+        .lang-toggle-container {
+            display: flex;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--surface-border);
+            padding: 4px;
+            border-radius: 30px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--text-primary);
+        }
+
+        /* GRID SYSTEM */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.2rem;
+            margin-bottom: 4rem;
         }
 
-        .glass-panel {
-            background: var(--surface); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2); transition: transform 0.3s ease;
-            display: flex; flex-direction: column;
+        /* CARD STYLING */
+        .category-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--surface-border);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
         }
-        .glass-panel:hover { transform: translateY(-3px); box-shadow: 0 25px 50px rgba(0,0,0,0.3), 0 0 15px var(--accent-glow); }
-        .glass-panel h2 { color: #fff; font-size: 1.4rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
-        .glass-panel h2 span.step { background: var(--accent); color: #000; width: 35px; height: 35px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%; font-size: 1.2rem; font-weight: 800; flex-shrink: 0; }
-        
-        .section-img { width: 100%; height: 220px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem; opacity: 0.9; border: 1px solid rgba(255,255,255,0.1); transition: opacity 0.3s ease, transform 0.3s ease; }
-        .glass-panel:hover .section-img { opacity: 1; transform: scale(1.01); }
 
-        table { width: 100%; border-collapse: collapse; margin-top: auto; font-size: 0.9rem; min-width: 450px; }
-        th, td { padding: 1rem 0.5rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); white-space: nowrap; }
-        th { color: var(--accent); font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; background: rgba(0,0,0,0.2); }
-        tr:hover td { background: rgba(255,255,255,0.05); }
-        .price-highlight { color: var(--warning); font-weight: 800; font-size: 1rem; }
-        .badge-supplier { background: rgba(56, 189, 248, 0.2); color: var(--accent); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
-        .badge-pending { background: rgba(239, 68, 68, 0.2); color: var(--danger); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
-        
-        .mobile-swipe-hint { display: none; }
-        div[style*="overflow-x: auto"]::-webkit-scrollbar { height: 6px; }
-        div[style*="overflow-x: auto"]::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
-        div[style*="overflow-x: auto"]::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.5); border-radius: 10px; }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        
+        .category-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 193, 7, 0.4);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 25px rgba(255, 193, 7, 0.15);
+        }
+
+        .category-img-container {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .category-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: zoom-in;
+        }
+
+        .category-card:hover .category-img {
+            transform: scale(1.06);
+        }
+
+        .category-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem 1.5rem 1rem;
+            background: linear-gradient(to top, rgba(7, 10, 19, 0.95) 20%, rgba(7, 10, 19, 0.4) 70%, transparent 100%);
+            color: #fff;
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .supplier-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--brand-yellow);
+            text-shadow: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .category-content {
+            padding: 1.8rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .category-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            min-height: 2.7rem;
+        }
+
+        /* TABLES */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0,0,0,0.25);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+
+        th, td {
+            padding: 1rem 0.8rem;
+            text-align: left;
+            vertical-align: middle;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            color: var(--text-secondary);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 1.2px;
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .item-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #000;
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+
+        .item-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .price-value {
+            color: var(--brand-yellow);
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .no-wrap {
+            white-space: nowrap;
+        }
+
+        /* CARD FOOTER NOTES */
+        .card-footer {
+            margin-top: auto;
+            padding-top: 1.2rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.08);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card-link {
+            color: var(--brand-yellow);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .card-link:hover {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+        }
+
+        /* STRATEGY COMPARISON BOARD */
+        .strategy-board {
+            background: linear-gradient(135deg, rgba(20, 26, 42, 0.8) 0%, rgba(10, 15, 28, 0.9) 100%);
+            border: 1px solid var(--surface-border);
+            border-radius: 28px;
+            padding: 3rem 2.5rem;
+            margin-top: 5rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .strategy-board::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--brand-yellow), var(--brand-red), var(--success-color));
+        }
+
+        .board-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .board-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        @media (max-width: 900px) {
+            .board-columns {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        .board-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .board-col-header {
+            font-size: 1.3rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid rgba(255,255,255,0.06);
+        }
+
+        .board-col-premium .board-col-header {
+            color: var(--success-color);
+        }
+
+        .board-col-classic .board-col-header {
+            color: var(--brand-yellow);
+        }
+
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .feature-icon {
+            font-size: 1.1rem;
+            margin-top: 2px;
+            display: inline-block;
+        }
+
+        /* MODAL FOR IMAGE ZOOM */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 99999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 7, 12, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            max-width: 900px;
+            max-height: 85vh;
+            width: auto;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 1px rgba(255,255,255,0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            object-fit: contain;
+            background: #111;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            z-index: 100000;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #fff;
+        }
+
+        /* GENERAL HINTS & RESPONSIVENESS */
+        .swipe-hint {
+            display: none;
+            color: var(--brand-yellow);
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            text-align: right;
+        }
+
         @media (max-width: 768px) {
-            body { padding: 1rem; }
-            h1 { font-size: 1.8rem; }
-            .grid-container { grid-template-columns: 1fr; }
-            .glass-panel { padding: 1.5rem 1rem; }
-            .glass-panel h2 { font-size: 1.1rem; }
-            table th, table td { padding: 0.8rem 0.5rem; font-size: 0.85rem; }
-            .mobile-swipe-hint { display: block; color: var(--warning); font-size: 0.85rem; font-style: italic; margin-bottom: 10px; animation: pulse 2s infinite; }
-            @keyframes pulse { 0% { opacity: 0.7; } 50% { opacity: 1; transform: translateX(5px); } 100% { opacity: 0.7; } }
+            body {
+                padding: 1.5rem 1rem;
+            }
+            .brand-logo-text {
+                font-size: 2.2rem;
+            }
+            .brand-heart {
+                font-size: 2.1rem;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .category-card {
+                border-radius: 20px;
+            }
+            .category-img-container {
+                height: 160px;
+            }
+            .category-content {
+                padding: 1.3rem;
+            }
+            th, td {
+                padding: 0.8rem 0.5rem;
+                font-size: 0.8rem;
+            }
+            .swipe-hint {
+                display: block;
+            }
+            .strategy-board {
+                padding: 2rem 1.5rem;
+                margin-top: 3rem;
+            }
+        }
+
+        /* ANIMATIONS */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        /* ACTIVE FILTER LOGIC */
+        [data-view] {
+            display: none !important;
+        }
+
+        body.premium-active [data-view="premium"] {
+            display: flex !important;
+        }
+
+        body.classic-active [data-view="classic"] {
+            display: flex !important;
+        }
+
+        /* MULTI-LANG TRANSLATIONS */
+        [data-lang-en] {
+            display: inline;
+        }
+        [data-lang-vi] {
+            display: none;
+        }
+
+        body.lang-vi [data-lang-en] {
+            display: none;
+        }
+        body.lang-vi [data-lang-vi] {
+            display: inline;
         }
     </style>
 </head>
-<body>
+<body class="premium-active">
+
     <div class="container">
         
-        <div class="lang-toggle">
-            <button id="btn-en" class="active" onclick="switchLang('en')">EN</button>
-            <button id="btn-vi" onclick="switchLang('vi')">VN</button>
-        </div>
+        <!-- HEADER -->
+        <header>
+            <div class="brand-logo-container">
+                <span class="brand-logo-text">I</span>
+                <span class="brand-heart">❤️</span>
+                <span class="brand-logo-text">BanhMi</span>
+            </div>
+            
+            <h1 data-lang-en="Sourcing & Operations Dashboard" data-lang-vi="Báo Cáo Dự Án & Báo Giá Vật Tư">Sourcing & Operations Dashboard</h1>
+            <p class="subtitle" 
+               data-lang-en="Interactive procurement catalog for US Strip Mall Expansion. Compare our premium direct-print strategy with the classic decal approach."
+               data-lang-vi="Hệ thống tổng hợp báo giá phục vụ mở rộng chi nhánh Mỹ. So sánh phương án In Ấn Trực Tiếp (Premium) và Dán Tem Thủ Công (Classic).">
+               Interactive procurement catalog for US Strip Mall Expansion. Compare our premium direct-print strategy with the classic decal approach.
+            </p>
+        </header>
 
-        <!-- ================= ENGLISH VERSION ================= -->
-        <div id="content-en">
-            <header>
-                <h1>SOURCING PRICING REPORT</h1>
-                <p class="subtitle">Complete Procurement Breakdown into 6 Core Material Categories</p>
-            </header>
+        <!-- CONTROLS -->
+        <div class="controls-wrapper">
+            <!-- Strategic View Switcher -->
+            <div class="view-toggle-container">
+                <button id="toggle-premium" class="toggle-btn active" onclick="setViewMode('premium')">
+                    <span class="icon">✨</span>
+                    <span data-lang-en="Premium Custom" data-lang-vi="In Ấn Premium">Premium Custom</span>
+                </button>
+                <button id="toggle-classic" class="toggle-btn" onclick="setViewMode('classic')">
+                    <span class="icon">🏷️</span>
+                    <span data-lang-en="Classic Decal" data-lang-vi="Dán Tem Classic">Classic Decal</span>
+                </button>
+            </div>
 
-            <div class="grid-container">
-                <!-- PART 1: CUPS -->
-                <section class="glass-panel">
-                    <h2><span class="step">1</span> PLASTIC CUPS</h2>
-                    <img src="plastic_cups.png" class="section-img" alt="Plastic Cups">
-                    <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
-                    <div style="overflow-x: auto;">
-                        <table>
-                            <thead><tr><th>Product</th><th>Volume</th><th>Qty</th><th>Unit Price</th><th>Supplier</th></tr></thead>
-                            <tbody>
-                                <tr><td>PET Cup (Size S)</td><td>16oz</td><td>1,000</td><td class="price-highlight">860 VND</td><td><span class="badge-supplier">Bao Bi Xanh</span></td></tr>
-                                <tr><td>PET Cup (Size M)</td><td>20oz</td><td>1,000</td><td class="price-highlight">1,100 VND</td><td><span class="badge-supplier">Bao Bi Xanh</span></td></tr>
-                                <tr><td>PET Cup (Size L)</td><td>24oz</td><td>1,000</td><td class="price-highlight">1,260 VND</td><td><span class="badge-supplier">Bao Bi Xanh</span></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- PART 2: PAPER BAGS -->
-                <section class="glass-panel">
-                    <h2><span class="step">2</span> PAPER BAGS</h2>
-                    <img src="paper_bags.png" class="section-img" alt="Paper Bags">
-                    <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
-                    <div style="overflow-x: auto;">
-                        <table>
-                            <thead><tr><th>Product</th><th>Dimensions</th><th>Qty</th><th>Unit Price</th><th>Supplier</th></tr></thead>
-                            <tbody>
-                                <tr><td>Square Bottom</td><td>13x20x5 cm</td><td>5,000</td><td class="price-highlight">198 VND</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
-                                <tr><td>Hexagon Bottom</td><td>15x20 cm</td><td>5,000</td><td class="price-highlight">190 VND</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
-                                <tr><td>Flat Bottom</td><td>13x20x5 cm</td><td>5,000</td><td class="price-highlight">186 VND</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- PART 3: BANH MI WRAPPERS -->
-                <section class="glass-panel">
-                    <h2><span class="step">3</span> BANH MI WRAPPERS</h2>
-                    <img src="banh_mi_wrapper.png" class="section-img" alt="Banh Mi Wrappers">
-                    <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
-                    <div style="overflow-x: auto;">
-                        <table>
-                            <thead><tr><th>Material</th><th>Dimensions</th><th>Status</th><th>Est. Price</th><th>Supplier</th></tr></thead>
-                            <tbody>
-                                <tr><td>Greaseproof</td><td>Standard</td><td>Pending Quote</td><td class="price-highlight">-</td><td><span class="badge-pending">Waiting</span></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- PART 4: PHO BOWLS -->
-                <section class="glass-panel">
-                    <h2><span class="step">4</span> PHO BOWLS (2-TIER)</h2>
-                    <img src="pho_bowl.png" class="section-img" alt="Pho Bowls">
-                    <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
-                    <div style="overflow-x: auto;">
-                        <table>
-                            <thead><tr><th>Material</th><th>Volume</th><th>Status</th><th>Est. Price</th><th>Supplier</th></tr></thead>
-                            <tbody>
-                                <tr><td>PP (Food Grade)</td><td>1000ml</td><td>Checking stock</td><td class="price-highlight">-</td><td><span class="badge-pending">Hunufa</span></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- PART 5: APRON -->
-                <section class="glass-panel">
-                    <h2><span class="step">5</span> UNIFORM (APRONS)</h2>
-                    <img src="canvas_apron.png" class="section-img" alt="Canvas Apron">
-                    <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
-                    <div style="overflow-x: auto;">
-                        <table>
-                            <thead><tr><th>Material</th><th>Customization</th><th>Qty</th><th>Unit Price</th><th>Supplier</th></tr></thead>
-                            <tbody>
-                                <tr><td>Canvas</td><td>Logo Printed</td><td>1</td><td class="price-highlight">170k-240k</td><td><span class="badge-supplier">Tạp dề Mỹ Nga</span></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- PART 6: DECALS -->
-                <section class="glass-panel">
-                    <h2><span class="step">6</span> BRANDING DECALS</h2>
-                    <img src="branding_decals.png" class="section-img" alt="Branding Decals">
-                    <p class="mobile-swipe-hint">👉 Swipe horizontally</p>
-                    <div style="overflow-x: auto;">
-                        <table>
-                            <thead><tr><th>Dimensions</th><th>Qty</th><th>Total Price</th><th>Unit Price</th><th>Supplier</th></tr></thead>
-                            <tbody>
-                                <tr><td>5 x 10 cm</td><td>10k</td><td>3,770,000 VND</td><td class="price-highlight">377 VND</td><td><span class="badge-supplier">In Bao Bì SG</span></td></tr>
-                                <tr><td>10 x 15 cm</td><td>10k</td><td>7,650,000 VND</td><td class="price-highlight">765 VND</td><td><span class="badge-supplier">In Bao Bì SG</span></td></tr>
-                                <tr><td>10 x 15 cm</td><td>20k</td><td>13,460,000 VND</td><td class="price-highlight">673 VND</td><td><span class="badge-supplier">In Bao Bì SG</span></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+            <!-- Language Switcher -->
+            <div class="lang-toggle-container">
+                <button id="lang-en" class="lang-btn active" onclick="setLang('en')">EN</button>
+                <button id="lang-vi" class="lang-btn" onclick="setLang('vi')">VN</button>
             </div>
         </div>
 
-        <!-- ================= VIETNAMESE VERSION ================= -->
-        <div id="content-vi" style="display: none;">
-            <header>
-                <h1>BÁO CÁO GIÁ THU MUA VẬT TƯ</h1>
-                <p class="subtitle">Phân bổ chi tiết 6 hạng mục vật tư & đồng phục thiết yếu</p>
-            </header>
+        <!-- MAIN PRODUCTS GRID -->
+        <div class="grid-container">
 
-            <div class="grid-container">
-                <!-- PHẦN 1: LY -->
-                <section class="glass-panel">
-                    <h2><span class="step">1</span> LY NHỰA</h2>
-                    <img src="plastic_cups.png" class="section-img" alt="Ly Nhựa">
-                    <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
-                    <div style="overflow-x: auto;">
+            <!-- ========================================== -->
+            <!-- PREMIUM CUSTOM VIEW ITEMS -->
+            <!-- ========================================== -->
+
+            <!-- 1. Premium PET Cups -->
+            <div class="category-card" data-view="premium">
+                <div class="category-img-container">
+                    <img src="plastic_cups.png" alt="Premium PET Cups" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="1. Custom Printed PET Cups" data-lang-vi="1. Ly Nhựa PET In Trực Tiếp">1. Custom Printed PET Cups</span>
+                        <span class="supplier-badge">🏭 Bao Bi Xanh (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="High-clarity, rigid PET cups direct-printed with premium 1-color brand logo. Premium look, perfect for ice drinks."
+                       data-lang-vi="Dòng ly PET cao cấp có độ trong suốt và cứng cáp tuyệt đối, in trực tiếp logo 1 màu sắc nét. Thích hợp đựng đồ uống lạnh.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
                         <table>
-                            <thead><tr><th>Sản Phẩm</th><th>Dung Tích</th><th>Số Lượng</th><th>Giá 1 Cái</th><th>Nhà Cung Cấp</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Size" data-lang-vi="Kích cỡ">Size</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Carton Price" data-lang-vi="Giá thùng">Carton Price</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td>Ly PET (Size S)</td><td>16oz</td><td>1.000</td><td class="price-highlight">860 VNĐ</td><td><span class="badge-supplier">Bao Bì Xanh</span></td></tr>
-                                <tr><td>Ly PET (Size M)</td><td>20oz</td><td>1.000</td><td class="price-highlight">1.100 VNĐ</td><td><span class="badge-supplier">Bao Bì Xanh</span></td></tr>
-                                <tr><td>Ly PET (Size L)</td><td>24oz</td><td>1.000</td><td class="price-highlight">1.260 VNĐ</td><td><span class="badge-supplier">Bao Bì Xanh</span></td></tr>
+                                <tr>
+                                    <td>470ml (16oz)</td>
+                                    <td>1,000 pcs</td>
+                                    <td>933,000 VND</td>
+                                    <td class="price-value">933 VND</td>
+                                </tr>
+                                <tr>
+                                    <td>500ml (16oz)</td>
+                                    <td>1,000 pcs</td>
+                                    <td>996,000 VND</td>
+                                    <td class="price-value">996 VND</td>
+                                </tr>
+                                <tr>
+                                    <td>590ml (20oz)</td>
+                                    <td>1,000 pcs</td>
+                                    <td>1,138,000 VND</td>
+                                    <td class="price-value">1,138 VND</td>
+                                </tr>
+                                <tr>
+                                    <td>700ml (24oz)</td>
+                                    <td>1,000 pcs</td>
+                                    <td>1,266,000 VND</td>
+                                    <td class="price-value">1,266 VND</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-                </section>
+                    <div class="card-footer">
+                        <span data-lang-en="* Note: Pricing includes high-definition direct printing." data-lang-vi="* Chú ý: Báo giá đã bao gồm chi phí in ấn logo trục xoay trực tiếp."></span>
+                        <a href="https://baobixanh.com.vn/" target="_blank" class="card-link">🔗 baobixanh.com.vn</a>
+                    </div>
+                </div>
+            </div>
 
-                <!-- PHẦN 2: TÚI GIẤY -->
-                <section class="glass-panel">
-                    <h2><span class="step">2</span> TÚI GIẤY</h2>
-                    <img src="paper_bags.png" class="section-img" alt="Túi Giấy">
-                    <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
-                    <div style="overflow-x: auto;">
+            <!-- 2. Premium PP Cups -->
+            <div class="category-card" data-view="premium">
+                <div class="category-img-container">
+                    <img src="plastic_cups.png" alt="Premium PP Cups" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="2. Custom Printed PP Cups" data-lang-vi="2. Ly Nhựa PP In Trực Tiếp">2. Custom Printed PP Cups</span>
+                        <span class="supplier-badge">🏭 Bao Bi Xanh (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Flexible, heat-resistant PP cups. Direct-printed with brand logo. Allows heat sealing lid films."
+                       data-lang-vi="Ly nhựa PP dẻo dai, chịu nhiệt tốt, in trực tiếp logo 1 màu sắc nét. Hỗ trợ dập màng nắp ly chống tràn tuyệt đối.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
                         <table>
-                            <thead><tr><th>Sản Phẩm</th><th>Kích Thước</th><th>Số Lượng</th><th>Giá 1 Cái</th><th>Nhà Cung Cấp</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Volume" data-lang-vi="Dung tích">Volume</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Carton Price" data-lang-vi="Giá thùng">Carton Price</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td>Đáy Vuông</td><td>13x20x5 cm</td><td>5.000</td><td class="price-highlight">198 VNĐ</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
-                                <tr><td>Đáy Lục Giác</td><td>15x20 cm</td><td>5.000</td><td class="price-highlight">190 VNĐ</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
-                                <tr><td>Đáy Thường</td><td>13x20x5 cm</td><td>5.000</td><td class="price-highlight">186 VNĐ</td><td><span class="badge-supplier">HK Packaging</span></td></tr>
+                                <tr>
+                                    <td>500ml</td>
+                                    <td>1,000 pcs</td>
+                                    <td>868,000 VND</td>
+                                    <td class="price-value">868 VND</td>
+                                </tr>
+                                <tr>
+                                    <td>650ml</td>
+                                    <td>1,000 pcs</td>
+                                    <td>920,000 VND</td>
+                                    <td class="price-value">920 VND</td>
+                                </tr>
+                                <tr>
+                                    <td>700ml</td>
+                                    <td>1,000 pcs</td>
+                                    <td>980,000 VND</td>
+                                    <td class="price-value">980 VND</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-                </section>
+                    <div class="card-footer">
+                        <span data-lang-en="* Note: Elastic, semi-opaque plastic, microwave safe." data-lang-vi="* Chú ý: Nhựa dẻo chịu nhiệt tốt, sử dụng được trong lò vi sóng."></span>
+                        <a href="https://baobixanh.com.vn/" target="_blank" class="card-link">🔗 baobixanh.com.vn</a>
+                    </div>
+                </div>
+            </div>
 
-                <!-- PHẦN 3: GIẤY GÓI BÁNH MÌ -->
-                <section class="glass-panel">
-                    <h2><span class="step">3</span> GIẤY GÓI BÁNH MÌ</h2>
-                    <img src="banh_mi_wrapper.png" class="section-img" alt="Giấy Gói Bánh Mì">
-                    <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
-                    <div style="overflow-x: auto;">
+            <!-- 3. Dual-Chamber Split Cups -->
+            <div class="category-card" data-view="premium">
+                <div class="category-img-container">
+                    <img src="https://kimmygroup.com/wp-content/uploads/2021/03/ly-nhua-pp-2-ngan-kim-my.jpg" alt="Dual-Chamber Split Cups" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="3. Dual-Chamber Split Cups" data-lang-vi="3. Ly Nhựa PP 2 Ngăn (Trending)">3. Dual-Chamber Split Cups</span>
+                        <span class="supplier-badge">🏭 Kim My Group (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Extremely viral dual-beverage container. Allows customers to enjoy 2 drinks at once (e.g., Peach Tea + Boba)."
+                       data-lang-vi="Dòng ly chia đôi cực kỳ thịnh hành, cho phép phục vụ song song 2 vị nước (VD: Trà đào + Trà sữa) trong cùng 1 ly uống.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
                         <table>
-                            <thead><tr><th>Chất Liệu</th><th>Kích Thước</th><th>Trạng Thái</th><th>Giá Dự Kiến</th><th>Nhà Cung Cấp</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Specs" data-lang-vi="Quy cách">Specs</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Price/Pack" data-lang-vi="Giá lốc">Price/Pack</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td>Chống thấm dầu</td><td>Tiêu chuẩn</td><td>Đang chờ báo giá</td><td class="price-highlight">-</td><td><span class="badge-pending">Chờ phản hồi</span></td></tr>
+                                <tr>
+                                    <td>600ml (95x63x162mm)</td>
+                                    <td>1 Pack (15 pcs)</td>
+                                    <td>113,000 VND</td>
+                                    <td class="price-value">7,512 VND</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-                </section>
+                    <div class="card-footer">
+                        <span data-lang-en="* Price break: Includes high-quality PP Cup (6,708 VND) + Heart lid (804 VND)." data-lang-vi="* Chi tiết giá: Gồm Ly PP 2 ngăn (6.708đ) + Nắp tim đôi (804đ) (Đã gồm VAT)."></span>
+                        <a href="https://kimmygroup.com/ly-nhua-pp-2-ngan.html" target="_blank" class="card-link">🔗 kimmygroup.com</a>
+                    </div>
+                </div>
+            </div>
 
-                <!-- PHẦN 4: TÔ PHỞ -->
-                <section class="glass-panel">
-                    <h2><span class="step">4</span> TÔ PHỞ (2 TẦNG)</h2>
-                    <img src="pho_bowl.png" class="section-img" alt="Tô Phở">
-                    <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
-                    <div style="overflow-x: auto;">
+            <!-- 4. Premium Paper Cups -->
+            <div class="category-card" data-view="premium">
+                <div class="category-img-container">
+                    <img src="https://bizweb.dktcdn.net/100/339/225/files/kich-thuoc-ly-giay.jpg" alt="Premium Paper Cups" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="4. Custom Printed Paper Cups" data-lang-vi="4. Ly Giấy Trắng & Kraft In Logo">4. Custom Printed Paper Cups</span>
+                        <span class="supplier-badge">🏭 Bao Bi Xanh (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Eco-friendly pure paper cups. Coated with food-grade PE. Direct-printed with custom logo."
+                       data-lang-vi="Ly giấy thân thiện môi trường từ tinh bột giấy nguyên chất, tráng phủ 1-2 lớp PE chịu nước tốt, in ấn logo trực tiếp.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
                         <table>
-                            <thead><tr><th>Chất Liệu</th><th>Dung Tích</th><th>Trạng Thái</th><th>Giá Dự Kiến</th><th>Nhà Cung Cấp</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Volume" data-lang-vi="Dung tích">Volume</th>
+                                    <th data-lang-en="Material" data-lang-vi="Chất liệu">Material</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td>Nhựa PP</td><td>1000ml</td><td>Check phôi trơn</td><td class="price-highlight">-</td><td><span class="badge-pending">Hunufa</span></td></tr>
+                                <tr>
+                                    <td>8oz (240ml)</td>
+                                    <td>White / Kraft</td>
+                                    <td>1,000 pcs</td>
+                                    <td class="price-value">939đ - 1,200đ</td>
+                                </tr>
+                                <tr>
+                                    <td>12oz (360ml)</td>
+                                    <td>White / Kraft</td>
+                                    <td>1,000 pcs</td>
+                                    <td class="price-value">1,069đ - 1,410đ</td>
+                                </tr>
+                                <tr>
+                                    <td>16oz (500ml)</td>
+                                    <td>White / Kraft</td>
+                                    <td>1,000 pcs</td>
+                                    <td class="price-value">1,144đ - 1,570đ</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-                </section>
+                    <div class="card-footer">
+                        <span data-lang-en="* Recommendation: Use White paper for coffee, Kraft for tea." data-lang-vi="* Khuyên dùng: Ly Trắng thích hợp cafe nóng, Ly Kraft phù hợp trà ấm."></span>
+                        <a href="https://baobixanh.com.vn/" target="_blank" class="card-link">🔗 baobixanh.com.vn</a>
+                    </div>
+                </div>
+            </div>
 
-                <!-- PHẦN 5: TẠP DỀ -->
-                <section class="glass-panel">
-                    <h2><span class="step">5</span> ĐỒNG PHỤC (TẠP DỀ)</h2>
-                    <img src="canvas_apron.png" class="section-img" alt="Tạp Dề">
-                    <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
-                    <div style="overflow-x: auto;">
+            <!-- 5. Custom Kraft Takeaway Bags -->
+            <div class="category-card" data-view="premium">
+                <div class="category-img-container">
+                    <img src="paper_bags.png" alt="Printed Kraft Takeaway Bags" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="5. Printed Kraft Takeaway Bags" data-lang-vi="5. Túi Giấy Kraft In Logo Offset">5. Printed Kraft Takeaway Bags</span>
+                        <span class="supplier-badge">🏭 HK Packaging (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Biodegradable Kraft bags with flat or square bottoms, customized with offset print. Zero decal stickers needed."
+                       data-lang-vi="Túi giấy Kraft tự phân hủy bảo vệ môi trường, đáy bằng/đáy vuông rộng rãi, gia công in offset trực tiếp logo cực đẹp.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
                         <table>
-                            <thead><tr><th>Chất Liệu</th><th>Gia Công</th><th>Số Lượng</th><th>Giá 1 Cái</th><th>Nhà Cung Cấp</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Style" data-lang-vi="Kiểu dáng">Style</th>
+                                    <th data-lang-en="Dimensions" data-lang-vi="Kích thước">Dimensions</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td>Vải Canvas</td><td>In Logo</td><td>1</td><td class="price-highlight">170k-240k</td><td><span class="badge-supplier">Tạp dề Mỹ Nga</span></td></tr>
+                                <tr>
+                                    <td data-lang-en="Square Bottom" data-lang-vi="Đáy vuông">Square Bottom</td>
+                                    <td>13x20x5 cm</td>
+                                    <td>5,000 pcs</td>
+                                    <td class="price-value">198 VND</td>
+                                </tr>
+                                <tr>
+                                    <td data-lang-en="Hexagon Bottom" data-lang-vi="Đáy lục giác">Hexagon Bottom</td>
+                                    <td>15x20 cm</td>
+                                    <td>5,000 pcs</td>
+                                    <td class="price-value">190 VND</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-                </section>
+                    <div class="card-footer">
+                        <span data-lang-en="* Status: Updated from blank to custom-offset printed." data-lang-vi="* Trạng thái: Đã cập nhật chuyển từ túi trơn sang in logo trực tiếp."></span>
+                    </div>
+                </div>
+            </div>
 
-                <!-- PHẦN 6: DECAL -->
-                <section class="glass-panel">
-                    <h2><span class="step">6</span> TEM DECAL</h2>
-                    <img src="branding_decals.png" class="section-img" alt="Tem Decal">
-                    <p class="mobile-swipe-hint">👉 Vuốt sang ngang để xem bảng</p>
-                    <div style="overflow-x: auto;">
+            <!-- 6. Custom Printed Banh Mi Wrappers -->
+            <div class="category-card" data-view="premium">
+                <div class="category-img-container">
+                    <img src="banh_mi_wrapper.png" alt="Printed Banh Mi Wrappers" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="6. Custom Banh Mi Bags & Wrappers" data-lang-vi="6. Túi Đựng Bánh Mì In Logo">6. Custom Banh Mi Bags & Wrappers</span>
+                        <span class="supplier-badge">🏭 STC Vietnam</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Food-grade greaseproof paper bag with side gussets, customized with 1-color logo print. Essential for crispiness."
+                       data-lang-vi="Túi giấy xi măng xếp hông chống thấm dầu, in ấn logo thương hiệu 1 màu sắc nét. Giữ bánh mì luôn ấm giòn vệ sinh.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
                         <table>
-                            <thead><tr><th>Kích Thước</th><th>Số Lượng</th><th>Tổng Tiền</th><th>Giá 1 Tem</th><th>Nhà Cung Cấp</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Type" data-lang-vi="Loại giấy">Type</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Total Price" data-lang-vi="Tổng đơn">Total Price</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td>5 x 10 cm</td><td>10.000</td><td>3.770.000 VNĐ</td><td class="price-highlight">377 VNĐ</td><td><span class="badge-supplier">In Bao Bì SG</span></td></tr>
-                                <tr><td>10 x 15 cm</td><td>10.000</td><td>7.650.000 VNĐ</td><td class="price-highlight">765 VNĐ</td><td><span class="badge-supplier">In Bao Bì SG</span></td></tr>
-                                <tr><td>10 x 15 cm</td><td>20.000</td><td>13.460.000 VNĐ</td><td class="price-highlight">673 VNĐ</td><td><span class="badge-supplier">In Bao Bì SG</span></td></tr>
+                                <tr>
+                                    <td data-lang-en="Custom Printed Bag" data-lang-vi="Túi xếp hông in">Custom Printed Bag</td>
+                                    <td>5,000 pcs</td>
+                                    <td>1,500,000 VND</td>
+                                    <td class="price-value">300 VND</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-                </section>
+                    <div class="card-footer">
+                        <span data-lang-en="* Note: Custom printing is much cleaner than using decals." data-lang-vi="* Lưu ý: Tối ưu tính thẩm mỹ vượt trội so với dán tem decal thủ công."></span>
+                        <a href="https://inbaoduagiare.com/" target="_blank" class="card-link">🔗 inbaoduagiare.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Premium Pho Bowl -->
+            <div class="category-card" data-view="premium">
+                <div class="category-img-container">
+                    <img src="pho_bowl.png" alt="2-Tier Pho Bowl" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="7. Premium 2-Tier Pho Bowl" data-lang-vi="7. Tô Giấy / Thố Nhựa Phở 2 Tầng">7. Premium 2-Tier Pho Bowl</span>
+                        <span class="supplier-badge">🏭 Hunufa / Phu Hoi (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Double tier container: broth on bottom, noodles/toppings on top khay. Heat & microwave-safe. Printed logo."
+                       data-lang-vi="Thố nhựa/giấy 2 tầng thông minh: Khay trên đựng bánh phở/thịt, dưới đựng nước lèo nóng. In logo trực tiếp chống rò rỉ.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Material" data-lang-vi="Chất liệu">Material</th>
+                                    <th data-lang-en="Volume" data-lang-vi="Dung tích">Volume</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Status" data-lang-vi="Trạng thái">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PP / Kraft</td>
+                                    <td>1000ml / 1200ml</td>
+                                    <td>2,000 pcs</td>
+                                    <td class="price-value" data-lang-en="Custom Mold Check" data-lang-vi="Đang đàm phán in">Negotiating Custom</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span data-lang-en="* SGS Test Report ASTM D 4802 certified for US customs compliance." data-lang-vi="* Đã có chứng nhận SGS ASTM D 4802 an toàn thực phẩm nhập khẩu Mỹ."></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Premium Canvas Aprons -->
+            <div class="category-card" data-view="premium">
+                <div class="category-img-container">
+                    <img src="canvas_apron.png" alt="Premium Canvas Aprons" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="8. Premium Canvas Apron (Embroidered)" data-lang-vi="8. Tạp Dề Canvas Mỹ Nghệ Thêu Logo">8. Premium Canvas Apron (Embroidered)</span>
+                        <span class="supplier-badge">🏭 Tap De My Nga (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Ultra-premium canvas apron with cross-back leather/rope straps and front pocket. Logo is high-density embroidered."
+                       data-lang-vi="Tạp dề vải Canvas thô mộc cao cấp, thiết kế quai chéo da/dù chữ X chịu lực. Logo được thêu vi tính dày nổi bật.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Material" data-lang-vi="Chất liệu">Material</th>
+                                    <th data-lang-en="Embroidery" data-lang-vi="Gia công">Embroidery</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Thick Canvas</td>
+                                    <td>Custom Thread</td>
+                                    <td>10 pcs</td>
+                                    <td class="price-value">170,000 - 240,000 VND</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span data-lang-en="* High-end look that elevates store presentation for American diners." data-lang-vi="* Mang tính mỹ nghệ cao, nâng tầm hình ảnh chuyên nghiệp tiệm tại Mỹ."></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Kitchen & Service Essentials -->
+            <div class="category-card" data-view="premium">
+                <div class="category-img-container">
+                    <img src="concept_image.jpg" alt="Premium Kitchen & Service Essentials" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="9. Premium Service Essentials" data-lang-vi="9. Chi Tiết Bếp & Phục Vụ">9. Premium Service Essentials</span>
+                        <span class="supplier-badge">🌐 US Health Dept. Compliant</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Black Nitrile Gloves for prep hygiene & paper-wrapped drinking straws printed with repeat brand pattern."
+                       data-lang-vi="Găng tay cao su đen Nitrile chuyên nghiệp, ống hút bọc màng giấy riêng biệt in ấn pattern logo thương hiệu.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Item" data-lang-vi="Hạng mục">Item</th>
+                                    <th data-lang-en="Spec" data-lang-vi="Thông số">Spec</th>
+                                    <th data-lang-en="Compliance" data-lang-vi="Chuẩn pháp lý">Compliance</th>
+                                    <th data-lang-en="Status" data-lang-vi="Trạng thái">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-lang-en="Black Nitrile Gloves" data-lang-vi="Găng Nitrile Đen">Black Nitrile Gloves</td>
+                                    <td>Powder-Free</td>
+                                    <td>FDA / HACCP</td>
+                                    <td class="price-value" data-lang-en="Sourced" data-lang-vi="Có Sẵn">In Stock</td>
+                                </tr>
+                                <tr>
+                                    <td data-lang-en="Pattern Straws" data-lang-vi="Ống Hút Bọc Giấy">Pattern Straws</td>
+                                    <td>Paper-Wrapped</td>
+                                    <td>Biodegradable</td>
+                                    <td class="price-value" data-lang-en="In Production" data-lang-vi="Đang sản xuất">Sourcing</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span data-lang-en="* Tiny details that build the 'Premium Authentic' F&B experience." data-lang-vi="* Những tiểu tiết gia tăng tối đa lòng tin về vệ sinh thực phẩm tại Mỹ."></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ========================================== -->
+            <!-- CLASSIC DECAL VIEW ITEMS -->
+            <!-- ========================================== -->
+
+            <!-- 1. Blank PET Cups -->
+            <div class="category-card" data-view="classic">
+                <div class="category-img-container">
+                    <img src="plastic_cups.png" alt="Blank PET Cups" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="1. Plain PET Cups (Decal Ready)" data-lang-vi="1. Phôi Ly Nhựa PET Trơn">1. Plain PET Cups (Decal Ready)</span>
+                        <span class="supplier-badge">🏭 Bao Bi Xanh (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Standard blank PET cups without print. Ideal for manual branding using clear vinyl decals (saves upfront MOQ)."
+                       data-lang-vi="Phôi ly nhựa PET trơn không in ấn. Giải pháp tiết kiệm mốc MOQ in trục bằng cách dán tem decal thủ công.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Size" data-lang-vi="Kích cỡ">Size</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Carton Price" data-lang-vi="Giá thùng">Carton Price</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>470ml (16oz)</td>
+                                    <td>1,000 pcs</td>
+                                    <td>850,000 VND</td>
+                                    <td class="price-value">850 VND</td>
+                                </tr>
+                                <tr>
+                                    <td>500ml (16oz)</td>
+                                    <td>1,000 pcs</td>
+                                    <td>840,000 VND</td>
+                                    <td class="price-value">840 VND</td>
+                                </tr>
+                                <tr>
+                                    <td>590ml (20oz)</td>
+                                    <td>1,000 pcs</td>
+                                    <td>1,088,000 VND</td>
+                                    <td class="price-value">1,088 VND</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span data-lang-en="* Low upfront cost, but requires hand-application of stickers in-store." data-lang-vi="* Ưu điểm: Phí đầu tư thấp. Nhược điểm: Tốn thời gian lột dán tem tại tiệm."></span>
+                        <a href="https://baobixanh.com.vn/" target="_blank" class="card-link">🔗 baobixanh.com.vn</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Blank PP Cups -->
+            <div class="category-card" data-view="classic">
+                <div class="category-img-container">
+                    <img src="plastic_cups.png" alt="Blank PP Cups" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="2. Plain PP Cups (Decal Ready)" data-lang-vi="2. Phôi Ly Nhựa PP Trơn">2. Plain PP Cups (Decal Ready)</span>
+                        <span class="supplier-badge">🏭 Bao Bi Xanh (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Plain heat-resistant PP cups. Flexible material, compatible with manual sticker branding."
+                       data-lang-vi="Phôi ly nhựa PP trơn chịu nhiệt tốt, dẻo dai. Dùng để dán decal logo thương hiệu trước khi phục vụ.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Volume" data-lang-vi="Dung tích">Volume</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Carton Price" data-lang-vi="Giá thùng">Carton Price</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>500ml</td>
+                                    <td>1,000 pcs</td>
+                                    <td>720,000 VND</td>
+                                    <td class="price-value">720 VND</td>
+                                </tr>
+                                <tr>
+                                    <td>650ml</td>
+                                    <td>1,000 pcs</td>
+                                    <td>748,000 VND</td>
+                                    <td class="price-value">748 VND</td>
+                                </tr>
+                                <tr>
+                                    <td>700ml</td>
+                                    <td>1,000 pcs</td>
+                                    <td>828,000 VND</td>
+                                    <td class="price-value">828 VND</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span data-lang-en="* Note: Plain cups are slightly cheaper, but risk decal peeling when wet." data-lang-vi="* Chú ý: Tiết kiệm chi phí, tuy nhiên decal có thể bong khi ly dính nước đá."></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Blank Paper Cups -->
+            <div class="category-card" data-view="classic">
+                <div class="category-img-container">
+                    <img src="https://bizweb.dktcdn.net/100/339/225/files/kich-thuoc-ly-giay.jpg" alt="Blank Paper Cups" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="3. Plain Paper Cups (Decal Ready)" data-lang-vi="3. Phôi Ly Giấy Trơn">3. Plain Paper Cups (Decal Ready)</span>
+                        <span class="supplier-badge">🏭 Bao Bi Xanh (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Standard pure white/kraft paper cups without print. High environment compatibility, branded with stickers."
+                       data-lang-vi="Phôi ly giấy trơn màu trắng hoặc nâu xi măng thân thiện môi trường, không có logo sẵn. Thích hợp dán tem tròn.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Volume" data-lang-vi="Dung tích">Volume</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Carton Price" data-lang-vi="Giá thùng">Carton Price</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>8oz (240ml)</td>
+                                    <td>1,000 pcs</td>
+                                    <td>850,000 VND</td>
+                                    <td class="price-value">850 VND</td>
+                                </tr>
+                                <tr>
+                                    <td>12oz (360ml)</td>
+                                    <td>1,000 pcs</td>
+                                    <td>980,000 VND</td>
+                                    <td class="price-value">980 VND</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span data-lang-en="* Note: Needs dry surface before sticking." data-lang-vi="* Lưu ý: Cần dán decal lúc phôi ly khô ráo hoàn toàn để đạt độ dính tốt."></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Blank Kraft Takeaway Bags -->
+            <div class="category-card" data-view="classic">
+                <div class="category-img-container">
+                    <img src="paper_bags.png" alt="Blank Kraft Bags" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="4. Plain Kraft Bags (Decal Ready)" data-lang-vi="4. Phôi Túi Giấy Kraft Trơn">4. Plain Kraft Bags (Decal Ready)</span>
+                        <span class="supplier-badge">🏭 HK Packaging (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Standard blank Kraft bags. Low cost, extremely quick lead times. Decals can be pasted on the flat face."
+                       data-lang-vi="Túi giấy Kraft trơn không in. Thời gian chuẩn bị cực kỳ nhanh, giá rẻ. Giải pháp: Mua túi trơn và dán tem decal.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Style" data-lang-vi="Kiểu dáng">Style</th>
+                                    <th data-lang-en="Dimensions" data-lang-vi="Kích thước">Dimensions</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-lang-en="Square Bottom" data-lang-vi="Đáy vuông">Square Bottom</td>
+                                    <td>13x20x5 cm</td>
+                                    <td>5,000 pcs</td>
+                                    <td class="price-value">198 VND</td>
+                                </tr>
+                                <tr>
+                                    <td data-lang-en="Hexagon Bottom" data-lang-vi="Đáy lục giác">Hexagon Bottom</td>
+                                    <td>15x20 cm</td>
+                                    <td>5,000 pcs</td>
+                                    <td class="price-value">190 VND</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span data-lang-en="* Note: Custom printing direct from factory requires 100,000 pcs MOQ." data-lang-vi="* Lưu ý: Xưởng báo in logo offset trực tiếp cần MOQ tới 100,000 cái."></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Branding Decals -->
+            <div class="category-card" data-view="classic">
+                <div class="category-img-container">
+                    <img src="branding_decals.png" alt="Clear Branding Decals" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="5. Branding Decals (Stickers)" data-lang-vi="5. Tem Logo Trong Suốt / Cắt Bế">5. Branding Decals (Stickers)</span>
+                        <span class="supplier-badge">🏭 In Sieu Toc VN / Luha</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Waterproof plastic transparent decals with white backing layer. Gives an seamless look on blank packaging."
+                       data-lang-vi="Tem Decal nhựa trong chống thấm nước, có in lót mực trắng. Lột dán tạo hiệu ứng chìm viền cực đẹp trên ly trơn.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Shape / Size" data-lang-vi="Kiểu / Kích cỡ">Shape / Size</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Total Cost" data-lang-vi="Tổng đơn">Total Cost</th>
+                                    <th data-lang-en="Est. Unit" data-lang-vi="Đơn giá tem">Est. Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-lang-en="Circular 4cm" data-lang-vi="Tròn 4 cm">Circular 4cm</td>
+                                    <td>5,000 pcs</td>
+                                    <td>1,250,000 VND</td>
+                                    <td class="price-value">250 VND</td>
+                                </tr>
+                                <tr>
+                                    <td data-lang-en="Circular 5cm" data-lang-vi="Tròn 5 cm">Circular 5cm</td>
+                                    <td>5,000 pcs</td>
+                                    <td>1,500,000 VND</td>
+                                    <td class="price-value">300 VND</td>
+                                </tr>
+                                <tr>
+                                    <td data-lang-en="Die-Cut (≤4x4cm)" data-lang-vi="Cắt bế Logo (≤4x4)">Die-Cut (≤4x4cm)</td>
+                                    <td>5,000 pcs</td>
+                                    <td>1,450,000 VND</td>
+                                    <td class="price-value">290 VND</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span data-lang-en="* Note: Transparent film needs white base print for high visibility." data-lang-vi="* Chú ý: Bắt buộc yêu cầu in lót mực trắng để logo nổi bật trên trà sữa sẫm màu."></span>
+                        <a href="https://insieutoc.vn/" target="_blank" class="card-link">🔗 insieutoc.vn</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Standard Canvas Aprons -->
+            <div class="category-card" data-view="classic">
+                <div class="category-img-container">
+                    <img src="apron_real.jpg" alt="Standard Canvas Aprons" class="category-img">
+                    <div class="category-title">
+                        <span data-lang-en="6. Printed Canvas Apron" data-lang-vi="6. Tạp Dề Canvas In Logo">6. Printed Canvas Apron</span>
+                        <span class="supplier-badge">🏭 Tap De My Nga (Vietnam)</span>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <p class="category-description" 
+                       data-lang-en="Standard canvas apron with printed logo. Solid budget option for operations."
+                       data-lang-vi="Tạp dề vải Canvas phôi có sẵn màu đen/nâu, gia công in mực dẻo logo trước ngực. Giải pháp vận hành tiết kiệm.">
+                    </p>
+                    <p class="swipe-hint">👉 Swipe horizontally</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-lang-en="Material" data-lang-vi="Chất liệu">Material</th>
+                                    <th data-lang-en="Print" data-lang-vi="Gia công">Print</th>
+                                    <th data-lang-en="MOQ" data-lang-vi="Số lượng (MOQ)">MOQ</th>
+                                    <th data-lang-en="Unit Price" data-lang-vi="Giá/Cái">Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Standard Canvas</td>
+                                    <td>Screen Printed</td>
+                                    <td>10 pcs</td>
+                                    <td class="price-value">130,000 - 150,000 VND</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span data-lang-en="* Decent quality, but print will crack over long washing cycles." data-lang-vi="* Chất lượng khá, tuy nhiên hình in lụa có thể nứt rạn sau nhiều lần giặt."></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- STRATEGY COMPARISON BOARD -->
+        <div class="strategy-board">
+            <h2 class="board-title" data-lang-en="Strategic Comparison Board" data-lang-vi="Bảng Đánh Giá & So Sánh Chiến Lược">Strategic Comparison Board</h2>
+            <div class="board-columns">
+                
+                <!-- Premium strategy -->
+                <div class="board-col board-col-premium">
+                    <h3 class="board-col-header">
+                        <span>✨</span>
+                        <span data-lang-en="Premium Custom Strategy (Recommended)" data-lang-vi="Chiến Lược Premium Custom (Khuyên Dùng)">Premium Custom Strategy (Recommended)</span>
+                    </h3>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">🟢</span>
+                            <span data-lang-en="<b>100% Brand Credibility:</b> Custom printed cups and bags convey trust, quality, and high franchise potential to Western consumers."
+                                  data-lang-vi="<b>Độ nhận diện 100%:</b> Ly và bao bì in logo đồng bộ tạo độ uy tín thương hiệu cao, sẵn sàng chuyển nhượng nhượng quyền tại Mỹ."></span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">🟢</span>
+                            <span data-lang-en="<b>Zero Store Labor:</b> No manual labor required in-store to stick decals. Reduces operational bottlenecks during peak hours."
+                                  data-lang-vi="<b>Tiết kiệm nhân lực:</b> Nhân viên không mất thời gian lột dán tem tại quầy, rút ngắn thời gian trả món giờ cao điểm."></span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">🟢</span>
+                            <span data-lang-en="<b>Higher Quality & Durability:</b> Direct ink does not peel off when wet or stored in freezers. Fully compliant with US FDA regulations."
+                                  data-lang-vi="<b>Bền bỉ & Vệ sinh:</b> Mực in chuyên dụng bám dính vĩnh viễn, không bong tróc khi gặp nước đá, đạt chuẩn FDA Hoa Kỳ."></span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">🟡</span>
+                            <span data-lang-en="<b>Higher Initial MOQ:</b> Needs higher upfront cash flow to lock direct print runs (usually 5,000+ pcs for custom bags)."
+                                  data-lang-vi="<b>Yêu cầu MOQ đầu kỳ:</b> Đòi hỏi vốn đầu tư ban đầu cao hơn một chút để kích hoạt các ca in trục lớn của nhà máy."></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Classic strategy -->
+                <div class="board-col board-col-classic">
+                    <h3 class="board-col-header">
+                        <span>🏷️</span>
+                        <span data-lang-en="Classic Decal Strategy" data-lang-vi="Chiến Lược Dán Tem Classic">Classic Decal Strategy</span>
+                    </h3>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">🟢</span>
+                            <span data-lang-en="<b>Ultra-Low MOQ:</b> Only buy blank stock (1,000 pcs) + separate decals. Excellent for testing market response."
+                                  data-lang-vi="<b>MOQ tối thiểu cực thấp:</b> Chỉ cần mua phôi trơn sẵn (thùng 1,000 ly) + tem lẻ. Vô cùng linh hoạt khi test menu."></span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">🟢</span>
+                            <span data-lang-en="<b>Lower Upfront Capital:</b> Minimize cash locked in inventory storage in the initial opening phase."
+                                  data-lang-vi="<b>Vốn lưu động thấp:</b> Không bị đọng nhiều vốn ở kho bãi bao bì trong 1-2 tháng đầu khai trương."></span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">🔴</span>
+                            <span data-lang-en="<b>Heavy Labor Cost:</b> High manual labor hours required to peel and paste decals on every single cup and bag before serving."
+                                  data-lang-vi="<b>Tốn nhân công vận hành:</b> Tốn rất nhiều thời gian lột dán decal thủ công, gây chậm trễ chuỗi và tăng áp lực bếp."></span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">🔴</span>
+                            <span data-lang-en="<b>Sub-optimal Ambiance:</b> Wet drink cups (ice condensation) cause vinyl decals to bubble, peel off, or warp, damaging brand image."
+                                  data-lang-vi="<b>Tính thẩm mỹ giảm:</b> Ly nước lạnh tươm mồ hôi đá dễ làm bong tróc lớp tem dán, ảnh hưởng lớn đến trải nghiệm khách."></span>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
         </div>
 
     </div>
 
+    <!-- IMAGE VIEW MODAL -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg" onclick="event.stopPropagation()">
+    </div>
+
+    <!-- SCRIPTS -->
     <script>
-        function switchLang(lang) {
-            document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
-            document.getElementById('content-vi').style.display = lang === 'vi' ? 'block' : 'none';
-            document.getElementById('btn-en').className = lang === 'en' ? 'active' : '';
-            document.getElementById('btn-vi').className = lang === 'vi' ? 'active' : '';
+        // Set View Mode: premium or classic
+        function setViewMode(mode) {
+            document.body.className = mode + '-active ' + (document.body.classList.contains('lang-vi') ? 'lang-vi' : '');
+            
+            // Update buttons
+            document.getElementById('toggle-premium').classList.toggle('active', mode === 'premium');
+            document.getElementById('toggle-classic').classList.toggle('active', mode === 'classic');
+            
+            // Dynamic theme glow adjust
+            if (mode === 'classic') {
+                document.documentElement.style.setProperty('--brand-yellow', '#38bdf8');
+                document.documentElement.style.setProperty('--accent-glow', 'rgba(56, 189, 248, 0.35)');
+            } else {
+                document.documentElement.style.setProperty('--brand-yellow', '#FFC107');
+                document.documentElement.style.setProperty('--accent-glow', 'rgba(255, 193, 7, 0.35)');
+            }
         }
+
+        // Set Language: en or vi
+        function setLang(lang) {
+            document.body.classList.toggle('lang-vi', lang === 'vi');
+            
+            // Update buttons
+            document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+            document.getElementById('lang-vi').classList.toggle('active', lang === 'vi');
+        }
+
+        // Modal Controls
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImg");
+
+        document.querySelectorAll('.category-img, .item-thumb').forEach(img => {
+            img.addEventListener('click', function() {
+                modal.style.display = "flex";
+                setTimeout(() => modal.classList.add('show'), 10);
+                modalImg.src = this.src;
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 300);
+        }
+
+        // Close on ESC
+        window.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeModal();
+        });
     </script>
 </body>
 </html>

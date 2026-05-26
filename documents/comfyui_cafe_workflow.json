@@ -1,0 +1,134 @@
+{
+  "3": {
+    "inputs": {
+      "seed": 123456789,
+      "steps": 30,
+      "cfg": 7.0,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 1.0,
+      "model": [
+        "4",
+        0
+      ],
+      "positive": [
+        "10",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "KSampler"
+  },
+  "4": {
+    "inputs": {
+      "ckpt_name": "RealVisXL_V4.0.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple"
+  },
+  "5": {
+    "inputs": {
+      "width": 1216,
+      "height": 832,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage"
+  },
+  "6": {
+    "inputs": {
+      "text": "An ultra-realistic isometric 3D architectural render of a coffee shop interior based on a rectangular floor plan. The front wall has the main entrance. The space is divided into a large main dining area and a rear utility section. In the rear section, there is a small enclosed restroom, an office room, and a small corridor between them leading to a back door. Right in front of this rear utility section sits a large, solid monolithic concrete coffee bar counter with metal shelving. The main dining area has a raw industrial warehouse mixed with gritty street-style aesthetic. The floor and walls are bare raw grey cement, with lower wall sections clad in corrugated metal. The ceiling is removed for the isometric view, showing warm yellow string lights hanging down. At the front entrance area, there are low seating clusters with black folding camping chairs and cinder block tables. In the middle space, there are massive wooden communal picnic tables with benches. Scattered around are vintage leather sofas. Free, unorganized layout. Highly detailed, 8k resolution, architectural visualization.",
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "7": {
+    "inputs": {
+      "text": "low quality, text, watermark, bad architecture, deformed structures, ugly, messy lines, bad proportions, bad perspective",
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "3",
+        0
+      ],
+      "vae": [
+        "4",
+        2
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "9": {
+    "inputs": {
+      "filename_prefix": "Cafe_Warehouse",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "SaveImage"
+  },
+  "10": {
+    "inputs": {
+      "strength": 0.8,
+      "start_percent": 0.0,
+      "end_percent": 1.0,
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "control_net": [
+        "11",
+        0
+      ],
+      "image": [
+        "13",
+        0
+      ]
+    },
+    "class_type": "ControlNetApplyAdvanced"
+  },
+  "11": {
+    "inputs": {
+      "control_net_name": "controlnet-canny-sdxl-1.0.safetensors"
+    },
+    "class_type": "ControlNetLoader"
+  },
+  "12": {
+    "inputs": {
+      "image": "floor_plan.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage"
+  },
+  "13": {
+    "inputs": {
+      "low_threshold": 0.4,
+      "high_threshold": 0.8,
+      "image": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "Canny"
+  }
+}
