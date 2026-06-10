@@ -1,0 +1,203 @@
+{
+  "1": {
+    "inputs": {
+      "unet_name": "flux1-Fill-Dev_FP8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader"
+  },
+  "2": {
+    "inputs": {
+      "clip_name1": "t5xxl_fp8_e4m3fn.safetensors",
+      "clip_name2": "clip_l.safetensors",
+      "type": "flux",
+      "device": "default"
+    },
+    "class_type": "DualCLIPLoader"
+  },
+  "3": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader"
+  },
+  "4": {
+    "inputs": {
+      "image": "sketchup_base.png"
+    },
+    "class_type": "LoadImage"
+  },
+  "5": {
+    "inputs": {
+      "mask": [
+        "4",
+        1
+      ],
+      "expand": 16,
+      "tapered_corners": true
+    },
+    "class_type": "GrowMask"
+  },
+  "6": {
+    "inputs": {
+      "mask": [
+        "5",
+        0
+      ],
+      "left": 16,
+      "top": 16,
+      "right": 16,
+      "bottom": 16
+    },
+    "class_type": "FeatherMask"
+  },
+  "7": {
+    "inputs": {
+      "text": "edit only the masked area according to this prompt, seamless photorealistic inpainting, preserve everything outside the mask, match original camera angle, perspective, lighting, materials, colors, reflections, texture, scale, and natural shadows, clean realistic detail",
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "8": {
+    "inputs": {
+      "text": "changed unmasked area, extra objects outside mask, warped geometry, distorted perspective, blurry, low quality, bad shadows, messy edges, text artifacts, watermark, logo distortion, duplicated objects",
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "9": {
+    "inputs": {
+      "guidance": 3.5,
+      "conditioning": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance"
+  },
+  "10": {
+    "inputs": {
+      "positive": [
+        "9",
+        0
+      ],
+      "negative": [
+        "8",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ],
+      "pixels": [
+        "4",
+        0
+      ],
+      "mask": [
+        "6",
+        0
+      ],
+      "noise_mask": true
+    },
+    "class_type": "InpaintModelConditioning"
+  },
+  "11": {
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "max_shift": 1.15,
+      "base_shift": 0.5,
+      "width": 1024,
+      "height": 1024
+    },
+    "class_type": "ModelSamplingFlux"
+  },
+  "12": {
+    "inputs": {
+      "model": [
+        "11",
+        0
+      ],
+      "strength": 1.0
+    },
+    "class_type": "DifferentialDiffusion"
+  },
+  "13": {
+    "inputs": {
+      "seed": 123456789,
+      "steps": 28,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 0.9,
+      "model": [
+        "12",
+        0
+      ],
+      "positive": [
+        "10",
+        0
+      ],
+      "negative": [
+        "10",
+        1
+      ],
+      "latent_image": [
+        "10",
+        2
+      ]
+    },
+    "class_type": "KSampler"
+  },
+  "14": {
+    "inputs": {
+      "samples": [
+        "13",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "15": {
+    "inputs": {
+      "filename_prefix": "ILoveBanhMi_Flux_Fill_Inpaint",
+      "images": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "SaveImage"
+  },
+  "16": {
+    "inputs": {
+      "destination": [
+        "4",
+        0
+      ],
+      "source": [
+        "14",
+        0
+      ],
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "mask": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "ImageCompositeMasked"
+  }
+}

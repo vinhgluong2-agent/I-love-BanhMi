@@ -1,0 +1,66 @@
+{
+  "1": {
+    "inputs": {
+      "image": "sketchup_base.png"
+    },
+    "class_type": "LoadImage"
+  },
+  "2": {
+    "inputs": {
+      "mask": [
+        "1",
+        1
+      ],
+      "expand": 18,
+      "tapered_corners": true
+    },
+    "class_type": "GrowMask"
+  },
+  "3": {
+    "inputs": {
+      "mask": [
+        "2",
+        0
+      ],
+      "left": 4,
+      "top": 4,
+      "right": 4,
+      "bottom": 4
+    },
+    "class_type": "FeatherMask"
+  },
+  "4": {
+    "inputs": {
+      "model_name": "big-lama.pt"
+    },
+    "class_type": "LoadLaMaModel"
+  },
+  "5": {
+    "inputs": {
+      "image": [
+        "1",
+        0
+      ],
+      "mask": [
+        "3",
+        0
+      ],
+      "device_mode": "Prefer GPU",
+      "lama_model": [
+        "4",
+        0
+      ]
+    },
+    "class_type": "LaMaInpaint"
+  },
+  "6": {
+    "inputs": {
+      "filename_prefix": "ILoveBanhMi_LaMa_RemoveLogo",
+      "images": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "SaveImage"
+  }
+}

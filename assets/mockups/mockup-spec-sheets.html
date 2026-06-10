@@ -1,0 +1,1547 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>I Love BanhMi - Mockup Spec Sheets</title>
+    <style>
+      :root {
+        --red: #ef476f;
+        --sky: #7bdff2;
+        --green: #9ef0cf;
+        --ink: #111111;
+        --muted: #52636f;
+        --paper: #f7fbff;
+        --card: #ffffff;
+        --line: #111111;
+        --soft: #eaf6ff;
+        --soft-line: #d7e5ed;
+        --image-bg: #e7f0f4;
+        --shadow: rgba(17, 17, 17, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family:
+          Arial,
+          "Helvetica Neue",
+          sans-serif;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 12px 16px;
+        padding: 14px 22px;
+        background: rgba(247, 251, 255, 0.96);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(12px);
+      }
+
+      .topbar h1 {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+
+      .topbar span {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      button,
+      select {
+        height: 38px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--card);
+        color: var(--ink);
+        font: inherit;
+        font-size: 13px;
+      }
+
+      button {
+        padding: 0 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      select {
+        min-width: 210px;
+        padding: 0 10px;
+      }
+
+      .category-tabs {
+        grid-column: 1 / -1;
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-top: 4px;
+        scrollbar-width: thin;
+      }
+
+      .tab-button {
+        flex: 0 0 auto;
+        height: 34px;
+        padding: 0 12px;
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        background: #ffffff;
+        color: var(--ink);
+        box-shadow: 3px 3px 0 rgba(17, 17, 17, 0.18);
+      }
+
+      .tab-button[aria-selected="true"] {
+        background: var(--green);
+        box-shadow: 3px 3px 0 var(--ink);
+      }
+
+      main {
+        display: grid;
+        gap: 36px;
+        padding: 28px;
+      }
+
+      .sheet {
+        width: min(1500px, 100%);
+        min-height: 820px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 430px;
+        background: var(--paper);
+        box-shadow: 0 18px 45px var(--shadow);
+        overflow: hidden;
+      }
+
+      .image-pane {
+        min-height: 820px;
+        background: var(--image-bg);
+        display: grid;
+      }
+
+      .image-pane img {
+        width: 100%;
+        height: 100%;
+        min-height: 820px;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+      }
+
+      .image-pane img.contain {
+        object-fit: contain;
+        padding: 22px;
+      }
+
+      .spec-pane {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        background: var(--paper);
+      }
+
+      .brand-head {
+        min-height: 132px;
+        padding: 28px 34px;
+        color: var(--ink);
+        border-bottom: 4px solid var(--ink);
+        background: var(--green);
+      }
+
+      .brand-head h2 {
+        margin: 0;
+        font-size: 29px;
+        line-height: 1.05;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .brand-head p {
+        margin: 8px 0 0;
+        font-size: 15px;
+        line-height: 1.35;
+      }
+
+      .spec-body {
+        display: grid;
+        align-content: start;
+        gap: 20px;
+        padding: 28px 24px;
+      }
+
+      .price-box,
+      .info-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 5px 5px 0 rgba(17, 17, 17, 0.18);
+      }
+
+      .price-box {
+        padding: 20px;
+      }
+
+      .label {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .price {
+        margin-top: 8px;
+        color: var(--red);
+        font-size: 29px;
+        line-height: 1.1;
+        font-weight: 900;
+      }
+
+      .moq-table {
+        width: 100%;
+        margin-top: 14px;
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-size: 12px;
+        line-height: 1.25;
+      }
+
+      .moq-table th,
+      .moq-table td {
+        padding: 8px 7px;
+        border-top: 1px solid var(--soft-line);
+        text-align: left;
+        vertical-align: top;
+        overflow-wrap: anywhere;
+      }
+
+      .moq-table th {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .moq-table td:nth-child(2),
+      .moq-table td:nth-child(3) {
+        font-weight: 800;
+      }
+
+      .moq-table td:nth-child(2) {
+        color: var(--red);
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 10px;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: var(--sky);
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .status.dashboard {
+        background: var(--green);
+        color: var(--ink);
+      }
+
+      .status.official {
+        background: var(--green);
+        color: var(--ink);
+        border: 1px solid #111111;
+      }
+
+      .info-card {
+        padding: 18px 20px;
+      }
+
+      .info-card h3 {
+        margin: 0 0 12px;
+        font-size: 21px;
+        line-height: 1.2;
+      }
+
+      .spec-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .spec-list li {
+        position: relative;
+        padding-left: 24px;
+        color: #1f2a33;
+        font-size: 15px;
+        line-height: 1.35;
+      }
+
+      .spec-list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 7px;
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        background: var(--green);
+        border: 1px solid var(--ink);
+      }
+
+      .spec-list li:nth-child(3n + 1)::before {
+        background: var(--sky);
+      }
+
+      .spec-list li:nth-child(3n + 2)::before {
+        background: var(--red);
+      }
+
+      .note {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .file-ref {
+        overflow-wrap: anywhere;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .legacy-section {
+        width: min(1500px, calc(100% - 56px));
+        margin: 0 auto 48px;
+        padding: 30px;
+        background: #ffffff;
+        box-shadow: 0 18px 45px var(--shadow);
+      }
+
+      .legacy-section h2 {
+        margin: 0;
+        font-size: 30px;
+        line-height: 1.1;
+        text-transform: uppercase;
+      }
+
+      .legacy-section > p {
+        max-width: 860px;
+        margin: 10px 0 24px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .legacy-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+        gap: 18px;
+      }
+
+      .legacy-card {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--card);
+        box-shadow: 5px 5px 0 rgba(17, 17, 17, 0.14);
+      }
+
+      .legacy-card header {
+        padding: 16px 18px;
+        background: var(--green);
+        color: var(--ink);
+        border-bottom: 3px solid var(--ink);
+      }
+
+      .legacy-card h3 {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.2;
+        text-transform: uppercase;
+      }
+
+      .legacy-card .source {
+        margin-top: 5px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .legacy-image-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--soft-line);
+        background: var(--soft);
+      }
+
+      .legacy-image-strip figure {
+        margin: 0;
+        min-width: 0;
+      }
+
+      .legacy-image-strip img {
+        width: 100%;
+        height: 120px;
+        display: block;
+        object-fit: cover;
+        border: 1px solid var(--soft-line);
+        border-radius: 6px;
+        background: var(--image-bg);
+      }
+
+      .legacy-image-strip figcaption {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 800;
+        line-height: 1.25;
+      }
+
+      .legacy-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-size: 12px;
+        line-height: 1.3;
+      }
+
+      .legacy-table th,
+      .legacy-table td {
+        padding: 9px 10px;
+        border-top: 1px solid var(--soft-line);
+        text-align: left;
+        vertical-align: top;
+        overflow-wrap: anywhere;
+      }
+
+      .legacy-table th {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .legacy-table td:nth-child(4) {
+        color: var(--red);
+        font-weight: 900;
+      }
+
+      @media (max-width: 980px) {
+        .topbar {
+          position: static;
+          align-items: flex-start;
+          grid-template-columns: 1fr;
+        }
+
+        .actions {
+          width: 100%;
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        button,
+        select {
+          width: 100%;
+        }
+
+        main {
+          padding: 12px;
+        }
+
+        .legacy-section {
+          width: calc(100% - 24px);
+          padding: 18px;
+        }
+
+        .legacy-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .sheet {
+          min-height: 0;
+          grid-template-columns: 1fr;
+        }
+
+        .image-pane,
+        .image-pane img {
+          min-height: 420px;
+        }
+      }
+
+      @media print {
+        @page {
+          size: A4 landscape;
+          margin: 0;
+        }
+
+        body {
+          background: #ffffff;
+        }
+
+        .topbar {
+          display: none;
+        }
+
+        main {
+          display: block;
+          padding: 0;
+        }
+
+        .legacy-section {
+          width: 100vw;
+          min-height: 100vh;
+          margin: 0;
+          box-shadow: none;
+          page-break-before: always;
+          break-before: page;
+        }
+
+        .sheet {
+          width: 100vw;
+          height: 100vh;
+          min-height: 0;
+          box-shadow: none;
+          page-break-after: always;
+          break-after: page;
+          grid-template-columns: minmax(0, 1fr) 430px;
+        }
+
+        .sheet:last-child {
+          page-break-after: auto;
+          break-after: auto;
+        }
+
+        .image-pane,
+        .image-pane img {
+          min-height: 100vh;
+          height: 100vh;
+        }
+
+        .spec-pane {
+          height: 100vh;
+        }
+
+        .brand-head {
+          min-height: 118px;
+        }
+
+        .spec-body {
+          gap: 16px;
+          padding: 20px;
+        }
+
+        .price {
+          font-size: 25px;
+        }
+
+        .moq-table {
+          font-size: 10px;
+        }
+
+        .info-card h3 {
+          font-size: 18px;
+        }
+
+        .spec-list li {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>
+        I Love BanhMi Mockup Spec Sheets
+        <span>Image on the left, specs and MOQ pricing on the right. Reference prices are not official vendor quotations.</span>
+      </h1>
+      <div class="actions">
+        <select id="jump"></select>
+        <button type="button" onclick="window.print()">Print / Export PDF</button>
+      </div>
+      <nav class="category-tabs" id="categoryTabs" aria-label="Product type tabs"></nav>
+    </header>
+
+    <main id="sheets"></main>
+    <section class="legacy-section" id="legacyQuotes"></section>
+
+    <script>
+      const products = [
+        {
+          title: "LED Neon Decor Sign",
+          subtitle: "Indoor handmade logo sign",
+          image: "signage_mockups/led-neon-decor-sign.png",
+          fit: "contain",
+          theme: "mint-fresh",
+          price: "1,500,000 VND / sign",
+          status: "official quote",
+          specs: [
+            "Quoted size: 1200 x 900 mm",
+            "Quoted LED bending colors: red and white",
+            "Indoor use only",
+            "Handmade fabrication",
+            "Final handmade finish follows the logo sample approximately",
+          ],
+          note: "Vendor quote supplied for the LED neon decor sign. Confirm backing board, adapter, mounting hardware, cable length, and final LED color layout before production.",
+        },
+        {
+          title: "Banh Mi Carry Box",
+          subtitle: "For printer quotation",
+          image: "banhmi-box-kraft-mockup-v1.png",
+          price: "18,000-35,000 VND / box",
+          status: "reference price, no official quote yet",
+          specs: [
+            "Holds approx. 10 wrapped banh mi",
+            "Inner size: 360 x 260 x 120 mm",
+            "Outer approx.: 380 x 280 x 140 mm",
+            "Kraft/carton board, 350-400 gsm",
+            "Fold-over locking lid, side locks, carry handle cutouts",
+            "Front and side direct custom print",
+          ],
+          note: "No official vendor quote yet. Use this range as a working budget when asking factories to quote dieline, paper weight, print colors, MOQ, and carry-handle structure.",
+        },
+        {
+          title: "Kraft Box Spec",
+          subtitle: "For printer quotation",
+          image: "banhmi-box-kraft-mockup-v1.png",
+          price: "18,000-35,000 VND / box",
+          status: "reference price, no official quote yet",
+          specs: [
+            "Recommended inner size: 360 x 260 x 120 mm",
+            "Outer approx.: 380 x 280 x 140 mm",
+            "Capacity: approx. 10 wrapped sandwiches",
+            "Packing layout: 2 rows x 5 pieces",
+            "Natural kraft surface with matte ink",
+            "No grease coating required because sandwiches are wrapped individually",
+          ],
+          note: "No official vendor quote yet. If sandwiches exceed 240 mm length, ask the factory to also quote the larger inner size: 380 x 280 x 120 mm.",
+        },
+        {
+          title: "PET Cold Cup",
+          subtitle: "Direct printed cup",
+          image: "packaging_mockups/product-crops/pet-cold-cup.png",
+          fit: "contain",
+          price: "933-1,266 VND / cup",
+          status: "dashboard price",
+          specs: [
+            "Clear rigid PET for cold drinks only",
+            "Direct 1-color logo print",
+            "Main sizes: 470ml, 500ml, 590ml, 700ml",
+            "MOQ: 1,000 pcs",
+            "Use for iced tea, boba, coffee, juice",
+          ],
+          note: "Price includes direct print in the dashboard source.",
+        },
+        {
+          title: "PP Flat-Bottom Cup",
+          subtitle: "Direct printed cup",
+          image: "packaging_mockups/product-crops/pp-flat-bottom-cup.png",
+          fit: "contain",
+          price: "868-980 VND / cup",
+          status: "dashboard price",
+          specs: [
+            "Flexible semi-opaque PP",
+            "Heat-resistant and supports heat-seal film",
+            "Main sizes: 500ml, 650ml, 700ml",
+            "MOQ: 1,000 pcs",
+            "Good for drinks needing stronger sealing",
+          ],
+        },
+        {
+          title: "Dual-Chamber Split Cup",
+          subtitle: "Trending beverage packaging",
+          image: "packaging_mockups/product-crops/dual-chamber-split-cup.png",
+          fit: "contain",
+          price: "7,512 VND / set",
+          status: "dashboard price",
+          specs: [
+            "600ml split PP cup",
+            "Overall size: 95 x 63 x 162 mm",
+            "Two drink chambers in one cup",
+            "Heart lid included",
+            "Price breakdown: cup 6,708 VND + lid 804 VND",
+            "Pack: 15 pcs",
+          ],
+        },
+        {
+          title: "Hot Paper Cup",
+          subtitle: "White/kraft direct print",
+          image: "redesign_concepts/mint-fresh-hot-paper-cup-concept.png",
+          fit: "contain",
+          price: "939-1,570 VND / cup",
+          status: "dashboard price",
+          specs: [
+            "Food paper with PE coating",
+            "Direct logo print",
+            "Main sizes: 8oz, 12oz, 16oz",
+            "MOQ: 1,000 pcs",
+            "Lids quoted separately",
+          ],
+        },
+        {
+          title: "Silver 2-Layer Hot Cup",
+          subtitle: "Cup with sipper lid",
+          image: "packaging_mockups/silver-2-layer-hot-cup.png",
+          fit: "contain",
+          price: "1,750-2,220 VND / cup",
+          status: "official quote",
+          specs: [
+            "Two-layer insulated paper cup",
+            "Metallized/titanium silver paper or Meta Shine silver paper",
+            "Quoted sizes: 12oz, 16oz, 22oz",
+            "Full-color industrial UV print MOQ: 5,000 pcs/size",
+            "1-color silk screen or foil stamping MOQ: 3,000 pcs/size, price not quoted",
+            "White sip-through plastic lid shown in mockup",
+            "Front logo placement",
+            "Use for hot coffee or tea",
+          ],
+          note: "Official vendor quote received for full-color UV print on silver metallized paper. Confirm whether the white lid is included before production.",
+        },
+        {
+          title: "Greaseproof Wrapper",
+          subtitle: "Banh mi wrapping paper",
+          image: "packaging_mockups/product-crops/greaseproof-wrapper.png",
+          fit: "contain",
+          price: "110-240 VND / sheet",
+          status: "reference price, no official quote yet",
+          specs: [
+            "MG white greaseproof 38-40 gsm or kraft paper",
+            "Food-safe soy ink",
+            "Sizes: 20 x 30 cm and 30 x 30 cm",
+            "MOQ: 20,000-100,000 sheets",
+            "For individually wrapped sandwiches",
+          ],
+          note: "No official vendor quote yet. MOQ tiers are reference prices for asking factories to quote greaseproof paper production.",
+        },
+        {
+          title: "Banh Mi Side-Gusset Bag",
+          subtitle: "Custom printed bag",
+          image: "packaging_mockups/product-crops/banh-mi-side-gusset-bag.png",
+          fit: "contain",
+          price: "300 VND / bag",
+          status: "dashboard price",
+          specs: [
+            "Food-grade kraft or greaseproof paper",
+            "Side-gusset bag shape",
+            "1-color logo print",
+            "MOQ: 5,000 pcs",
+            "Cleaner than hand-applied decals",
+          ],
+        },
+        {
+          title: "Kraft Takeaway Bag",
+          subtitle: "Offset logo print",
+          image: "packaging_mockups/product-crops/kraft-takeaway-bag.png",
+          fit: "contain",
+          price: "190-198 VND / bag",
+          status: "dashboard price",
+          specs: [
+            "Biodegradable kraft bag",
+            "Square bottom: 13 x 20 x 5 cm",
+            "Hexagon bottom: 15 x 20 cm",
+            "Offset logo print",
+            "MOQ: 5,000 pcs",
+          ],
+        },
+        {
+          title: "2-Tier Pho Bowl",
+          subtitle: "Takeaway pho packaging",
+          image: "packaging_mockups/product-crops/pho-bowl.png",
+          fit: "contain",
+          price: "2,500-5,000 VND / set",
+          status: "estimate",
+          specs: [
+            "PP or kraft two-tier bowl",
+            "Broth below, noodle/topping tray above",
+            "Target volume: 1000ml / 1200ml",
+            "Heat and microwave-safe target",
+            "MOQ target: approx. 2,000 pcs",
+          ],
+          note: "Dashboard status was negotiating custom. Must test leaking, heat, lid fit, and food-contact documents.",
+        },
+        {
+          title: "Sauce Cup",
+          subtitle: "Condiment container",
+          image: "packaging_mockups/product-crops/sauce-cup.png",
+          fit: "contain",
+          price: "530-1,760 VND / cup",
+          status: "estimate",
+          specs: [
+            "Small plastic or paper sauce cup",
+            "Capacity target: 1-3 oz / 30-90 ml",
+            "Lid included",
+            "For sauce, chili oil, pickles, or condiment packs",
+            "Logo sticker optional",
+          ],
+        },
+        {
+          title: "Paper-Wrapped Straw",
+          subtitle: "Pattern straw wrapper",
+          image: "packaging_mockups/product-crops/paper-wrapped-straw.png",
+          fit: "contain",
+          price: "150-370 VND / straw",
+          status: "estimate",
+          specs: [
+            "Individually paper-wrapped straw",
+            "Kraft or white paper wrap",
+            "Optional repeat brand pattern",
+            "Typical sizes: phi 6/8/12 x 197 mm",
+            "Dashboard status: sourcing",
+          ],
+        },
+        {
+          title: "Cutlery Kit",
+          subtitle: "Single-use service kit",
+          image: "packaging_mockups/product-crops/cutlery-kit.png",
+          fit: "contain",
+          price: "900-1,800 VND / kit",
+          status: "estimate",
+          specs: [
+            "Spoon, fork, knife, and chopsticks",
+            "Kraft sleeve or clear outer bag",
+            "Optional napkin and sauce packet",
+            "Prefer wood or bagasse for dine-out kit",
+          ],
+        },
+        {
+          title: "Kraft Napkin",
+          subtitle: "Dine-out napkin",
+          image: "packaging_mockups/product-crops/kraft-napkin.png",
+          fit: "contain",
+          price: "80-150 VND / napkin",
+          status: "estimate",
+          specs: [
+            "Kraft or brown napkin",
+            "Single-use service item",
+            "Blank or logo printed corner",
+            "Use inside delivery and dine-in kits",
+          ],
+        },
+        {
+          title: "Tamper-Evident Seal",
+          subtitle: "Cup, bottle, bowl, bag seal",
+          image: "packaging_mockups/product-crops/tamper-evident-seal.png",
+          fit: "contain",
+          price: "30-280 VND / seal",
+          status: "estimate",
+          specs: [
+            "Sticker seal for cup lids, bottle necks, pho bowls, and delivery bags",
+            "Clear, kraft, or breakable decal options",
+            "Can carry logo or delivery warning",
+            "Must test adhesive on wet/cold cup surfaces",
+          ],
+        },
+        {
+          title: "Cup Lid / Film Seal",
+          subtitle: "Matched by cup size",
+          image: "packaging_mockups/product-crops/cup-lid-film-seal.png",
+          fit: "contain",
+          price: "200-1,300 VND / lid",
+          status: "dashboard + estimate",
+          specs: [
+            "Flat PET lid, dome lid, hot-cup lid, heart lid, or heat-seal film",
+            "Dual-cup heart lid: 804 VND",
+            "BVC paper-cup lid set: 900-1,300 VND",
+            "Must match rim diameter and sealing machine",
+          ],
+        },
+        {
+          title: "Dine-In Black Tray",
+          subtitle: "Reusable service tray",
+          image: "packaging_mockups/product-crops/dine-in-black-tray.png",
+          fit: "contain",
+          price: "25,000-125,000 VND / tray",
+          status: "estimate",
+          specs: [
+            "Black rectangular melamine or plastic tray",
+            "Use for dine-in combo service",
+            "Small/medium sizes to confirm with store workflow",
+            "Pair with printed tray liner",
+          ],
+        },
+        {
+          title: "Kraft Basket / Small Tray",
+          subtitle: "Dine-in paper tray",
+          image: "packaging_mockups/product-crops/kraft-basket-small-tray.png",
+          fit: "contain",
+          price: "1,400-3,500 VND / piece",
+          status: "estimate",
+          specs: [
+            "Small kraft tray or basket",
+            "For banh mi, fries, sides, or combo service",
+            "Grease-resistant liner recommended",
+            "Confirm size after menu mapping",
+          ],
+        },
+        {
+          title: "Tray Liner",
+          subtitle: "Printed paper liner",
+          image: "packaging_mockups/product-crops/tray-liner.png",
+          fit: "contain",
+          price: "700 VND / sheet",
+          status: "estimate",
+          specs: [
+            "Paper liner printed with brand pattern or message",
+            "Sized to dine-in tray",
+            "MOQ target: 1,000 sheets",
+            "Use food-safe ink and confirm grease resistance",
+          ],
+        },
+        {
+          title: "Clear Bottle",
+          subtitle: "Square bottle with black cap",
+          image: "packaging_mockups/10-clear-bottle-mockup.png",
+          fit: "contain",
+          price: "2,500-14,300 VND / bottle",
+          status: "estimate",
+          specs: [
+            "Clear PET bottle",
+            "Black screw cap",
+            "Target volume: 330-500ml",
+            "Front logo label or direct print",
+            "Optional neck seal with pattern",
+          ],
+        },
+        {
+          title: "Canvas Apron",
+          subtitle: "Staff uniform",
+          image: "apparel_mockups/apron_model_apron_chest_center_logo_25pct_larger_mockup.png",
+          fit: "contain",
+          price: "130,000-240,000 VND / apron",
+          status: "dashboard price",
+          specs: [
+            "Gray/black canvas apron",
+            "Cross-back strap",
+            "Chest logo placement",
+            "Front pocket",
+            "MOQ: 10 pcs",
+            "Screen print: 130,000-150,000 VND; embroidery: 170,000-240,000 VND",
+          ],
+        },
+        {
+          title: "Black Polo Uniform",
+          subtitle: "Chest logo polo",
+          image: "apparel_mockups/polo_black_model_lacoste_position_logo_mockup.png",
+          fit: "contain",
+          price: "109,000-260,000 VND / shirt",
+          status: "estimate",
+          specs: [
+            "Black short-sleeve polo",
+            "Left-chest logo placement",
+            "Staff front-of-house uniform",
+            "Final fabric and size run required",
+            "Logo method: screen print, heat transfer, UV DTF, or embroidery",
+          ],
+        },
+        {
+          title: "Cream Polo Uniform",
+          subtitle: "Chest logo polo",
+          image: "apparel_mockups/polo_blank_cream_mockup.png",
+          fit: "contain",
+          price: "109,000-260,000 VND / shirt",
+          status: "estimate",
+          specs: [
+            "Cream short-sleeve polo",
+            "Left-chest logo placement",
+            "Staff front-of-house uniform",
+            "Final fabric and size run required",
+            "Logo method: screen print, heat transfer, UV DTF, or embroidery",
+          ],
+        },
+        {
+          title: "Black Nitrile Glove",
+          subtitle: "Kitchen prep hygiene",
+          image: "packaging_mockups/ILoveBanhMi_Precise_Marked_Area_00002_.png",
+          fit: "contain",
+          price: "39,000-128,000 VND / box",
+          status: "estimate",
+          specs: [
+            "Powder-free black nitrile glove",
+            "Latex-free target",
+            "Food prep use",
+            "Box of 100 pcs",
+            "Confirm FDA/HACCP suitability with vendor",
+          ],
+        },
+      ];
+
+      const sheets = document.getElementById("sheets");
+      const jump = document.getElementById("jump");
+      const categoryTabs = document.getElementById("categoryTabs");
+      let activeCategory = "all";
+
+      const categories = [
+        { id: "all", label: "All Products" },
+        { id: "signage", label: "Signage" },
+        { id: "boxes", label: "Boxes" },
+        { id: "cups", label: "Cups" },
+        { id: "wrappers", label: "Wrappers" },
+        { id: "bags", label: "Bags" },
+        { id: "bowls", label: "Bowls" },
+        { id: "service", label: "Service Items" },
+        { id: "trays", label: "Trays" },
+        { id: "bottles", label: "Bottles" },
+        { id: "apparel", label: "Apparel" },
+      ];
+
+      function productCategory(product) {
+        const title = product.title.toLowerCase();
+        if (title.includes("sign")) return "signage";
+        if (title.includes("box")) return "boxes";
+        if (title.includes("cup") || title.includes("lid") || title.includes("seal")) return "cups";
+        if (title.includes("wrapper")) return "wrappers";
+        if (title.includes("bag")) return "bags";
+        if (title.includes("bowl")) return "bowls";
+        if (title.includes("straw") || title.includes("cutlery") || title.includes("napkin") || title.includes("glove")) {
+          return "service";
+        }
+        if (title.includes("tray") || title.includes("basket") || title.includes("liner")) return "trays";
+        if (title.includes("bottle")) return "bottles";
+        if (title.includes("apron") || title.includes("polo")) return "apparel";
+        return "service";
+      }
+
+      function statusClass(status) {
+        const normalized = status.trim().toLowerCase();
+        if (normalized === "dashboard price") return "dashboard";
+        if (normalized === "official quote") return "official";
+        return "";
+      }
+
+      function statusLabel(status) {
+        const normalized = status.toLowerCase();
+        if (normalized === "official quote") return "Official vendor quote available";
+        if (normalized === "dashboard price") return "Dashboard price available";
+        if (normalized.includes("dashboard") && normalized.includes("estimate")) {
+          return "Part dashboard price, part reference price";
+        }
+        return "Reference price, no official quote yet";
+      }
+
+      const priceTiers = {
+        "LED Neon Decor Sign": [
+          { moq: "1 sign", unit: "1,500,000 VND", total: "1,500,000 VND", note: "1200 x 900 mm, indoor LED neon decor" },
+        ],
+        "Banh Mi Carry Box": [
+          { moq: "500 pcs", unit: "35,000 VND", total: "17,500,000 VND", note: "custom print, estimate" },
+          { moq: "1,000 pcs", unit: "25,000 VND", total: "25,000,000 VND", note: "target quote" },
+          { moq: "2,000 pcs", unit: "18,000 VND", total: "36,000,000 VND", note: "best estimate" },
+        ],
+        "Kraft Box Spec": [
+          { moq: "500 pcs", unit: "35,000 VND", total: "17,500,000 VND", note: "custom kraft print, estimate" },
+          { moq: "1,000 pcs", unit: "25,000 VND", total: "25,000,000 VND", note: "target quote" },
+          { moq: "2,000 pcs", unit: "18,000 VND", total: "36,000,000 VND", note: "best estimate" },
+        ],
+        "PET Cold Cup": [
+          { moq: "1,000 pcs", unit: "933 VND", total: "933,000 VND", note: "470ml" },
+          { moq: "1,000 pcs", unit: "996 VND", total: "996,000 VND", note: "500ml" },
+          { moq: "1,000 pcs", unit: "1,138 VND", total: "1,138,000 VND", note: "590ml" },
+          { moq: "1,000 pcs", unit: "1,266 VND", total: "1,266,000 VND", note: "700ml" },
+        ],
+        "PP Flat-Bottom Cup": [
+          { moq: "1,000 pcs", unit: "868 VND", total: "868,000 VND", note: "500ml" },
+          { moq: "1,000 pcs", unit: "920 VND", total: "920,000 VND", note: "650ml" },
+          { moq: "1,000 pcs", unit: "980 VND", total: "980,000 VND", note: "700ml" },
+        ],
+        "Dual-Chamber Split Cup": [
+          { moq: "15 pcs", unit: "7,512 VND", total: "113,000 VND", note: "600ml, cup + heart lid" },
+        ],
+        "Hot Paper Cup": [
+          { moq: "1,000 pcs", unit: "939-1,200 VND", total: "939,000-1,200,000 VND", note: "8oz white/kraft" },
+          { moq: "1,000 pcs", unit: "1,069-1,410 VND", total: "1,069,000-1,410,000 VND", note: "12oz white/kraft" },
+          { moq: "1,000 pcs", unit: "1,144-1,570 VND", total: "1,144,000-1,570,000 VND", note: "16oz white/kraft" },
+        ],
+        "Silver 2-Layer Hot Cup": [
+          { moq: "5,000 pcs/size", unit: "1,910 VND", total: "9,550,000 VND", note: "12oz, full-color UV print" },
+          { moq: "10,000 pcs/size", unit: "1,750 VND", total: "17,500,000 VND", note: "12oz, full-color UV print" },
+          { moq: "5,000 pcs/size", unit: "2,100 VND", total: "10,500,000 VND", note: "16oz, full-color UV print" },
+          { moq: "10,000 pcs/size", unit: "1,920 VND", total: "19,200,000 VND", note: "16oz, full-color UV print" },
+          { moq: "5,000 pcs/size", unit: "2,220 VND", total: "11,100,000 VND", note: "22oz, full-color UV print" },
+          { moq: "10,000 pcs/size", unit: "2,120 VND", total: "21,200,000 VND", note: "22oz, full-color UV print" },
+        ],
+        "Greaseproof Wrapper": [
+          { moq: "20,000 sheets", unit: "165 VND", total: "3,300,000 VND", note: "20 x 30 cm" },
+          { moq: "50,000 sheets", unit: "130 VND", total: "6,500,000 VND", note: "20 x 30 cm" },
+          { moq: "100,000 sheets", unit: "110 VND", total: "11,000,000 VND", note: "20 x 30 cm" },
+          { moq: "20,000 sheets", unit: "240 VND", total: "4,800,000 VND", note: "30 x 30 cm" },
+          { moq: "50,000 sheets", unit: "195 VND", total: "9,750,000 VND", note: "30 x 30 cm" },
+          { moq: "100,000 sheets", unit: "165 VND", total: "16,500,000 VND", note: "30 x 30 cm" },
+        ],
+        "Banh Mi Side-Gusset Bag": [
+          { moq: "5,000 pcs", unit: "300 VND", total: "1,500,000 VND", note: "custom printed bag" },
+        ],
+        "Kraft Takeaway Bag": [
+          { moq: "5,000 pcs", unit: "198 VND", total: "990,000 VND", note: "square bottom 13 x 20 x 5 cm" },
+          { moq: "5,000 pcs", unit: "190 VND", total: "950,000 VND", note: "hexagon bottom 15 x 20 cm" },
+        ],
+        "2-Tier Pho Bowl": [
+          { moq: "2,000 sets", unit: "5,000 VND", total: "10,000,000 VND", note: "custom mold check estimate" },
+          { moq: "5,000 sets", unit: "3,500 VND", total: "17,500,000 VND", note: "target quote" },
+          { moq: "10,000 sets", unit: "2,500 VND", total: "25,000,000 VND", note: "best estimate" },
+        ],
+        "Sauce Cup": [
+          { moq: "100 sets", unit: "1,760 VND", total: "176,000 VND", note: "small pack estimate" },
+          { moq: "1,000 sets", unit: "900 VND", total: "900,000 VND", note: "cup + lid estimate" },
+          { moq: "10,000 sets", unit: "530 VND", total: "5,300,000 VND", note: "bulk quote target" },
+        ],
+        "Paper-Wrapped Straw": [
+          { moq: "1,000 pcs", unit: "370 VND", total: "370,000 VND", note: "paper wrap, estimate" },
+          { moq: "5,000 pcs", unit: "250 VND", total: "1,250,000 VND", note: "printed wrap target" },
+          { moq: "10,000 pcs", unit: "150 VND", total: "1,500,000 VND", note: "bulk quote target" },
+        ],
+        "Cutlery Kit": [
+          { moq: "1,000 kits", unit: "1,800 VND", total: "1,800,000 VND", note: "full kit estimate" },
+          { moq: "5,000 kits", unit: "1,200 VND", total: "6,000,000 VND", note: "kraft sleeve target" },
+          { moq: "10,000 kits", unit: "900 VND", total: "9,000,000 VND", note: "bulk quote target" },
+        ],
+        "Kraft Napkin": [
+          { moq: "1,000 pcs", unit: "150 VND", total: "150,000 VND", note: "blank/low MOQ estimate" },
+          { moq: "5,000 pcs", unit: "110 VND", total: "550,000 VND", note: "logo corner estimate" },
+          { moq: "10,000 pcs", unit: "80 VND", total: "800,000 VND", note: "bulk quote target" },
+        ],
+        "Tamper-Evident Seal": [
+          { moq: "1,000 seals", unit: "280 VND", total: "280,000 VND", note: "low MOQ estimate" },
+          { moq: "5,000 seals", unit: "80 VND", total: "400,000 VND", note: "delivery/cup seal" },
+          { moq: "10,000 seals", unit: "30 VND", total: "300,000 VND", note: "bulk quote target" },
+        ],
+        "Cup Lid / Film Seal": [
+          { moq: "15 pcs", unit: "804 VND", total: "12,060 VND", note: "dual-cup heart lid only" },
+          { moq: "1,000 pcs", unit: "200-900 VND", total: "200,000-900,000 VND", note: "standard lid estimate" },
+          { moq: "3,000 pcs", unit: "1,300 VND", total: "3,900,000 VND", note: "BVC cone-hat lid + flat PET lid" },
+          { moq: "6,000 pcs", unit: "1,100 VND", total: "6,600,000 VND", note: "BVC cone-hat lid + flat PET lid" },
+          { moq: "10,000 pcs", unit: "900 VND", total: "9,000,000 VND", note: "BVC cone-hat lid + flat PET lid" },
+        ],
+        "Dine-In Black Tray": [
+          { moq: "10 pcs", unit: "125,000 VND", total: "1,250,000 VND", note: "heavy tray estimate" },
+          { moq: "50 pcs", unit: "65,000 VND", total: "3,250,000 VND", note: "standard tray estimate" },
+          { moq: "100 pcs", unit: "25,000 VND", total: "2,500,000 VND", note: "basic PP tray estimate" },
+        ],
+        "Kraft Basket / Small Tray": [
+          { moq: "1,000 pcs", unit: "3,500 VND", total: "3,500,000 VND", note: "small tray estimate" },
+          { moq: "5,000 pcs", unit: "2,200 VND", total: "11,000,000 VND", note: "target quote" },
+          { moq: "10,000 pcs", unit: "1,400 VND", total: "14,000,000 VND", note: "bulk quote target" },
+        ],
+        "Tray Liner": [
+          { moq: "1,000 sheets", unit: "700 VND", total: "700,000 VND", note: "printed liner estimate" },
+          { moq: "5,000 sheets", unit: "450 VND", total: "2,250,000 VND", note: "target quote" },
+          { moq: "10,000 sheets", unit: "300 VND", total: "3,000,000 VND", note: "bulk quote target" },
+        ],
+        "Clear Bottle": [
+          { moq: "100 bottles", unit: "14,300 VND", total: "1,430,000 VND", note: "small batch estimate" },
+          { moq: "1,000 bottles", unit: "6,000 VND", total: "6,000,000 VND", note: "with cap, label estimate" },
+          { moq: "5,000 bottles", unit: "2,500 VND", total: "12,500,000 VND", note: "bulk quote target" },
+        ],
+        "Canvas Apron": [
+          { moq: "10 pcs", unit: "130,000-150,000 VND", total: "1,300,000-1,500,000 VND", note: "screen print" },
+          { moq: "10 pcs", unit: "170,000-240,000 VND", total: "1,700,000-2,400,000 VND", note: "embroidered logo" },
+          { moq: "50 pcs", unit: "130,000 VND", total: "6,500,000 VND", note: "screen print target" },
+          { moq: "50 pcs", unit: "170,000 VND", total: "8,500,000 VND", note: "embroidery target" },
+        ],
+        "Black Polo Uniform": [
+          { moq: "10 pcs", unit: "260,000 VND", total: "2,600,000 VND", note: "small batch, logo included" },
+          { moq: "50 pcs", unit: "160,000 VND", total: "8,000,000 VND", note: "target quote" },
+          { moq: "100 pcs", unit: "109,000 VND", total: "10,900,000 VND", note: "bulk quote target" },
+        ],
+        "Cream Polo Uniform": [
+          { moq: "10 pcs", unit: "260,000 VND", total: "2,600,000 VND", note: "small batch, logo included" },
+          { moq: "50 pcs", unit: "160,000 VND", total: "8,000,000 VND", note: "target quote" },
+          { moq: "100 pcs", unit: "109,000 VND", total: "10,900,000 VND", note: "bulk quote target" },
+        ],
+        "Black Nitrile Glove": [
+          { moq: "1 box", unit: "128,000 VND", total: "128,000 VND", note: "100 pcs/box" },
+          { moq: "10 boxes", unit: "75,000 VND", total: "750,000 VND", note: "working estimate" },
+          { moq: "50 boxes", unit: "39,000 VND", total: "1,950,000 VND", note: "bulk quote target" },
+        ],
+      };
+
+      function getPriceTiers(product) {
+        return priceTiers[product.title] || [
+          { moq: "Quote", unit: product.price, total: "-", note: product.status },
+        ];
+      }
+
+      const legacyQuotes = [
+        {
+          title: "Legacy Signage And Export Packing",
+          source: "Export_Dashboard/Bao_Gia_Tong_Hop.html",
+          images: [
+            { label: "Exterior signage", src: "../German - PA/Concepts/final_horizontal_blade_sign_wide.png" },
+            { label: "Window graphics", src: "../German - PA/Concepts/Frankfurt_window_graphics.png" },
+          ],
+          rows: [
+            ["I Love BanhMi main exterior sign", "2.0 x 2.8 m, free-form acrylic/mica sign", "1 set", "73,000,000 VND", "Temporary estimate"],
+            ["Vietnamese Food & Coffee sign", "1.8 x 0.85 m channel letters", "1 set", "56,000,000 VND", "Temporary estimate"],
+            ["3D banh mi standee prop", "1.5 m high, weighted hidden base", "1 set", "Pending quote", "Old dashboard had no final price"],
+            ["Window graphics", "Clear vinyl with white UV print", "Project scope", "Pending quote", "Old dashboard had no final price"],
+            ["Export wood packing and fumigation", "ISPM 15 export packing", "Project scope", "18,000,000 VND", "Temporary estimate"],
+          ],
+        },
+        {
+          title: "Legacy Pearl Paper Cup Quote",
+          source: "Export_Dashboard/Bao_Gia_Tong_Hop.html",
+          rows: [
+            ["Pearl paper cup", "12oz / 360ml, UV print", "5,000 pcs", "1,960 VND / cup", "Archive only, no current mockup sheet"],
+            ["Pearl paper cup", "12oz / 360ml, UV print", "10,000 pcs", "1,820 VND / cup", "Archive only, no current mockup sheet"],
+            ["Pearl paper cup", "16oz / 500ml, UV print", "5,000 pcs", "2,190 VND / cup", "Archive only, no current mockup sheet"],
+            ["Pearl paper cup", "16oz / 500ml, UV print", "10,000 pcs", "2,030 VND / cup", "Archive only, no current mockup sheet"],
+            ["Pearl paper cup", "22oz / 680ml, UV print", "5,000 pcs", "2,370 VND / cup", "Archive only, no current mockup sheet"],
+            ["Pearl paper cup", "22oz / 680ml, UV print", "10,000 pcs", "2,270 VND / cup", "Archive only, no current mockup sheet"],
+          ],
+        },
+        {
+          title: "Legacy BVC Single-Wall Paper Cup Quote",
+          source: "Export_Dashboard/Bao_Gia_Tong_Hop.html",
+          images: [
+            { label: "Paper cup reference", src: "packaging_mockups/product-crops/hot-paper-cup.png" },
+            { label: "Lid quote reference", src: "packaging_mockups/product-crops/cup-lid-film-seal.png" },
+          ],
+          rows: [
+            ["BVC paper cup", "12/14oz, 360-420ml, regular / premium", "2,000 pcs", "1,530 / 1,626 VND", "Unit price"],
+            ["BVC paper cup", "12/14oz, 360-420ml, regular / premium", "5,000 pcs", "1,188 / 1,284 VND", "Unit price"],
+            ["BVC paper cup", "12/14oz, 360-420ml, regular / premium", "10,000 pcs", "1,140 / 1,236 VND", "Unit price"],
+            ["BVC paper cup", "12/14oz, 360-420ml, regular / premium", "30,000 pcs", "1,068 / 1,164 VND", "Unit price"],
+            ["BVC paper cup", "12/14oz, 360-420ml, regular / premium", "50,000 pcs", "1,044 / 1,140 VND", "Unit price"],
+            ["BVC paper cup", "12/14oz, 360-420ml, regular / premium", "100,000 pcs", "1,020 / 1,116 VND", "Unit price"],
+            ["BVC paper cup", "16oz, 480-500ml, regular / premium", "2,000 pcs", "1,596 / 1,692 VND", "Unit price"],
+            ["BVC paper cup", "16oz, 480-500ml, regular / premium", "5,000 pcs", "1,248 / 1,344 VND", "Unit price"],
+            ["BVC paper cup", "16oz, 480-500ml, regular / premium", "10,000 pcs", "1,200 / 1,296 VND", "Unit price"],
+            ["BVC paper cup", "16oz, 480-500ml, regular / premium", "30,000 pcs", "1,140 / 1,236 VND", "Unit price"],
+            ["BVC paper cup", "16oz, 480-500ml, regular / premium", "50,000 pcs", "1,128 / 1,224 VND", "Unit price"],
+            ["BVC paper cup", "16oz, 480-500ml, regular / premium", "100,000 pcs", "1,116 / 1,212 VND", "Unit price"],
+            ["BVC paper cup", "18oz, 520-540ml, regular / premium", "2,000 pcs", "1,716 / 1,812 VND", "Unit price"],
+            ["BVC paper cup", "18oz, 520-540ml, regular / premium", "5,000 pcs", "1,284 / 1,380 VND", "Unit price"],
+            ["BVC paper cup", "18oz, 520-540ml, regular / premium", "10,000 pcs", "1,224 / 1,320 VND", "Unit price"],
+            ["BVC paper cup", "18oz, 520-540ml, regular / premium", "30,000 pcs", "1,164 / 1,260 VND", "Unit price"],
+            ["BVC paper cup", "18oz, 520-540ml, regular / premium", "50,000 pcs", "1,152 / 1,248 VND", "Unit price"],
+            ["BVC paper cup", "18oz, 520-540ml, regular / premium", "100,000 pcs", "1,140 / 1,236 VND", "Unit price"],
+            ["BVC paper cup", "22oz, 630-680ml, regular / premium", "2,000 pcs", "1,776 / 1,896 VND", "Unit price"],
+            ["BVC paper cup", "22oz, 630-680ml, regular / premium", "5,000 pcs", "1,404 / 1,500 VND", "Unit price"],
+            ["BVC paper cup", "22oz, 630-680ml, regular / premium", "10,000 pcs", "1,344 / 1,440 VND", "Unit price"],
+            ["BVC paper cup", "22oz, 630-680ml, regular / premium", "30,000 pcs", "1,260 / 1,356 VND", "Unit price"],
+            ["BVC paper cup", "22oz, 630-680ml, regular / premium", "50,000 pcs", "1,236 / 1,332 VND", "Unit price"],
+            ["BVC paper cup", "22oz, 630-680ml, regular / premium", "100,000 pcs", "1,212 / 1,308 VND", "Unit price"],
+            ["BVC cone-hat lid + flat PET lid", "Accessory set", "3,000 pcs", "1,300 VND / pc", "Old accessory quote"],
+            ["BVC cone-hat lid + flat PET lid", "Accessory set", "6,000 pcs", "1,100 VND / pc", "Old accessory quote"],
+            ["BVC cone-hat lid + flat PET lid", "Accessory set", "10,000 pcs", "900 VND / pc", "Old accessory quote"],
+          ],
+        },
+        {
+          title: "Legacy Greaseproof Wrapper Quote",
+          source: "Export_Dashboard/Bao_Gia_Tong_Hop.html",
+          images: [
+            { label: "Greaseproof wrapper", src: "packaging_mockups/product-crops/greaseproof-wrapper.png" },
+          ],
+          rows: [
+            ["Greaseproof wrapper", "20 x 30 cm", "20,000 sheets", "165 VND / sheet", "Reference only, no official current quote"],
+            ["Greaseproof wrapper", "20 x 30 cm", "50,000 sheets", "130 VND / sheet", "Reference only, no official current quote"],
+            ["Greaseproof wrapper", "20 x 30 cm", "100,000 sheets", "110 VND / sheet", "Reference only, no official current quote"],
+            ["Greaseproof wrapper", "30 x 30 cm", "20,000 sheets", "240 VND / sheet", "Reference only, no official current quote"],
+            ["Greaseproof wrapper", "30 x 30 cm", "50,000 sheets", "195 VND / sheet", "Reference only, no official current quote"],
+            ["Greaseproof wrapper", "30 x 30 cm", "100,000 sheets", "165 VND / sheet", "Reference only, no official current quote"],
+          ],
+        },
+        {
+          title: "Legacy Sticker And Decal Quote",
+          source: "Export_Dashboard/Bao_Gia_Tong_Hop.html",
+          images: [
+            { label: "Sticker and decal sheet", src: "packaging_mockups/product-crops/stickers-and-decals.png" },
+            { label: "Tamper seal strip", src: "packaging_mockups/product-crops/tamper-evident-seal.png" },
+          ],
+          rows: [
+            ["UV DTF sticker sheet", "A4, 29 x 20 cm", "1 sheet", "60,000 VND", "Test print"],
+            ["UV DTF sticker sheet", "A4, 29 x 20 cm", "From 5 sheets", "39,000 VND / sheet", "Same design"],
+            ["UV DTF roll", "30 cm format, 29 x 100 cm", "1 m", "210,000 VND / m", "Max 2 designs"],
+            ["UV DTF roll", "60 cm format, 59 x 100 cm", "1 m", "269,000 VND / m", "Max 4 designs"],
+            ["UV DTF roll", "60 cm format, 59 x 100 cm", "From 6 m", "215,000 VND / m", "Old quote"],
+            ["UV DTF roll", "60 cm format, 59 x 100 cm", "From 50 m", "189,000 VND / m", "Old quote"],
+            ["Transparent logo decal", "Round 4 cm", "5,000 stickers", "1,250,000-1,750,000 VND", "Old quote range"],
+            ["Transparent logo decal", "Round 4 cm", "10,000 stickers", "1,500,000-2,500,000 VND", "Old quote range"],
+            ["Transparent logo decal", "Round 5 cm", "5,000 stickers", "1,500,000-2,250,000 VND", "Old quote range"],
+            ["Transparent logo decal", "Round 5 cm", "10,000 stickers", "2,000,000-3,000,000 VND", "Old quote range"],
+            ["Die-cut logo decal", "Up to 4 x 4 cm", "5,000 stickers", "1,450,000-1,950,000 VND", "Old quote range"],
+            ["Die-cut logo decal", "Up to 4 x 4 cm", "10,000 stickers", "1,700,000-2,800,000 VND", "Old quote range"],
+            ["Die-cut logo decal", "Up to 5 x 5 cm", "5,000 stickers", "1,750,000-2,500,000 VND", "Old quote range"],
+            ["Die-cut logo decal", "Up to 5 x 5 cm", "10,000 stickers", "2,300,000-3,400,000 VND", "Old quote range"],
+          ],
+        },
+        {
+          title: "Legacy Banh Mi Bag And Kraft Bag Quote",
+          source: "Export_Dashboard/Bao_Gia_Tong_Hop.html",
+          images: [
+            { label: "Banh mi side-gusset bag", src: "packaging_mockups/product-crops/banh-mi-side-gusset-bag.png" },
+            { label: "Kraft takeaway bag", src: "packaging_mockups/product-crops/kraft-takeaway-bag.png" },
+          ],
+          rows: [
+            ["Custom side-gusset banh mi bag", "Custom printed", "5,000 pcs", "1,500,000 VND total", "300 VND / pc"],
+            ["Kraft takeaway bag", "Square bottom, 13 x 20 x 5 cm", "5,000 pcs", "990,000 VND total", "198 VND / pc"],
+            ["Kraft takeaway bag", "Hexagon bottom, 15 x 20 cm", "5,000 pcs", "950,000 VND total", "190 VND / pc"],
+            ["Kraft takeaway bag", "Standard bottom, 13 x 20 x 5 cm", "5,000 pcs", "930,000 VND total", "186 VND / pc"],
+          ],
+        },
+        {
+          title: "Legacy PET Cup Quote",
+          source: "Export_Dashboard/Bao_Gia_Tong_Hop.html",
+          images: [
+            { label: "PET cold cup", src: "packaging_mockups/product-crops/pet-cold-cup.png" },
+          ],
+          rows: [
+            ["PET cup", "270ml / 9oz, L1", "1,000 pcs", "860,000 VND total", "860 VND / pc"],
+            ["PET cup", "360ml / 12-14oz, L1 / L2 / L3", "1,000 pcs", "883,000 / 799,000 / 742,000 VND", "Total per 1,000 pcs"],
+            ["PET cup", "470ml / 16oz, L1 / L2", "1,000 pcs", "933,000 / 850,000 VND", "Total per 1,000 pcs"],
+            ["PET cup", "500ml / 16oz, L1 / L2", "1,000 pcs", "996,000 / 840,000 VND", "Total per 1,000 pcs"],
+            ["PET cup", "500ml low / 18oz, L1", "1,000 pcs", "1,040,000 VND total", "Old quote"],
+            ["PET cup", "590ml / 20oz, L1 / L2", "1,000 pcs", "1,138,000 / 1,088,000 VND", "Total per 1,000 pcs"],
+            ["PET cup", "650ml / 22oz, L1 / L2", "1,000 pcs", "1,215,000 / 1,170,000 VND", "Total per 1,000 pcs"],
+            ["PET cup", "700ml / 24oz, L1 / L2", "1,000 pcs", "1,266,000 / 1,215,000 VND", "Total per 1,000 pcs"],
+          ],
+        },
+        {
+          title: "Legacy PP Cup Quote",
+          source: "Export_Dashboard/Bao_Gia_Tong_Hop.html",
+          images: [
+            { label: "PP flat-bottom cup", src: "packaging_mockups/product-crops/pp-flat-bottom-cup.png" },
+            { label: "Dual-chamber split cup", src: "packaging_mockups/product-crops/dual-chamber-split-cup.png" },
+          ],
+          rows: [
+            ["PP cup", "360ml, L1 / L2 / L3", "1,000 pcs", "770,000 / 720,000 / 680,000 VND", "Total per 1,000 pcs"],
+            ["PP cup", "500ml, L1 / L2 / L3 / L4", "1,000 pcs", "868,000 / 800,000 / 760,000 / 720,000 VND", "Total per 1,000 pcs"],
+            ["PP cup", "650ml, L1 / L2 / L3 / L4", "1,000 pcs", "920,000 / 888,000 / 800,000 / 748,000 VND", "Total per 1,000 pcs"],
+            ["PP cup", "700ml, L1 / L2 / L3 / L4", "1,000 pcs", "980,000 / 900,000 / 860,000 / 828,000 VND", "Total per 1,000 pcs"],
+            ["PP cup", "800ml, mini / light / thin / thick / carton-thick", "1,000 pcs", "732,000 / 745,000 / 815,000 / 912,000 / 925,000 VND", "Total per 1,000 pcs"],
+            ["PP cup", "900ml, L1 / L2", "1,000 pcs", "1,080,000 / 950,000 VND", "Total per 1,000 pcs"],
+            ["PP cup", "1000ml, low / tall", "1,000 pcs", "1,210,000 / 1,095,000 VND", "Total per 1,000 pcs"],
+            ["PP cup", "1300ml, L1", "1,000 pcs", "1,450,000 VND total", "Old quote"],
+            ["Dual-chamber PP split cup", "600ml, cup + heart lid", "15 pcs", "113,000 VND total", "7,512 VND / set"],
+          ],
+        },
+        {
+          title: "Legacy Plain Paper Cup Quote",
+          source: "Export_Dashboard/Bao_Gia_Tong_Hop.html",
+          images: [
+            { label: "Plain paper cup", src: "packaging_mockups/product-crops/hot-paper-cup.png" },
+          ],
+          rows: [
+            ["Plain paper cup", "3oz-7oz, white", "1,000 pcs", "781,000-1,000,000 VND total", "Old quote range"],
+            ["Plain paper cup", "8oz / 240ml, white / kraft", "1,000 pcs", "939,000 / 1,200,000 VND", "Total per 1,000 pcs"],
+            ["Plain paper cup", "9oz / 270ml, white", "1,000 pcs", "920,000 VND total", "Old quote"],
+            ["Plain paper cup", "12oz / 360ml, white / kraft", "1,000 pcs", "1,069,000 / 1,410,000 VND", "Total per 1,000 pcs"],
+            ["Plain paper cup", "16oz / 500ml, white / kraft", "1,000 pcs", "1,144,000 / 1,570,000 VND", "Total per 1,000 pcs"],
+            ["Plain paper cup", "22oz / 680ml, white / kraft", "1,000 pcs", "1,309,000 / 1,720,000 VND", "Total per 1,000 pcs"],
+          ],
+        },
+        {
+          title: "Legacy Canvas Apron Quote",
+          source: "Export_Dashboard/Bao_Gia_Tong_Hop.html",
+          images: [
+            { label: "Canvas apron", src: "apparel_mockups/apron_model_apron_chest_center_logo_25pct_larger_mockup.png" },
+          ],
+          rows: [
+            ["Canvas apron", "Logo print or embroidery", "10 pcs", "1,700,000-2,400,000 VND total", "170,000-240,000 VND / pc"],
+          ],
+        },
+      ];
+
+      function renderLegacyQuotes() {
+        const target = document.getElementById("legacyQuotes");
+        target.innerHTML = `
+          <h2>Legacy Quote Archive</h2>
+          <p>Older quotation data copied into this file for reference. These legacy prices are kept separate from the current mockup spec sheets and should be re-confirmed with vendors before purchase orders.</p>
+          <div class="legacy-grid">
+            ${legacyQuotes
+              .map(
+                (group) => `
+                  <article class="legacy-card">
+                    <header>
+                      <h3>${group.title}</h3>
+                      <div class="source">Source: ${group.source}</div>
+                    </header>
+                    ${
+                      group.images
+                        ? `<div class="legacy-image-strip">
+                            ${group.images
+                              .map(
+                                (image) => `
+                                  <figure>
+                                    <img src="${image.src}" alt="${image.label}">
+                                    <figcaption>${image.label}</figcaption>
+                                  </figure>`,
+                              )
+                              .join("")}
+                          </div>`
+                        : ""
+                    }
+                    <table class="legacy-table">
+                      <thead>
+                        <tr>
+                          <th>Item</th>
+                          <th>Spec</th>
+                          <th>MOQ</th>
+                          <th>Old quote</th>
+                          <th>Note</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        ${group.rows
+                          .map(
+                            (row) => `
+                              <tr>
+                                <td>${row[0]}</td>
+                                <td>${row[1]}</td>
+                                <td>${row[2]}</td>
+                                <td>${row[3]}</td>
+                                <td>${row[4]}</td>
+                              </tr>`,
+                          )
+                          .join("")}
+                      </tbody>
+                    </table>
+                  </article>`,
+              )
+              .join("")}
+          </div>
+        `;
+      }
+
+      function renderTabs() {
+        categoryTabs.innerHTML = categories
+          .map((category) => {
+            const count =
+              category.id === "all" ? products.length : products.filter((product) => productCategory(product) === category.id).length;
+            return `
+              <button
+                class="tab-button"
+                type="button"
+                data-category="${category.id}"
+                aria-selected="${category.id === activeCategory}"
+              >
+                ${category.label} (${count})
+              </button>`;
+          })
+          .join("");
+      }
+
+      function render() {
+        const visibleProducts = products
+          .map((product, index) => ({
+            product,
+            index,
+            category: productCategory(product),
+          }))
+          .filter((item) => activeCategory === "all" || item.category === activeCategory);
+
+        sheets.innerHTML = visibleProducts
+          .map((item) => {
+            const product = item.product;
+            const id = `sheet-${item.index + 1}`;
+            const tiers = getPriceTiers(product);
+            const themeClass = product.theme ? ` theme-${product.theme}` : "";
+            return `
+              <section class="sheet${themeClass}" id="${id}" data-category="${item.category}">
+                <div class="image-pane">
+                  <img class="${product.fit === "contain" ? "contain" : ""}" src="${product.image}" alt="${product.title}">
+                </div>
+                <aside class="spec-pane">
+                  <div class="brand-head">
+                    <h2>${product.title}</h2>
+                    <p>${product.subtitle}</p>
+                  </div>
+                  <div class="spec-body">
+                    <div class="price-box">
+                      <div class="label">MOQ pricing</div>
+                      <div class="price">${product.price}</div>
+                      <span class="status ${statusClass(product.status)}">${statusLabel(product.status)}</span>
+                      <table class="moq-table">
+                        <thead>
+                          <tr>
+                            <th>MOQ</th>
+                            <th>Unit price</th>
+                            <th>Order total</th>
+                            <th>Note</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          ${tiers
+                            .map(
+                              (tier) => `
+                                <tr>
+                                  <td>${tier.moq}</td>
+                                  <td>${tier.unit}</td>
+                                  <td>${tier.total}</td>
+                                  <td>${tier.note}</td>
+                                </tr>`,
+                            )
+                            .join("")}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="info-card">
+                      <h3>Specs</h3>
+                      <ul class="spec-list">
+                        ${product.specs.map((item) => `<li>${item}</li>`).join("")}
+                      </ul>
+                    </div>
+
+                    ${
+                      product.note
+                        ? `<div class="info-card"><h3>Before production</h3><div class="note">${product.note}</div></div>`
+                        : ""
+                    }
+
+                    <div class="info-card">
+                      <h3>Mockup file</h3>
+                      <div class="file-ref">${product.image}</div>
+                    </div>
+                  </div>
+                </aside>
+              </section>`;
+          })
+          .join("");
+
+        jump.innerHTML = visibleProducts
+          .map((item) => `<option value="sheet-${item.index + 1}">${item.index + 1}. ${item.product.title}</option>`)
+          .join("");
+      }
+
+      categoryTabs.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-category]");
+        if (!button) return;
+        activeCategory = button.dataset.category;
+        renderTabs();
+        render();
+        sheets.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      jump.addEventListener("change", () => {
+        document.getElementById(jump.value).scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      renderTabs();
+      render();
+      renderLegacyQuotes();
+    </script>
+  </body>
+</html>

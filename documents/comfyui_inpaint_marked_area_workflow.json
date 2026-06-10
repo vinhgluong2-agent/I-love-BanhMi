@@ -1,0 +1,358 @@
+{
+  "id": "ilovebanhmi-flux-fill-marked-area-inpaint",
+  "revision": 0,
+  "last_node_id": 16,
+  "last_link_id": 23,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [40, 40],
+      "size": [330, 82],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {"name": "unet_name", "type": "COMBO", "widget": {"name": "unet_name"}, "link": null},
+        {"name": "weight_dtype", "type": "COMBO", "widget": {"name": "weight_dtype"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "MODEL", "type": "MODEL", "links": [15]}
+      ],
+      "properties": {"Node name for S&R": "UNETLoader"},
+      "widgets_values": ["flux1-Fill-Dev_FP8.safetensors", "default"]
+    },
+    {
+      "id": 2,
+      "type": "DualCLIPLoader",
+      "pos": [40, 165],
+      "size": [330, 152],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {"name": "clip_name1", "type": "COMBO", "widget": {"name": "clip_name1"}, "link": null},
+        {"name": "clip_name2", "type": "COMBO", "widget": {"name": "clip_name2"}, "link": null},
+        {"name": "type", "type": "COMBO", "widget": {"name": "type"}, "link": null},
+        {"name": "device", "type": "COMBO", "widget": {"name": "device"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "CLIP", "type": "CLIP", "links": [1, 2]}
+      ],
+      "properties": {"Node name for S&R": "DualCLIPLoader"},
+      "widgets_values": ["t5xxl_fp8_e4m3fn.safetensors", "clip_l.safetensors", "flux", "default"]
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [40, 355],
+      "size": [330, 82],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {"name": "vae_name", "type": "COMBO", "widget": {"name": "vae_name"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "VAE", "type": "VAE", "links": [9, 19]}
+      ],
+      "properties": {"Node name for S&R": "VAELoader"},
+      "widgets_values": ["ae.safetensors"]
+    },
+    {
+      "id": 4,
+      "type": "LoadImage",
+      "pos": [40, 485],
+      "size": [315, 350],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {"name": "image", "type": "COMBO", "widget": {"name": "image"}, "link": null},
+        {"name": "upload", "type": "IMAGEUPLOAD", "widget": {"name": "upload"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [10, 21]},
+        {"name": "MASK", "type": "MASK", "links": [3]}
+      ],
+      "properties": {"Node name for S&R": "LoadImage"},
+      "widgets_values": ["sketchup_base.png", "image"]
+    },
+    {
+      "id": 5,
+      "type": "GrowMask",
+      "pos": [415, 555],
+      "size": [260, 100],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {"name": "mask", "type": "MASK", "link": 3},
+        {"name": "expand", "type": "INT", "widget": {"name": "expand"}, "link": null},
+        {"name": "tapered_corners", "type": "BOOLEAN", "widget": {"name": "tapered_corners"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "MASK", "type": "MASK", "links": [4]}
+      ],
+      "properties": {"Node name for S&R": "GrowMask"},
+      "widgets_values": [16, true]
+    },
+    {
+      "id": 6,
+      "type": "FeatherMask",
+      "pos": [715, 555],
+      "size": [260, 150],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {"name": "mask", "type": "MASK", "link": 4},
+        {"name": "left", "type": "INT", "widget": {"name": "left"}, "link": null},
+        {"name": "top", "type": "INT", "widget": {"name": "top"}, "link": null},
+        {"name": "right", "type": "INT", "widget": {"name": "right"}, "link": null},
+        {"name": "bottom", "type": "INT", "widget": {"name": "bottom"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "MASK", "type": "MASK", "links": [11, 23]}
+      ],
+      "properties": {"Node name for S&R": "FeatherMask"},
+      "widgets_values": [16, 16, 16, 16]
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [415, 125],
+      "size": [500, 210],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {"name": "clip", "type": "CLIP", "link": 1},
+        {"name": "text", "type": "STRING", "widget": {"name": "text"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "CONDITIONING", "type": "CONDITIONING", "links": [5]}
+      ],
+      "properties": {"Node name for S&R": "CLIPTextEncode"},
+      "widgets_values": [
+        "edit only the masked area according to this prompt, seamless photorealistic inpainting, preserve everything outside the mask, match original camera angle, perspective, lighting, materials, colors, reflections, texture, scale, and natural shadows, clean realistic detail"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "CLIPTextEncode",
+      "pos": [415, 365],
+      "size": [500, 130],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {"name": "clip", "type": "CLIP", "link": 2},
+        {"name": "text", "type": "STRING", "widget": {"name": "text"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "CONDITIONING", "type": "CONDITIONING", "links": [8]}
+      ],
+      "properties": {"Node name for S&R": "CLIPTextEncode"},
+      "widgets_values": [
+        "changed unmasked area, extra objects outside mask, warped geometry, distorted perspective, blurry, low quality, bad shadows, messy edges, text artifacts, watermark, logo distortion, duplicated objects"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "FluxGuidance",
+      "pos": [960, 180],
+      "size": [240, 80],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {"name": "conditioning", "type": "CONDITIONING", "link": 5},
+        {"name": "guidance", "type": "FLOAT", "widget": {"name": "guidance"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "CONDITIONING", "type": "CONDITIONING", "links": [7]}
+      ],
+      "properties": {"Node name for S&R": "FluxGuidance"},
+      "widgets_values": [3.5]
+    },
+    {
+      "id": 10,
+      "type": "InpaintModelConditioning",
+      "pos": [1020, 420],
+      "size": [320, 190],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {"name": "positive", "type": "CONDITIONING", "link": 7},
+        {"name": "negative", "type": "CONDITIONING", "link": 8},
+        {"name": "vae", "type": "VAE", "link": 9},
+        {"name": "pixels", "type": "IMAGE", "link": 10},
+        {"name": "mask", "type": "MASK", "link": 11},
+        {"name": "noise_mask", "type": "BOOLEAN", "widget": {"name": "noise_mask"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "positive", "type": "CONDITIONING", "links": [12]},
+        {"name": "negative", "type": "CONDITIONING", "links": [13]},
+        {"name": "latent", "type": "LATENT", "links": [14]}
+      ],
+      "properties": {"Node name for S&R": "InpaintModelConditioning"},
+      "widgets_values": [true]
+    },
+    {
+      "id": 11,
+      "type": "ModelSamplingFlux",
+      "pos": [415, 40],
+      "size": [300, 100],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {"name": "model", "type": "MODEL", "link": 15},
+        {"name": "max_shift", "type": "FLOAT", "widget": {"name": "max_shift"}, "link": null},
+        {"name": "base_shift", "type": "FLOAT", "widget": {"name": "base_shift"}, "link": null},
+        {"name": "width", "type": "INT", "widget": {"name": "width"}, "link": null},
+        {"name": "height", "type": "INT", "widget": {"name": "height"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "MODEL", "type": "MODEL", "links": [16]}
+      ],
+      "properties": {"Node name for S&R": "ModelSamplingFlux"},
+      "widgets_values": [1.15, 0.5, 1024, 1024]
+    },
+    {
+      "id": 12,
+      "type": "DifferentialDiffusion",
+      "pos": [760, 40],
+      "size": [240, 80],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {"name": "model", "type": "MODEL", "link": 16},
+        {"name": "strength", "type": "FLOAT", "widget": {"name": "strength"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "MODEL", "type": "MODEL", "links": [17]}
+      ],
+      "properties": {"Node name for S&R": "DifferentialDiffusion"},
+      "widgets_values": [1.0]
+    },
+    {
+      "id": 13,
+      "type": "KSampler",
+      "pos": [1385, 240],
+      "size": [330, 260],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {"name": "model", "type": "MODEL", "link": 17},
+        {"name": "seed", "type": "INT", "widget": {"name": "seed"}, "link": null},
+        {"name": "steps", "type": "INT", "widget": {"name": "steps"}, "link": null},
+        {"name": "cfg", "type": "FLOAT", "widget": {"name": "cfg"}, "link": null},
+        {"name": "sampler_name", "type": "COMBO", "widget": {"name": "sampler_name"}, "link": null},
+        {"name": "scheduler", "type": "COMBO", "widget": {"name": "scheduler"}, "link": null},
+        {"name": "positive", "type": "CONDITIONING", "link": 12},
+        {"name": "negative", "type": "CONDITIONING", "link": 13},
+        {"name": "latent_image", "type": "LATENT", "link": 14},
+        {"name": "denoise", "type": "FLOAT", "widget": {"name": "denoise"}, "link": null}
+      ],
+      "outputs": [
+        {"name": "LATENT", "type": "LATENT", "links": [18]}
+      ],
+      "properties": {"Node name for S&R": "KSampler"},
+      "widgets_values": [123456789, "randomize", 28, 1.0, "euler", "simple", 0.9]
+    },
+    {
+      "id": 14,
+      "type": "VAEDecode",
+      "pos": [1770, 290],
+      "size": [240, 80],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {"name": "samples", "type": "LATENT", "link": 18},
+        {"name": "vae", "type": "VAE", "link": 19}
+      ],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [22]}
+      ],
+      "properties": {"Node name for S&R": "VAEDecode"},
+      "widgets_values": []
+    },
+    {
+      "id": 16,
+      "type": "ImageCompositeMasked",
+      "pos": [2055, 210],
+      "size": [300, 190],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {"name": "destination", "type": "IMAGE", "link": 21},
+        {"name": "source", "type": "IMAGE", "link": 22},
+        {"name": "x", "type": "INT", "widget": {"name": "x"}, "link": null},
+        {"name": "y", "type": "INT", "widget": {"name": "y"}, "link": null},
+        {"name": "resize_source", "type": "BOOLEAN", "widget": {"name": "resize_source"}, "link": null},
+        {"name": "mask", "type": "MASK", "link": 23}
+      ],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [20]}
+      ],
+      "properties": {"Node name for S&R": "ImageCompositeMasked"},
+      "widgets_values": [0, 0, false]
+    },
+    {
+      "id": 15,
+      "type": "SaveImage",
+      "pos": [2400, 260],
+      "size": [300, 90],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {"name": "images", "type": "IMAGE", "link": 20},
+        {"name": "filename_prefix", "type": "STRING", "widget": {"name": "filename_prefix"}, "link": null}
+      ],
+      "outputs": [],
+      "properties": {"Node name for S&R": "SaveImage"},
+      "widgets_values": ["ILoveBanhMi_Flux_Fill_Inpaint"]
+    }
+  ],
+  "links": [
+    [1, 2, 0, 7, 0, "CLIP"],
+    [2, 2, 0, 8, 0, "CLIP"],
+    [3, 4, 1, 5, 0, "MASK"],
+    [4, 5, 0, 6, 0, "MASK"],
+    [5, 7, 0, 9, 0, "CONDITIONING"],
+    [7, 9, 0, 10, 0, "CONDITIONING"],
+    [8, 8, 0, 10, 1, "CONDITIONING"],
+    [9, 3, 0, 10, 2, "VAE"],
+    [10, 4, 0, 10, 3, "IMAGE"],
+    [11, 6, 0, 10, 4, "MASK"],
+    [12, 10, 0, 13, 6, "CONDITIONING"],
+    [13, 10, 1, 13, 7, "CONDITIONING"],
+    [14, 10, 2, 13, 8, "LATENT"],
+    [15, 1, 0, 11, 0, "MODEL"],
+    [16, 11, 0, 12, 0, "MODEL"],
+    [17, 12, 0, 13, 0, "MODEL"],
+    [18, 13, 0, 14, 0, "LATENT"],
+    [19, 3, 0, 14, 1, "VAE"],
+    [20, 16, 0, 15, 0, "IMAGE"],
+    [21, 4, 0, 16, 0, "IMAGE"],
+    [22, 14, 0, 16, 1, "IMAGE"],
+    [23, 6, 0, 16, 5, "MASK"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.72,
+      "offset": [120, 120]
+    }
+  },
+  "version": 0.4
+}
