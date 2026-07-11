@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>I LOVE BANH MI - Product Design System 2026</title>
+    <style>
+      :root {
+        --mint: #a8e6cf;
+        --red: #e31837;
+        --black: #111111;
+        --cream: #fdf5e6;
+        --white: #ffffff;
+        --terracotta: #e07a5f;
+        --pink: #ffd1dc;
+        --muted: #5f5b53;
+        --line: #111111;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--cream);
+        color: var(--black);
+        font-family: Montserrat, Arial, Helvetica, sans-serif;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      .top {
+        min-height: 86vh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        padding: 42px clamp(18px, 5vw, 72px);
+        background: var(--mint);
+      }
+
+      .topline,
+      .footline {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .hero {
+        display: grid;
+        align-items: center;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 520px);
+        gap: clamp(36px, 7vw, 92px);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        max-width: 900px;
+        font-size: clamp(64px, 12vw, 156px);
+        font-weight: 900;
+        line-height: 0.82;
+        text-transform: uppercase;
+      }
+
+      .hero-logo {
+        padding: 42px;
+        background: var(--cream);
+        border: 6px solid var(--black);
+      }
+
+      .hero-logo img {
+        filter: drop-shadow(0 20px 16px rgba(0, 0, 0, 0.22));
+      }
+
+      .section {
+        padding: 76px clamp(18px, 5vw, 72px);
+        border-top: 4px solid var(--black);
+      }
+
+      .section.dark {
+        background: var(--black);
+        color: var(--white);
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 34px;
+      }
+
+      h2 {
+        font-size: clamp(44px, 8vw, 104px);
+        font-weight: 900;
+        line-height: 0.9;
+        text-transform: uppercase;
+      }
+
+      .section-head p {
+        max-width: 520px;
+        color: var(--muted);
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      .dark .section-head p {
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .product {
+        min-height: 540px;
+        display: grid;
+        grid-template-rows: minmax(300px, 1fr) auto;
+        background: var(--white);
+        border: 3px solid var(--black);
+      }
+
+      .stage {
+        position: relative;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        min-height: 330px;
+        padding: 28px;
+        background:
+          linear-gradient(135deg, rgba(168, 230, 207, 0.58), transparent 45%),
+          var(--cream);
+      }
+
+      .copy {
+        padding: 24px;
+        border-top: 3px solid var(--black);
+      }
+
+      .tag {
+        margin-bottom: 10px;
+        color: var(--red);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h3 {
+        margin-bottom: 12px;
+        font-size: 30px;
+        font-weight: 900;
+        line-height: 0.95;
+        text-transform: uppercase;
+      }
+
+      .copy p:not(.tag) {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .logo-mini {
+        width: 38%;
+        min-width: 110px;
+        padding: 10px;
+        background: rgba(253, 245, 230, 0.82);
+      }
+
+      .logo-lockup {
+        width: min(72%, 360px);
+        padding: 14px;
+        background: rgba(253, 245, 230, 0.9);
+      }
+
+      .logo-lockup.small {
+        width: min(58%, 240px);
+      }
+
+      .wordmark {
+        color: var(--black);
+        font-size: 22px;
+        font-weight: 900;
+        line-height: 0.9;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .heart {
+        width: 40px;
+        height: 36px;
+        margin: 0 auto 8px;
+        background: var(--red);
+        clip-path: path("M20 34 C7 24 2 17 2 10 C2 4 7 1 12 1 C16 1 19 3 20 7 C21 3 24 1 28 1 C33 1 38 4 38 10 C38 17 33 24 20 34Z");
+      }
+
+      .pattern {
+        position: absolute;
+        inset: 0;
+        opacity: 0.13;
+        background-image:
+          linear-gradient(25deg, transparent 0 44%, var(--black) 44% 47%, transparent 47%),
+          radial-gradient(circle at 20% 30%, var(--red) 0 12px, transparent 13px),
+          radial-gradient(circle at 70% 64%, var(--black) 0 9px, transparent 10px);
+        background-size: 220px 150px;
+      }
+
+      .wrapper {
+        width: 80%;
+        aspect-ratio: 3 / 2;
+        display: grid;
+        place-items: center;
+        background: var(--mint);
+        border: 4px solid var(--black);
+        transform: rotate(-8deg);
+        box-shadow: 24px 24px 0 var(--red);
+      }
+
+      .bag {
+        width: 58%;
+        height: 76%;
+        position: relative;
+        display: grid;
+        place-items: center;
+        background: #caa56d;
+        border: 4px solid var(--black);
+      }
+
+      .bag::before {
+        content: "";
+        position: absolute;
+        top: -38px;
+        width: 56%;
+        height: 70px;
+        border: 12px solid var(--black);
+        border-bottom: 0;
+        border-radius: 90px 90px 0 0;
+      }
+
+      .box {
+        width: 74%;
+        height: 42%;
+        display: grid;
+        place-items: center;
+        background: var(--mint);
+        border: 4px solid var(--black);
+        box-shadow: 0 -60px 0 #d8b179 inset, 22px 22px 0 var(--black);
+        transform: perspective(500px) rotateX(8deg) rotateZ(-4deg);
+      }
+
+      .cup {
+        width: 42%;
+        height: 82%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(168, 230, 207, 0.65));
+        border: 4px solid var(--black);
+        border-radius: 18px 18px 70px 70px / 18px 18px 22px 22px;
+        clip-path: polygon(10% 0, 90% 0, 75% 100%, 25% 100%);
+      }
+
+      .paper-cup {
+        background: var(--cream);
+        box-shadow: inset 0 0 0 20px var(--mint);
+      }
+
+      .bowl {
+        width: 68%;
+        height: 42%;
+        display: grid;
+        place-items: center;
+        background: var(--cream);
+        border: 4px solid var(--black);
+        border-radius: 50% 50% 32% 32%;
+        box-shadow: 0 -42px 0 var(--mint) inset;
+      }
+
+      .bottle {
+        width: 34%;
+        height: 82%;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.5);
+        border: 4px solid var(--black);
+        border-radius: 34px 34px 18px 18px;
+        box-shadow: inset 0 0 0 16px rgba(168, 230, 207, 0.38);
+      }
+
+      .bottle::before {
+        content: "";
+        position: absolute;
+        top: 42px;
+        width: 70px;
+        height: 34px;
+        background: var(--black);
+      }
+
+      .seal {
+        width: 190px;
+        height: 190px;
+        display: grid;
+        place-items: center;
+        background: var(--red);
+        border: 4px solid var(--black);
+        border-radius: 50%;
+        color: var(--cream);
+        font-size: 24px;
+        font-weight: 900;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .straw {
+        width: 84%;
+        height: 58px;
+        display: grid;
+        place-items: center;
+        background: var(--cream);
+        border: 4px solid var(--black);
+        transform: rotate(-18deg);
+      }
+
+      .kit {
+        width: 68%;
+        height: 54%;
+        display: grid;
+        place-items: center;
+        background: var(--cream);
+        border: 4px solid var(--black);
+        box-shadow: inset 0 0 0 22px var(--mint);
+      }
+
+      .tray {
+        width: 82%;
+        height: 54%;
+        display: grid;
+        place-items: center;
+        background: var(--black);
+        border: 4px solid var(--black);
+        border-radius: 24px;
+        color: var(--cream);
+      }
+
+      .liner {
+        width: 72%;
+        height: 52%;
+        display: grid;
+        place-items: center;
+        background: var(--mint);
+        border: 4px solid var(--black);
+        transform: rotate(6deg);
+      }
+
+      .uniform {
+        width: 58%;
+        height: 82%;
+        position: relative;
+        display: grid;
+        place-items: center;
+        background: var(--black);
+        clip-path: polygon(30% 0, 70% 0, 88% 22%, 76% 100%, 24% 100%, 12% 22%);
+      }
+
+      .uniform.cream {
+        background: var(--cream);
+        border: 4px solid var(--black);
+        clip-path: polygon(30% 0, 70% 0, 88% 22%, 76% 100%, 24% 100%, 12% 22%);
+      }
+
+      .apron {
+        width: 50%;
+        height: 82%;
+        display: grid;
+        place-items: center;
+        background: #313131;
+        border: 4px solid var(--black);
+        clip-path: polygon(28% 0, 72% 0, 90% 100%, 10% 100%);
+      }
+
+      .signage {
+        width: 86%;
+        height: 58%;
+        display: grid;
+        place-items: center;
+        background: var(--black);
+        border: 5px solid var(--mint);
+        box-shadow: 0 0 28px var(--mint);
+        color: var(--cream);
+      }
+
+      .signage .wordmark {
+        color: var(--cream);
+        text-shadow: 0 0 18px var(--mint);
+      }
+
+      .signage .logo-lockup {
+        background: transparent;
+        filter: drop-shadow(0 0 16px var(--mint));
+      }
+
+      .option {
+        background: #0057ff;
+        color: var(--white);
+      }
+
+      .option .section-head {
+        align-items: start;
+      }
+
+      .option .section-head p {
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .option-kicker {
+        display: inline-block;
+        margin-bottom: 14px;
+        padding: 8px 12px;
+        background: #d7ff40;
+        border: 3px solid var(--black);
+        color: var(--black);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .option-board {
+        display: grid;
+        grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.4fr);
+        gap: 24px;
+        align-items: stretch;
+      }
+
+      .option-lead {
+        display: grid;
+        align-content: space-between;
+        min-height: 560px;
+        padding: 28px;
+        background:
+          linear-gradient(135deg, rgba(215, 255, 64, 0.95) 0 24%, transparent 24% 100%),
+          var(--cream);
+        border: 4px solid var(--black);
+        color: var(--black);
+      }
+
+      .option-lead h3 {
+        max-width: 460px;
+        font-size: clamp(42px, 6vw, 82px);
+      }
+
+      .option-lead p {
+        max-width: 420px;
+        color: var(--black);
+        font-size: 16px;
+        font-weight: 900;
+      }
+
+      .option-notes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 28px;
+      }
+
+      .option-notes span {
+        padding: 9px 12px;
+        background: var(--black);
+        color: var(--white);
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .option-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .option-shot {
+        min-height: 260px;
+        margin: 0;
+        background: var(--white);
+        border: 4px solid var(--black);
+        overflow: hidden;
+      }
+
+      .option-shot.featured {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+
+      .option-shot img {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+      }
+
+      .option-shot.featured img {
+        aspect-ratio: 2 / 1.35;
+      }
+
+      .footer {
+        padding: 42px clamp(18px, 5vw, 72px);
+        background: var(--black);
+        color: var(--white);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 1050px) {
+        .hero,
+        .grid,
+        .option-board {
+          grid-template-columns: 1fr;
+        }
+
+        .option-gallery {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .section-head {
+          display: block;
+        }
+
+        .section-head p {
+          margin-top: 18px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .option-gallery {
+          grid-template-columns: 1fr;
+        }
+
+        .option-shot.featured {
+          grid-column: span 1;
+          grid-row: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <div class="topline">
+        <span>I Love Banh Mi</span>
+        <span>Product Design System 2026</span>
+      </div>
+      <div class="hero">
+        <h1>Unified Product Line</h1>
+        <div class="hero-logo"><img src="logo.png" alt="I Love Banh Mi logo" /></div>
+      </div>
+      <div class="footline">
+        <span>Mint Green / Red / Black / Cream</span>
+        <span>Packaging / Uniform / Signage</span>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Packaging</h2>
+        <p>Rule: mint is the brand field, cream is the food-safe paper base, black carries typography, red is used only as a sharp accent.</p>
+      </div>
+      <div class="grid">
+        <article class="product">
+          <div class="stage"><div class="pattern"></div><div class="wrapper"><div class="logo-lockup"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div></div>
+          <div class="copy"><p class="tag">Greaseproof Wrapper</p><h3>20 x 30 cm Sheet</h3><p>Mint field, oversized logo block, small repeated typography. Use 1-color black/red simplified version for cost control.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="pattern"></div><div class="bag"><div class="logo-mini"><img src="logo.png" alt="" /></div></div></div>
+          <div class="copy"><p class="tag">Takeaway Bag</p><h3>Kraft Square Bottom</h3><p>Natural kraft stays visible. Front logo on cream patch, mint side band, red tamper seal option.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="pattern"></div><div class="box"><div class="logo-mini"><img src="logo.png" alt="" /></div></div></div>
+          <div class="copy"><p class="tag">Carry Box</p><h3>10 Banh Mi Box</h3><p>Mint lid, kraft base, black type on side panels. Keep top face clean for delivery photos.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="cup"><div class="logo-mini"><img src="logo.png" alt="" /></div></div></div>
+          <div class="copy"><p class="tag">Cold Drink</p><h3>PET Cup</h3><p>Clear cup, front logo only. Mint/red lid seal or sleeve carries the stronger brand color.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="cup"><div class="logo-lockup small"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div></div>
+          <div class="copy"><p class="tag">PP Cup</p><h3>Flat Bottom Cup</h3><p>Semi-opaque cup with one-color black logo and red/mint sticker seal on top film.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="cup paper-cup"><div class="logo-mini"><img src="logo.png" alt="" /></div></div></div>
+          <div class="copy"><p class="tag">Hot Drink</p><h3>Paper Cup</h3><p>Cream cup, mint vertical band, black wordmark. Red heart stays as the only hot accent.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="cup paper-cup" style="background:#d9d9d9"><div class="logo-mini"><img src="logo.png" alt="" /></div></div></div>
+          <div class="copy"><p class="tag">Premium Hot Cup</p><h3>2-Layer Silver Cup</h3><p>Silver cup should be restrained: black logo, mint lid seal, no extra pattern on metallic surface.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="bowl"><div class="logo-mini"><img src="logo.png" alt="" /></div></div></div>
+          <div class="copy"><p class="tag">Food Bowl</p><h3>2-Tier Pho Bowl</h3><p>Cream bowl sleeve with mint band. Put logo on the top tray seal where delivery photos see it.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="bowl" style="width:48%;height:35%"><div class="logo-lockup small"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div></div>
+          <div class="copy"><p class="tag">Condiment</p><h3>Sauce Cup</h3><p>Keep cup blank if tiny. Use lid sticker: red heart + black wordmark on mint or cream.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="bottle"><div class="logo-mini"><img src="logo.png" alt="" /></div></div></div>
+          <div class="copy"><p class="tag">Bottle</p><h3>Clear PET Bottle</h3><p>Minimal front label, black cap, mint neck seal. Avoid busy wraparound labels.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="seal"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div>
+          <div class="copy"><p class="tag">Delivery Seal</p><h3>Sticker Set</h3><p>Use red for warning/closure, mint for normal brand seals, cream for paper bag closure.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="straw"><div class="logo-lockup small"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div></div>
+          <div class="copy"><p class="tag">Straw</p><h3>Paper-Wrapped Straw</h3><p>Repeat black text on cream paper. Mint end marks help sorting by size.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section dark">
+      <div class="section-head">
+        <h2>Service Items</h2>
+        <p>These need lower ink coverage and harder-wearing production choices. The design should be functional first.</p>
+      </div>
+      <div class="grid">
+        <article class="product">
+          <div class="stage"><div class="kit"><div class="logo-lockup small"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div></div>
+          <div class="copy"><p class="tag">To-Go Kit</p><h3>Cutlery Sleeve</h3><p>Mint sleeve, black type, red heart. Do not print on every utensil.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="wrapper" style="width:62%;box-shadow:18px 18px 0 var(--black)"><div class="logo-lockup small"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div></div>
+          <div class="copy"><p class="tag">Paper Goods</p><h3>Kraft Napkin</h3><p>Small black corner logo. Mint/red only if vendor can hold registration cleanly.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="tray"><div class="logo-lockup small"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div></div>
+          <div class="copy"><p class="tag">Dine-In</p><h3>Black Tray</h3><p>Keep tray plain black. Brand through liner, not permanent tray print.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="liner"><div class="wordmark">Tray<br />Liner</div></div></div>
+          <div class="copy"><p class="tag">Dine-In</p><h3>Tray Liner</h3><p>This is the main dine-in storytelling surface: large black type, mint field, red accent strip.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="seal" style="background:var(--cream);color:var(--black)"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div>
+          <div class="copy"><p class="tag">Cup Lid</p><h3>Film / Lid Seal</h3><p>Use size-coded mint/red tabs. Logo must stay away from straw hole and heat seal edge.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="kit" style="background:var(--black);color:var(--cream)"><div class="logo-lockup small"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div></div>
+          <div class="copy"><p class="tag">Back Of House</p><h3>Black Gloves</h3><p>Glove itself stays black. Brand the box label only; keep hygiene info readable.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Uniform & Signage</h2>
+        <p>Uniforms should be calmer than packaging. Signage can glow, but still follows mint as the 2026 primary field.</p>
+      </div>
+      <div class="grid">
+        <article class="product">
+          <div class="stage"><div class="apron"><div class="logo-mini"><img src="logo.png" alt="" /></div></div></div>
+          <div class="copy"><p class="tag">Uniform</p><h3>Canvas Apron</h3><p>Black/charcoal apron, chest logo patch, mint stitching/detail. Embroidery preferred.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="uniform"><div class="logo-mini"><img src="logo.png" alt="" /></div></div></div>
+          <div class="copy"><p class="tag">Uniform</p><h3>Black Polo</h3><p>Left chest logo, no big back print. Add mint sleeve tab if needed.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="uniform cream"><div class="logo-mini"><img src="logo.png" alt="" /></div></div></div>
+          <div class="copy"><p class="tag">Uniform</p><h3>Cream Polo</h3><p>Use black logo version if embroidery loses small white details.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="signage"><div class="logo-lockup"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div></div>
+          <div class="copy"><p class="tag">Storefront</p><h3>Neon Decor Sign</h3><p>Approved direction: cream neon letters, red heart, mint backing glow, black wall.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="box" style="background:var(--black);color:var(--cream)"><div class="logo-lockup small"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div></div>
+          <div class="copy"><p class="tag">Exterior</p><h3>3D Blade Sign</h3><p>Mint edge, black side wall, cream face. Keep shape simple for fabrication.</p></div>
+        </article>
+        <article class="product">
+          <div class="stage"><div class="wrapper" style="width:80%;height:48%;box-shadow:none"><div class="logo-lockup"><img src="logo.png" alt="I Love Banh Mi logo" /></div></div></div>
+          <div class="copy"><p class="tag">Storefront</p><h3>Window Decals</h3><p>Large sparse decals, not wallpaper. Preserve visibility into the shop.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section option">
+      <div class="section-head">
+        <div>
+          <span class="option-kicker">Design Option 02</span>
+          <h2>Youth Pop</h2>
+        </div>
+        <p>More youthful and energetic: cobalt blue becomes the campaign field, lime adds motion, kraft keeps the food craft feeling, and the original logo stays unchanged.</p>
+      </div>
+      <div class="option-board">
+        <div class="option-lead">
+          <div>
+            <h3>Cobalt Street Energy</h3>
+            <p>Use this option for launch drops, student areas, TikTok/Instagram content, staff tees, and limited packaging runs. It is louder than the mint system, so keep it as a campaign option instead of replacing the core brand.</p>
+          </div>
+          <div class="option-notes">
+            <span>Cobalt field</span>
+            <span>Lime hits</span>
+            <span>Kraft base</span>
+            <span>Logo-safe</span>
+          </div>
+        </div>
+        <div class="option-gallery">
+          <figure class="option-shot featured">
+            <img src="assets/mockups/2026-06-12-genz-cobalt-logo-safe/final-logo-safe/01-kraft-carry-box-cobalt-logo-safe.png" alt="Cobalt youth pop kraft carry box mockup" />
+          </figure>
+          <figure class="option-shot">
+            <img src="assets/mockups/2026-06-12-genz-cobalt-logo-safe/final-logo-safe/02-banhmi-wrapper-cobalt-logo-safe.png" alt="Cobalt youth pop banh mi wrapper mockup" />
+          </figure>
+          <figure class="option-shot">
+            <img src="assets/mockups/2026-06-12-genz-cobalt-logo-safe/final-logo-safe/03-kraft-takeaway-bag-cobalt-logo-safe.png" alt="Cobalt youth pop takeaway bag mockup" />
+          </figure>
+          <figure class="option-shot">
+            <img src="assets/mockups/2026-06-12-genz-cobalt-logo-safe/final-logo-safe/04-hot-paper-cup-cobalt-logo-safe.png" alt="Cobalt youth pop hot paper cup mockup" />
+          </figure>
+          <figure class="option-shot">
+            <img src="assets/mockups/2026-06-12-genz-cobalt-logo-safe/final-logo-safe/05-iced-cup-cobalt-logo-safe.png" alt="Cobalt youth pop iced cup mockup" />
+          </figure>
+          <figure class="option-shot">
+            <img src="assets/mockups/2026-06-12-genz-cobalt-logo-safe/final-logo-safe/06-cobalt-staff-tshirt-logo-safe.png" alt="Cobalt youth pop staff t-shirt mockup" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">© 2026 ZAP CRM. I LOVE BANH MI PRODUCT DESIGN SYSTEM.</footer>
+  </body>
+</html>

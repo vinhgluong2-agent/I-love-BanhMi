@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300mm" height="200mm" viewBox="0 0 3000 2000">
+  <title>I LOVE BANH MI - Greaseproof Wrapper 20x30cm - Brand Guideline 2026</title>
+  <defs>
+    <style>
+      .mint { fill: #a8e6cf; }
+      .cream { fill: #fdf5e6; }
+      .black { fill: #111111; }
+      .red { fill: #e31837; }
+      .white { fill: #ffffff; }
+      .type {
+        font-family: Montserrat, Arial, Helvetica, sans-serif;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+      .type-medium {
+        font-family: Montserrat, Arial, Helvetica, sans-serif;
+        font-weight: 700;
+        letter-spacing: 12px;
+      }
+      .outline {
+        fill: none;
+        stroke: #111111;
+        stroke-width: 8;
+      }
+      .trim {
+        fill: none;
+        stroke: #e31837;
+        stroke-width: 4;
+        stroke-dasharray: 28 18;
+        opacity: 0.36;
+      }
+      .safe {
+        fill: none;
+        stroke: #111111;
+        stroke-width: 3;
+        stroke-dasharray: 16 18;
+        opacity: 0.2;
+      }
+    </style>
+
+    <symbol id="heart" viewBox="0 0 100 90">
+      <path class="red" d="M50 82 C18 58 6 43 6 25 C6 10 18 2 31 2 C40 2 47 7 50 15 C53 7 60 2 69 2 C82 2 94 10 94 25 C94 43 82 58 50 82Z"/>
+    </symbol>
+
+    <pattern id="miniPattern" width="620" height="360" patternUnits="userSpaceOnUse" patternTransform="rotate(-10)">
+      <rect width="620" height="360" fill="transparent"/>
+      <text x="0" y="92" class="type black" font-size="78">I</text>
+      <use href="#heart" x="82" y="24" width="76" height="68"/>
+      <text x="178" y="92" class="type black" font-size="78">LOVE</text>
+      <text x="0" y="188" class="type black" font-size="106">BANH MI</text>
+      <rect x="0" y="226" width="330" height="18" class="red"/>
+      <text x="0" y="288" class="type-medium black" font-size="32">SAIGON STREET BITE</text>
+    </pattern>
+  </defs>
+
+  <!-- 20x30cm flat print artwork. Red dashed line = trim; black dashed line = safe area. -->
+  <rect width="3000" height="2000" class="mint"/>
+  <rect width="3000" height="2000" fill="url(#miniPattern)" opacity="0.12"/>
+
+  <rect x="0" y="0" width="3000" height="290" class="black"/>
+  <text x="110" y="198" class="type cream" font-size="150">I LOVE BANH MI</text>
+  <use href="#heart" x="1376" y="78" width="96" height="86"/>
+  <text x="1605" y="177" class="type-medium cream" font-size="44">BRAND WRAPPER 2026</text>
+
+  <g transform="translate(1500 955)">
+    <rect x="-590" y="-320" width="1180" height="640" rx="0" class="cream"/>
+    <rect x="-540" y="-270" width="1080" height="540" rx="0" class="outline"/>
+    <image href="../../../logo.svg" x="-445" y="-210" width="890" height="420" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+
+  <g transform="translate(130 520)">
+    <text x="0" y="0" class="type black" font-size="112">WARM</text>
+    <text x="0" y="116" class="type black" font-size="112">&amp; CRISPY</text>
+    <rect x="0" y="154" width="310" height="24" class="red"/>
+  </g>
+
+  <g transform="translate(2280 1364)">
+    <text x="0" y="0" class="type black" font-size="92">SAIGON</text>
+    <text x="0" y="96" class="type black" font-size="92">STREETS</text>
+    <rect x="0" y="132" width="300" height="24" class="red"/>
+  </g>
+
+  <g transform="translate(120 1658)">
+    <text x="0" y="0" class="type-medium black" font-size="38">MINT GREEN / VIBRANT RED / RICH BLACK / CREAM</text>
+    <text x="0" y="74" class="type-medium black" font-size="30">GREASEPROOF PAPER - 20 x 30 CM</text>
+  </g>
+
+  <g transform="translate(2520 520)">
+    <use href="#heart" x="0" y="0" width="170" height="153"/>
+    <text x="-102" y="226" class="type black" font-size="54">FRESH</text>
+    <text x="-106" y="286" class="type black" font-size="54">DAILY</text>
+  </g>
+
+  <rect x="30" y="30" width="2940" height="1940" class="trim"/>
+  <rect x="90" y="90" width="2820" height="1820" class="safe"/>
+</svg>

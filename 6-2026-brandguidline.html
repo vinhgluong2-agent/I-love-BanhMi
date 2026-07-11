@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>I LOVE BANH MI BRAND GUIDELINE 2026</title>
+    <style>
+      :root {
+        --primary: #a8e6cf;
+        --mustard: #ffc107;
+        --red: #e31837;
+        --black: #111111;
+        --white: #ffffff;
+        --mint: #a8e6cf;
+        --cream: #fdf5e6;
+        --terracotta: #e07a5f;
+        --pink: #ffd1dc;
+        --text-soft: rgba(17, 17, 17, 0.68);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--white);
+        color: var(--black);
+        font-family: Montserrat, Inter, Arial, Helvetica, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      .section {
+        padding: 96px 24px;
+      }
+
+      .wrap {
+        width: min(1180px, 100%);
+        margin: 0 auto;
+      }
+
+      .cover {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 48px 24px;
+        background: var(--primary);
+      }
+
+      .cover-title {
+        font-size: clamp(18px, 2vw, 28px);
+        font-weight: 900;
+        line-height: 1;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .cover-title span {
+        margin: 0 16px;
+        font-weight: 500;
+      }
+
+      .cover-logo {
+        display: flex;
+        justify-content: center;
+        padding: 64px 0;
+      }
+
+      .cover-logo img {
+        width: min(880px, 92vw);
+        filter: drop-shadow(0 28px 28px rgba(0, 0, 0, 0.32));
+      }
+
+      .cover-footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .intro {
+        min-height: 48vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--cream);
+        text-align: center;
+      }
+
+      .intro p {
+        max-width: 920px;
+        font-size: clamp(30px, 5vw, 70px);
+        font-weight: 900;
+        line-height: 1.05;
+      }
+
+      .section-title {
+        margin-bottom: 56px;
+        font-size: clamp(44px, 8vw, 104px);
+        font-weight: 900;
+        line-height: 0.9;
+        text-transform: uppercase;
+      }
+
+      .palette-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .color-card {
+        min-height: 260px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 26px;
+      }
+
+      .color-card h3 {
+        font-size: clamp(22px, 3vw, 38px);
+        font-weight: 900;
+        line-height: 0.95;
+        text-transform: uppercase;
+      }
+
+      .color-card p {
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .dark {
+        color: var(--white);
+      }
+
+      .type-section,
+      .photo-section,
+      .site-footer {
+        background: var(--black);
+        color: var(--white);
+      }
+
+      .type-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 48px;
+      }
+
+      .type-sample {
+        border-top: 1px solid rgba(255, 255, 255, 0.36);
+        padding-top: 32px;
+      }
+
+      .aa {
+        margin-bottom: 30px;
+        font-size: clamp(110px, 18vw, 240px);
+        font-weight: 900;
+        line-height: 0.78;
+      }
+
+      .type-sample h3 {
+        margin-bottom: 24px;
+        font-size: clamp(30px, 4vw, 56px);
+        font-weight: 900;
+        line-height: 0.95;
+        text-transform: uppercase;
+      }
+
+      .alphabet {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: clamp(17px, 2vw, 25px);
+        font-weight: 700;
+        line-height: 1.55;
+        overflow-wrap: anywhere;
+      }
+
+      .usage {
+        margin-top: 28px;
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .mockup-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .mockup-card {
+        overflow: hidden;
+        background: var(--cream);
+      }
+
+      .mockup-image {
+        height: 460px;
+        overflow: hidden;
+        background: #eee;
+      }
+
+      .mockup-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 700ms ease;
+      }
+
+      .mockup-card:hover img {
+        transform: scale(1.1);
+      }
+
+      .mockup-copy {
+        padding: 28px;
+      }
+
+      .mockup-copy p:first-child {
+        margin-bottom: 14px;
+        color: var(--red);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .mockup-copy h3 {
+        font-size: clamp(26px, 3vw, 42px);
+        font-weight: 900;
+        line-height: 0.95;
+        text-transform: uppercase;
+      }
+
+      .logo-stage {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .logo-strip {
+        display: grid;
+        grid-auto-columns: minmax(320px, 1fr);
+        grid-auto-flow: column;
+        gap: 0;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+      }
+
+      .logo-bg {
+        min-height: 430px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 56px;
+        scroll-snap-align: start;
+      }
+
+      .logo-bg img {
+        width: min(420px, 84%);
+        max-height: 230px;
+        object-fit: contain;
+        transition: transform 300ms ease;
+      }
+
+      .logo-bg:hover img {
+        transform: scale(1.05);
+      }
+
+      .arrow-row {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 28px;
+      }
+
+      .arrow {
+        width: 56px;
+        height: 56px;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--black);
+        border-radius: 999px;
+        background: var(--white);
+        font-size: 26px;
+        font-weight: 900;
+      }
+
+      .rules-section {
+        background: var(--cream);
+        border-top: 4px solid var(--black);
+      }
+
+      .rules-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 48px;
+        align-items: stretch;
+      }
+
+      .clear-card,
+      .min-card {
+        background: var(--white);
+        padding: 36px;
+      }
+
+      .clear-card h3,
+      .min-card h3 {
+        margin-bottom: 28px;
+        font-size: 22px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .clear-box {
+        position: relative;
+        min-height: 360px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 24px;
+        border: 2px dashed var(--black);
+      }
+
+      .clear-box img {
+        width: min(460px, 70%);
+      }
+
+      .clear-box span {
+        position: absolute;
+        color: var(--red);
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .clear-box .top {
+        top: 18px;
+      }
+
+      .clear-box .right {
+        right: 22px;
+      }
+
+      .clear-box .bottom {
+        bottom: 18px;
+      }
+
+      .clear-box .left {
+        left: 22px;
+      }
+
+      .rule-note {
+        color: var(--text-soft);
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .min-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .min-unit {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: 240px;
+        padding: 24px;
+        background: var(--primary);
+        text-align: center;
+      }
+
+      .min-unit img {
+        width: 100%;
+        margin: auto auto 28px;
+      }
+
+      .min-unit strong {
+        display: block;
+        font-size: clamp(36px, 5vw, 64px);
+        font-weight: 900;
+        line-height: 0.9;
+      }
+
+      .min-unit span {
+        display: block;
+        margin-top: 8px;
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .incorrect-section {
+        background: var(--primary);
+      }
+
+      .incorrect-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .bad-card {
+        min-height: 280px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+        padding: 24px;
+        background: var(--cream);
+      }
+
+      .bad-logo {
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .bad-logo img {
+        width: min(260px, 86%);
+      }
+
+      .shadow-logo {
+        filter: drop-shadow(0 24px 18px rgba(0, 0, 0, 0.7));
+      }
+
+      .rotate-logo {
+        transform: rotate(-12deg);
+      }
+
+      .stretch-logo {
+        transform: scale(0.9, 1.28);
+      }
+
+      .color-logo {
+        filter: hue-rotate(220deg) saturate(1.5);
+      }
+
+      .busy-bg {
+        background:
+          repeating-linear-gradient(45deg, var(--red) 0 12px, var(--mustard) 12px 24px),
+          var(--red);
+      }
+
+      .crop-logo img {
+        width: 380px;
+        max-width: none;
+        transform: translate(60px, 24px);
+      }
+
+      .bad-card p {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .bad-card b {
+        color: var(--red);
+        font-size: 32px;
+      }
+
+      .photo-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 42px;
+      }
+
+      .photo-rule {
+        border-top: 1px solid rgba(255, 255, 255, 0.32);
+        padding-top: 28px;
+      }
+
+      .photo-rule h3 {
+        margin-bottom: 18px;
+        color: var(--primary);
+        font-size: clamp(34px, 4vw, 56px);
+        font-weight: 900;
+        line-height: 0.92;
+        text-transform: uppercase;
+      }
+
+      .photo-rule p {
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .site-footer {
+        padding: 48px 24px;
+        border-top: 4px solid var(--black);
+        text-align: center;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 920px) {
+        .section {
+          padding: 72px 20px;
+        }
+
+        .palette-grid,
+        .mockup-grid,
+        .incorrect-grid,
+        .photo-grid,
+        .type-grid,
+        .rules-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cover-footer {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .cover {
+          padding: 34px 18px;
+        }
+
+        .cover-title span {
+          display: block;
+          margin: 8px 0;
+        }
+
+        .palette-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .min-row {
+          grid-template-columns: 1fr;
+        }
+
+        .mockup-image,
+        .logo-bg {
+          min-height: 320px;
+          height: 320px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="cover">
+      <div class="cover-title">I Love Banh Mi <span>&nbsp;</span> Brand Guideline 2026</div>
+      <div class="cover-logo">
+        <img src="logo.png" alt="I Love Banh Mi Logo" />
+      </div>
+      <div class="cover-footer">
+        <div>Brand system / June 2026</div>
+        <div>Primary color variant: Mint Green</div>
+      </div>
+    </section>
+
+    <section class="intro section">
+      <p>
+        More than just a meal, it's the heartbeat of Saigon. I LOVE BANH MI captures
+        the vibrant, free-spirited essence of Vietnamese street food culture.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title">Color Palette</h2>
+        <div class="palette-grid">
+          <article class="color-card" style="background: var(--primary)">
+            <h3>Mint Green</h3>
+            <p>#A8E6CF</p>
+          </article>
+          <article class="color-card dark" style="background: var(--red)">
+            <h3>Vibrant Red</h3>
+            <p>#E31837</p>
+          </article>
+          <article class="color-card dark" style="background: var(--black)">
+            <h3>Rich Black</h3>
+            <p>#111111</p>
+          </article>
+          <article class="color-card" style="background: var(--white); border: 1px solid #eee">
+            <h3>Pure White</h3>
+            <p>#FFFFFF</p>
+          </article>
+          <article class="color-card" style="background: var(--mustard)">
+            <h3>Mustard Yellow</h3>
+            <p>#FFC107</p>
+          </article>
+          <article class="color-card" style="background: var(--cream)">
+            <h3>Cream</h3>
+            <p>#FDF5E6</p>
+          </article>
+          <article class="color-card" style="background: var(--terracotta)">
+            <h3>Terracotta</h3>
+            <p>#E07A5F</p>
+          </article>
+          <article class="color-card" style="background: var(--pink)">
+            <h3>Soft Pink</h3>
+            <p>#FFD1DC</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section type-section">
+      <div class="wrap">
+        <h2 class="section-title">Typography</h2>
+        <div class="type-grid">
+          <article class="type-sample">
+            <div class="aa">Aa</div>
+            <h3>Montserrat Black</h3>
+            <p class="alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />abcdefghijklmnopqrstuvwxyz<br />0123456789!@#$%^&amp;*</p>
+            <p class="usage">Usage: primary headings</p>
+          </article>
+          <article class="type-sample">
+            <div class="aa" style="font-weight: 500">Aa</div>
+            <h3 style="font-weight: 500">Montserrat Medium</h3>
+            <p class="alphabet" style="font-weight: 500">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />abcdefghijklmnopqrstuvwxyz<br />0123456789!@#$%^&amp;*</p>
+            <p class="usage">Usage: body copy</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title">Real-World Mockups</h2>
+        <div class="mockup-grid">
+          <article class="mockup-card">
+            <div class="mockup-image">
+              <img src="assets/mockups/apparel_mockups/apron_model_apron_chest_center_logo_25pct_larger_mockup.png" alt="Barista Apron Mockup" />
+            </div>
+            <div class="mockup-copy">
+              <p>Barista Uniform</p>
+              <h3>Premium Canvas Apron</h3>
+            </div>
+          </article>
+          <article class="mockup-card">
+            <div class="mockup-image">
+              <img src="assets/mockups/apparel_mockups/polo_black_model_lacoste_position_logo_mockup.png" alt="Staff Apparel Mockup" />
+            </div>
+            <div class="mockup-copy">
+              <p>Staff Apparel</p>
+              <h3>Branded Workwear</h3>
+            </div>
+          </article>
+          <article class="mockup-card">
+            <div class="mockup-image">
+              <img src="assets/mockups/packaging_mockups/01-packaging-family-overview.png" alt="Brand Stationery Mockup" />
+            </div>
+            <div class="mockup-copy">
+              <p>Brand Identity</p>
+              <h3>Takeaway & Packaging</h3>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap logo-stage">
+        <h2 class="section-title">Logo Background Test</h2>
+        <div class="logo-strip" aria-label="Logo background test carousel">
+          <div class="logo-bg" style="background: var(--mint)">
+            <img src="logo.png" alt="I Love Banh Mi Logo on Mint Green" />
+          </div>
+          <div class="logo-bg" style="background: var(--mustard)">
+            <img src="logo.png" alt="I Love Banh Mi Logo on Mustard Yellow" />
+          </div>
+          <div class="logo-bg" style="background: var(--terracotta)">
+            <img src="logo.png" alt="I Love Banh Mi Logo on Terracotta" />
+          </div>
+          <div class="logo-bg" style="background: var(--pink)">
+            <img src="logo.png" alt="I Love Banh Mi Logo on Soft Pink" />
+          </div>
+        </div>
+        <div class="arrow-row" aria-hidden="true">
+          <div class="arrow">&larr;</div>
+          <div class="arrow">&rarr;</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section rules-section">
+      <div class="wrap">
+        <h2 class="section-title">Clear Space & Minimum Size</h2>
+        <div class="rules-grid">
+          <article class="clear-card">
+            <h3>Clear Space</h3>
+            <div class="clear-box">
+              <span class="top">X</span>
+              <span class="right">X</span>
+              <span class="bottom">X</span>
+              <span class="left">X</span>
+              <img src="logo.png" alt="Clear Space" />
+            </div>
+            <p class="rule-note">
+              The clear space "X" is equivalent to the height of the red heart icon,
+              ensuring the logo always has room to breathe.
+            </p>
+          </article>
+          <article class="min-card">
+            <h3>Minimum Size</h3>
+            <div class="min-row">
+              <div class="min-unit">
+                <img src="logo.png" alt="Min Size Print" />
+                <strong>1.5 CM</strong>
+                <span>Print Media</span>
+              </div>
+              <div class="min-unit">
+                <img src="logo.png" alt="Min Size Digital" />
+                <strong>40 PIXELS</strong>
+                <span>Digital Screens</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section incorrect-section">
+      <div class="wrap">
+        <h2 class="section-title">Incorrect Usage</h2>
+        <div class="incorrect-grid">
+          <article class="bad-card">
+            <div class="bad-logo"><img class="shadow-logo" src="logo.png" alt="" /></div>
+            <p><b>x</b> Do not add drop shadows</p>
+          </article>
+          <article class="bad-card">
+            <div class="bad-logo"><img class="rotate-logo" src="logo.png" alt="" /></div>
+            <p><b>x</b> Do not rotate the logo</p>
+          </article>
+          <article class="bad-card">
+            <div class="bad-logo"><img class="stretch-logo" src="logo.png" alt="" /></div>
+            <p><b>x</b> Do not stretch or squash</p>
+          </article>
+          <article class="bad-card">
+            <div class="bad-logo"><img class="color-logo" src="logo.png" alt="" /></div>
+            <p><b>x</b> Do not alter colors</p>
+          </article>
+          <article class="bad-card">
+            <div class="bad-logo busy-bg"><img src="logo.png" alt="" /></div>
+            <p><b>x</b> Avoid busy backgrounds</p>
+          </article>
+          <article class="bad-card">
+            <div class="bad-logo crop-logo"><img src="logo.png" alt="" /></div>
+            <p><b>x</b> Do not crop the logo</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section photo-section">
+      <div class="wrap">
+        <h2 class="section-title">Photography Style</h2>
+        <div class="photo-grid">
+          <article class="photo-rule">
+            <h3>Warm & Crispy</h3>
+            <p>Highlight the crispiness of the crust through warm, inviting lighting that evokes immediate appetite.</p>
+          </article>
+          <article class="photo-rule">
+            <h3>Saigon Streets</h3>
+            <p>Dynamic, authentic settings that mix street culture with energetic, bustling slices of life.</p>
+          </article>
+          <article class="photo-rule">
+            <h3>Vibrant Pop</h3>
+            <p>Push high color contrast to make fresh cilantro and vibrant chili peppers genuinely pop.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">© 2026 ZAP CRM. All rights reserved.</footer>
+  </body>
+</html>
